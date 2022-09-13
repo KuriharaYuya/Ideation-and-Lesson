@@ -1,1 +1,10 @@
-hello world
+<% provide(:title, "yuya") %>
+
+<%# <%= form_with(model:@user)  do |f| %> %>
+<%= form_with(model:@user,local: true,method: :post,url: "/users")  do |f| %>
+    <%= f.label :name %> 
+    <%= f.text_field :name %> <br>
+    <%= f.label :email %>
+    <%= f.text_field :email %> <br>
+    <%= f.submit "Create my account" %>
+<% end %>
