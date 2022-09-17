@@ -4,16 +4,15 @@ class UsersController < ApplicationController
   end
 
   def show
-    p params
+    
     @user = User.find(params[:id])
   end
 
   def create
-    # p params[:user]
     @user = User.new(user_params)
     if @user.save
-      p "/users/#{params[:id]}"
       redirect_to @user
+      #redirect_to user_url(@user.id)
     else
       redirect_to root_path
     end
@@ -22,6 +21,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password,:password_confirmation)
   end
 end

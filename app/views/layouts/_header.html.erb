@@ -1,13 +1,18 @@
 <ul class="nav">
+  <% if logged_in?  %>
+  <li class="nav-item">
+    <%#=   ログイン中のユーザー名表示%>
+  </li>
+  <li class="nav-item">
+    <%=link_to "Log out", logout_path %>
+  </li>
+  <% else  %>
   <li class="nav-item">
     <%=link_to "signup", signup_path  %>
   </li>
   <li class="nav-item">
-    <%=link_to "profile", signup_path %>
+    <%=link_to "login", login_path  %>
   </li>
-  <li class="nav-item">
-    <%=link_to "login", "#"  %>
-  </li>
-  <li class="nav-item">
-  </li>
+  <% end  %>
 </ul>
+
