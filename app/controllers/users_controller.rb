@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    
     @user = User.find(params[:id])
   end
 
@@ -14,13 +13,15 @@ class UsersController < ApplicationController
       redirect_to @user
       #redirect_to user_url(@user.id)
     else
-      redirect_to root_path
+      flash.now[:notice] = @user.errors.full_messages
+      # render action: "new"
+      render action: "new"
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password,:password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end

@@ -5,3 +5,6 @@
     <%= f.password_field :password %>
     <%= f.submit "Log in" %>
 <% end %>
+<% flash.each do |msg_type,msg|  %>
+<%= msg  %>
+<% end  %>

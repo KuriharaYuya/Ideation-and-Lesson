@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    flash = ""
   end
 
   def create
@@ -12,7 +13,8 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to @user
     else
-      render action: "new"
+      flash.now[:notice] = "ログイン情報が間違っているか、登録されていないアカウントです"
+      render :new
     end
   end
   def destroy
