@@ -1,18 +1,17 @@
 <ul class="nav">
-  <% if logged_in?  %>
+  <% if logged_in? %>
   <li class="nav-item">
-    <%= @current_user.name%>
+    <%= @current_user.name %>
   </li>
   <li class="nav-item">
-    <%=link_to "Log out", logout_path %>
+    <%= link_to "Log out", logout_path %>
   </li>
-  <% else  %>
+  <% else %>
   <li class="nav-item">
-    <%=link_to "signup", signup_path  %>
+    <%= link_to "signup", signup_path %>
   </li>
   <li class="nav-item">
-    <%=link_to "login", login_path  %>
+    <%= link_to "login", login_path %>
   </li>
-  <% end  %>
+  <% end %>
 </ul>
-
