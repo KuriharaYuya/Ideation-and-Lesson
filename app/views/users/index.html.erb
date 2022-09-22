@@ -1,1 +1,14 @@
 <h1>Here is user list page</h1>
+<% 
+i = 0
+@users.each do |users| 
+i += 1
+%>
+
+<div class="index_user_wrapper">
+    <%= link_to users,class: "index_user"  do %>
+    <h3>User No.<%= i %> Name: <%= users.name%> </h3>
+    <% end  %>
+</div>
+
+<% end  %>

@@ -3,12 +3,14 @@
 
 <div class="user_infomation">
     <h2>User infomation</h2>
+    <h3><%= "#{@user[:name]}followed by #{"XXX"}user" %></h3>
     <p><%= @user[:name] %></p>
     <p><%= @user[:email] %></p>
 </div>
 
 <div class="user_infomation follow_lits">
     <h2>Follow lits</h2>
+    <h3><%= "#{@user[:name]}follow#{"YYY"}user" %></h3>
     <p class="follow"><%= "follow"%></p>
     <p class="follower"><%= "follower" %></p>
 </div>
