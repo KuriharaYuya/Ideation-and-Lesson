@@ -6,7 +6,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user_params = { session: { email: 'nikoand01@gmail.com', password: 'password' } }
   end
   test 'login with valid user info' do
-    debugger
     get login_path
     assert_template 'sessions/new'
     post login_path, params: @user_params
