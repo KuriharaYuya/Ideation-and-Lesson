@@ -6,8 +6,35 @@ i += 1
 %>
 
 <div class="index_user_wrapper">
-    <%= link_to users,class: "index_user"  do %>
-    <h3>User No.<%= i %> Name: <%= users.name%> </h3>
+    <div style="display:inline-block;">
+
+        <% if !(users == current_user)  %>
+
+        <a id="follow_form">
+            <% if !current_user.following?(users) %>
+            <%= form_with(model: current_user.active_relationships.build,remote: true) do |f| %>
+            <%= hidden_field_tag :followed_id, users.id %>
+            <%= hidden_field_tag :current_page, request.fullpath %>
+            <%= f.submit "Follow", disable_with: "Following" %>
+            <% end  %>
+            <% else  %>
+            <%= form_with(model: current_user.active_relationships.find_by(followed: users), html: {method: :delete},remote: true) do |f| %>
+            <%= hidden_field_tag :current_page, request.fullpath %>
+            <%= f.submit "Unfollow", disable_with: 'Unfollowing...'  %>
+            <% end  %>
+            <% end %>
+        </a>
+
+        <% end %>
+        </a>
+
+
+
+    </div>
+    <%= link_to users,class: "index_user",style: "text-decoretion: none;"  do %>
+    <h3 style="display: inline-block;">&nbsp;&nbsp;User No.<%= i %> Name:
+        <%= users.name%>&nbsp;&nbsp;&nbsp;&nbsp;
+    </h3>
     <% end  %>
 </div>
 

@@ -1,0 +1,10 @@
+one:
+  follower: naoto
+  followed: yuya
+  # naotoがyuyaをフォローしている
+two:
+  follower: yuya
+  followed: naoto
+three:
+  follower: yuya
+  followed: aki

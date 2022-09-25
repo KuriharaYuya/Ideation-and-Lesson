@@ -1,5 +1,3 @@
-require 'test_helper'
-
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = User.new(name: 'Example User', email: 'nikoand01@gmail.com',
@@ -30,5 +28,18 @@ class UserTest < ActiveSupport::TestCase
   end
   test 'user should be valid' do
     @user.valid?
+  end
+
+  test 'should follow and unfollow a user' do
+    yuya = users(:yuya)
+    naoto = users(:naoto)
+    aki = users(:aki)
+
+    assert_not aki.following?(yuya)
+    aki.follow(yuya)
+    assert aki.following?(yuya)
+    aki.unfollow(yuya)
+    assert_not aki.following?(yuya)
+    assert_not yuya.followers.include?(naoto)
   end
 end

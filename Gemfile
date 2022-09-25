@@ -17,6 +17,7 @@ gem 'sprockets-rails',            '3.4.2'
 gem 'stimulus-rails',             '1.0.4'
 gem 'turbo-rails',                '1.0.1'
 gem 'will_paginate',              '3.3.1'
+gem "faker", "2.20.0"
 
 group :development, :test do
   gem 'debug',   '1.4.0', platforms: %i[mri mingw x64_mingw]

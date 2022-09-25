@@ -23,6 +23,8 @@ class UsersController < ApplicationController
     end
   end
 
+  def following; end
+
   private
 
   def user_params

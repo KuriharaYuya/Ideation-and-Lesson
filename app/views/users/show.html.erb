@@ -1,16 +1,33 @@
-<h1>Here is<%= @user[:name] %>'s page</h1>
-
-
+<h1>Here is <%= @user[:name] %>'s page</h1>
+<h2>id: <%= @user.id%></h2>
+<%if !(@user == current_user)  %>
+<% if !current_user.following?(@user)  %>
+<a class="follow">
+    <%= form_with(model: current_user.active_relationships.build, local: false)do |f|%>
+    <div><%= hidden_field_tag :followed_id, @user.id  %></div>
+    <%= hidden_field_tag :current_page,request.fullpath  %>
+    <%= f.submit "Follow", disable_with: 'Following...' %>
+    <% end  %>
+</a>
+<% else  %>
+<a class="unfollow">
+    <%= form_with(model: current_user.active_relationships.find_by(followed: @user),html: {method: :delete},local: false) do |f| %>
+    <%= hidden_field_tag :current_page,request.fullpath  %>
+    <%= f.submit "Unfollow", disable_with: "Unfollowing"  %>
+    <% end  %>
+</a>
+<% end  %>
+<% end  %>
+<h2>User infomation</h2>
 <div class="user_infomation">
-    <h2>User infomation</h2>
-    <h3><%= "#{@user[:name]}followed by #{"XXX"}user" %></h3>
-    <p><%= @user[:name] %></p>
-    <p><%= @user[:email] %></p>
+    <h3><%= "#{@user[:name]} is followed by #{@user.followers.count} user" %></h3>
+    <a class="follower"><%= "follower" %></a>
 </div>
 
 <div class="user_infomation follow_lits">
     <h2>Follow lits</h2>
-    <h3><%= "#{@user[:name]}follow#{"YYY"}user" %></h3>
-    <p class="follow"><%= "follow"%></p>
-    <p class="follower"><%= "follower" %></p>
+    <h3><%= "#{@user[:name]} is following #{@user.following.count} user" %></h3>
+    <br>
+    <h3><%= link_to "following list",following_user_path %></h3>
+
 </div>
