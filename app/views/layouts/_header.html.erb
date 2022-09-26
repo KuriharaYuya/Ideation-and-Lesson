@@ -3,9 +3,11 @@
   <li class="nav-item">
     <p>Logged in with <%= @current_user.name %>'s account</p>
   </li>
+  <% if !(request.path == "/users/#{current_user.id}")  %>
   <li>
     <%= link_to "Mypage", current_user  %>
   </li>
+  <% end  %>
   <li class="nav-item">
     <%= link_to "User index Page", users_path %>
   </li>
