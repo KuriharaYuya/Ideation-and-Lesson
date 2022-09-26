@@ -21,13 +21,14 @@
 <h2>User infomation</h2>
 <div class="user_infomation">
     <h3><%= "#{@user[:name]} is followed by #{@user.followers.count} user" %></h3>
-    <a class="follower"><%= "follower" %></a>
+    <br><br>
+    <h3><%= link_to "followers",followers_user_path %></h3>
 </div>
 
 <div class="user_infomation follow_lits">
     <h2>Follow lits</h2>
     <h3><%= "#{@user[:name]} is following #{@user.following.count} user" %></h3>
     <br>
-    <h3><%= link_to "following list",following_user_path %></h3>
+    <h3><%= link_to "following",following_user_path %></h3>
 
 </div>

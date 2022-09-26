@@ -15,10 +15,11 @@ class RelationshipsController < ApplicationController
 
   def redirect_current_page
     current_page = params[:current_page]
-    if current_page == "#{users_path}/#{@user.id}"
-      redirect_to @user
+    if current_page.nil?
+      user = User.find_by(id: params(:id))
+      redirect_to Something_path
     else
-      redirect_to users_path
+      redirect_to "#{current_page}"
     end
   end
 end

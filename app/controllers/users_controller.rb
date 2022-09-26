@@ -23,7 +23,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def following; end
+  def followers
+    @user = User.find_by(id: params[:id])
+  end
+
+  def following
+    @user = User.find_by(id: params[:id])
+  end
 
   private
 

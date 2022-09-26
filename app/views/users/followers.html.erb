@@ -1,6 +1,6 @@
-<h2><%="there are list of #{@user.name}'s following users"%></h2>
+<h2><%="there are list of #{@user.name}'s folowers"%></h2>
 
-<% @user.following.each do |user|  %>
+<% @user.followers.each do |user|  %>
 <div style="display: inline-block;">
     <% if !current_user.following?(user)  %>
     <a class="follow">
