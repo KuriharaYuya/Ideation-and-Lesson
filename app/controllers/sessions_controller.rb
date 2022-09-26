@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-    flash = ''
-  end
+  def new; end
 
   def create
     # sessionを取得しuser変数にて定義
