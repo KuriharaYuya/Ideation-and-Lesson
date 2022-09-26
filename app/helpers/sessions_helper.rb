@@ -15,4 +15,15 @@ module SessionsHelper
     reset_session
     @current_user = nil
   end
+
+  def user_log_in
+    unless logged_in?
+      store_location
+      redirect_to login_url
+    end
+  end
+
+  def store_location
+    session[:return_to] = request.url
+  end
 end

@@ -40,6 +40,6 @@ class UserTest < ActiveSupport::TestCase
     assert aki.following?(yuya)
     aki.unfollow(yuya)
     assert_not aki.following?(yuya)
-    assert_not yuya.followers.include?(naoto)
+    assert yuya.followers.include?(naoto)
   end
 end
