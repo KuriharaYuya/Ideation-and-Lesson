@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include UsersHelper
   before_action :user_log_in
   def new
     @user = User.new
@@ -22,6 +23,11 @@ class UsersController < ApplicationController
       # render action: "new"
       render action: 'new'
     end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    reject_other_user_to_access_user_edit_page
   end
 
   def followers

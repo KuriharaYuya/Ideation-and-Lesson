@@ -1,4 +1,7 @@
 <h1>Here is <%= @user[:name] %>'s page</h1>
+<% if current_user == @user  %>
+<%= link_to "User setting", action: "edit"  %>
+<% end  %>
 <h2>id: <%= @user.id%></h2>
 <%if !(@user == current_user)  %>
 <% if !current_user.following?(@user)  %>
