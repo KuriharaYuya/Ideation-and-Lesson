@@ -1,9 +1,4 @@
 <h3>Change your user-settings</h3>
-<p>基本のフォームはsign upの時のやつ</p>
-<p>pass confirmationだけ空欄で、それ以外は初期のvalueが入っている</p>
-<p>入力のリセットボタンを作る</p>
-<p>saveボタンを作る</p>
-<p>完了したらuser情報確認用パーシャルをレンダリング</p>
 <%= form_with(model: @user, local: true) do |f| %>
 
 <%= f.label :name %>

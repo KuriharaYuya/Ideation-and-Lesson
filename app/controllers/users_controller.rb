@@ -30,6 +30,11 @@ class UsersController < ApplicationController
     reject_other_user_to_access_user_edit_page
   end
 
+  def update
+    @user = User.find(params[:id])
+    render partial: 'users/updated' if @user.update(user_params)
+  end
+
   def followers
     @user = User.find_by(id: params[:id])
   end
