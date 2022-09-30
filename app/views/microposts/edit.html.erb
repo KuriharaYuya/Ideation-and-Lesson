@@ -1,0 +1,17 @@
+<h1>edit</h1>
+<br><br><br>
+<%= form_with(model: @micropost, local: true) do |f| %>
+<%= f.label :title %>
+<br>
+<%= f.text_field :title %>
+<br><br>
+<%= f.label :engagement_status %>
+<br>
+<%= f.select :engagement_status, ["予定","実行中","完了","未完了"] %>
+<br><br>
+<%=f.label :post_type  %>
+<br>
+<%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
+<br><br><br>
+<%= f.submit "Submit", disable_with: 'Submiting...'  %>
+<% end  %>

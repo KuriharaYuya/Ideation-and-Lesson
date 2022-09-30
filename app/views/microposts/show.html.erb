@@ -1,0 +1,11 @@
+<br><br><br>
+<% @columns.each do |colum|  %>
+<% if @micropost[colum]  %>
+<h3><%= colum  %>: <%= @micropost[colum]  %></h3>
+<br><br>
+<% end  %>
+<% end  %>
+<%= link_to "Edit micropost", edit_micropost_path  %>
+<%= form_with(model:@micropost,html:{method: :delete}, local: true) do |f| %>
+<%= f.submit "Delete micropost", disable_with: 'Deleting...'  %>
+<% end  %>

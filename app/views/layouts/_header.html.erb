@@ -3,6 +3,9 @@
   <li class="nav-item">
     <p>Logged in with <%= @current_user.name %>'s account</p>
   </li>
+  <li>
+    <%= link_to "Create new post", new_micropost_path %>
+  </li>
   <% if !(request.path == "/users/#{current_user.id}")  %>
   <li>
     <%= link_to "Mypage", current_user  %>
