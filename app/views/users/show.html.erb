@@ -75,7 +75,9 @@
 <br><br><br>
 <h3>マイクロポスト</h3>
 <br><br>
+<%if @user == current_user  %>
 <button><%= link_to "Create new post", new_micropost_path %></button>
+<% end  %>
 <br><br>
 <% @user.microposts.each do |micropost|  %>
 <h3>title: <%= link_to "#{micropost.title}",  micropost_path(micropost)%></h3>

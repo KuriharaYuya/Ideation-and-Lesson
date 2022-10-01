@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<%yuya_id = 553716162%>
+<%yuya_micropost_id = 298486374%>
+one:
+  content: <%= "test" * 3 %>    
+  user_id: <%= yuya_id%>
+  micropost_id: <%= yuya_micropost_id %>

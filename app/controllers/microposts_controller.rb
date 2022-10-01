@@ -14,6 +14,7 @@ class MicropostsController < ApplicationController
   def show
     @micropost = Micropost.find(params[:id])
     @user = @micropost.user
+    @comment = @user.comments.new
     @columns = get_all_column_names
   end
 

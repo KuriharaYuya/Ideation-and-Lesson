@@ -1,11 +1,31 @@
 <br><br><br>
 <% @columns.each do |colum|  %>
-<% if @micropost[colum]  %>
-<h3><%= colum  %>: <%= @micropost[colum]  %></h3>
+<h3><%= colum  %>: <%= @micropost[colum] if @micropost[colum] %></h3>
 <br><br>
 <% end  %>
-<% end  %>
+
+<br><br>
 <%= link_to "Edit micropost", edit_micropost_path  %>
 <%= form_with(model:@micropost,html:{method: :delete}, local: true) do |f| %>
 <%= f.submit "Delete micropost", disable_with: 'Deleting...'  %>
+<% end  %>
+
+<h2>Comment</h2>
+<%= form_with(model:@comment,local: true,url: micropost_comments_path(@micropost)) do |f| %>
+<%= f.hidden_field :micropost_id,value: @micropost.id  %>
+<%=f.label :content  %>
+<br>
+<%=f.text_field :content  %>
+<br><br>
+<%=f.submit "Comment", disable_with: 'Commenting...'  %>
+<% end  %>
+<br><br>
+<% @micropost.comments.each do |comment|  %>
+<h3><%=comment.user.name %></h3>
+<h4><%=comment.content %></h4>
+
+<% if comment.user==current_user %>
+<%= button_to "delete comment", micropost_comment_path(@micropost, comment), method: :delete   %>
+<%end  %>
+
 <% end  %>
