@@ -1,14 +1,14 @@
 class MicropostsController < ApplicationController
+  before_action :user_log_in, only: %w[new create destroy edit update]
   def new
     @micropost = Micropost.new
   end
 
   def create
-    redirect_to login_path unless logged_in?
     user = current_user
     micropost = user.microposts.build(micropost_params)
     micropost.save
-    redirect_to micropost_path(micropost)
+    redirect_to micropost_path(micropost.id)
   end
 
   def show
@@ -41,7 +41,7 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:title,:engagement_status,:post_type)
+    params.require(:micropost).permit(:title, :engagement_status, :post_type)
   end
 
   def get_all_column_names

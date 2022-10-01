@@ -17,8 +17,10 @@ module SessionsHelper
   end
 
   def user_log_in
-    flash.now[:notice] = 'ログインもしくはサインアップをしてください'
-    render 'sessions/new' unless logged_in?
+    unless logged_in?
+      flash.now[:notice] = 'ログインもしくはサインアップをしてください'
+      redirect_to login_url, status: :see_other
+    end
   end
 
   def store_location

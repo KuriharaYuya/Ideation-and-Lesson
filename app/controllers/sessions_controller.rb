@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
     # sessionを取得しuser変数にて定義
     user = User.find_by(email: params[:session][:email].downcase)
     @user = user
-    # 処理
     if user && user.authenticate(params[:session][:password])
       reset_session
       log_in(user)
