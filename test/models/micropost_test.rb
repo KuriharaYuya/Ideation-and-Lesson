@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MicropostTest < ActiveSupport::TestCase
   def setup
-    @micropost = microposts(:one)
+    @micropost = microposts(:two)
     @user = users(:yuya)
   end
   test 'should be valid' do
@@ -11,8 +11,7 @@ class MicropostTest < ActiveSupport::TestCase
   test 'title, created_user, engagement_status, post_type should present' do
     @micropost.title = ' '
     assert_not @micropost.valid?
-
-    @micropost.created_user = ' '
+    @micropost.user_id = ' '
     assert_not @micropost.valid?
 
     @micropost.engagement_status = ' '

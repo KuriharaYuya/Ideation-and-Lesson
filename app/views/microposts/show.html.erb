@@ -3,6 +3,25 @@
 <h3><%= colum  %>: <%= @micropost[colum] if @micropost[colum] %></h3>
 <br><br>
 <% end  %>
+<br><br>
+
+<h3>
+    <% if @micropost.likes.find_by(user_id: current_user.id)  %>
+    <%=form_with(model:@like,url:  micropost_like_path(@micropost), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>
+    <%=f.hidden_field :user_id,value: @user.id %>
+    <%=f.hidden_field :micropost_id,value: @micropost.id %>
+    <%=f.hidden_field :like_id,value: @like.id %>
+    <%=f.submit "いいねを取り消す", disable_with: 'proccesing...'  %>
+    <% end  %>
+    <% else  %>
+    <%=form_with(model:@like,url: micropost_likes_path(@micropost), local: true,:html => { :style => "display:inline-block;"} ) do |f| %>
+    <%=f.hidden_field :user_id,value: @user.id %>
+    <%=f.hidden_field :micropost_id,value: @micropost.id %>
+    <%=f.submit "いいね！", disable_with: 'proccesing...'  %>
+    <% end  %>
+    <% end  %>
+    <%=link_to "#{@micropost.likes.count}いいね",micropost_likes_path(@micropost) %>
+</h3>
 
 <br><br>
 <%= link_to "Edit micropost", edit_micropost_path  %>
@@ -24,6 +43,30 @@
 <h3><%=comment.user.name %></h3>
 <h4><%=comment.content %></h4>
 
+<p>
+    <% like =  comment.likes.find_by(user_id: current_user.id) %>
+    <% if  like %>
+    <%=form_with(model:like, url: micropost_comment_like_path(@micropost, comment), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>
+    <%=f.hidden_field :user_id,value: @user.id %>
+    <%=f.hidden_field :micropost_id,value: @micropost.id %>
+    <%=f.hidden_field :comment_id,value: comment.id %>
+    <%=f.hidden_field :like_id,value: like.id %>
+    <%=f.submit "いいねを取り消す", disable_with: 'proccesing...'  %>
+    <% end %>
+    <% else %>
+    <% @like = Like.new  %>
+    <%=form_with(model:@like,url: micropost_likes_path(comment), local: true,:html => { :style => "display:inline-block;"} ) do |f| %>
+    <%=f.hidden_field :user_id,value: current_user.id %>
+    <%=f.hidden_field :comment_id,value: comment.id %>
+    <%=f.hidden_field :micropost_id,value: @micropost.id %>
+    <%=f.hidden_field :id,value: @like.id %>
+    <%=f.submit "いいね！", disable_with: 'proccesing...'  %>
+    <% end  %>
+    <% end  %>
+    <%=link_to "#{comment.likes.count}いいね",micropost_comment_likes_path(@micropost,comment) %>
+</p>
+
+<br>
 <% if comment.user==current_user %>
 <%= button_to "delete comment", micropost_comment_path(@micropost, comment), method: :delete   %>
 <%end  %>

@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: %i[create destroy]
   resources :microposts, only: %i[new create edit update destroy show] do
-    resources :comments, only: %i[create index destroy]
+    resources :comments, only: %i[create index destroy] do
+      resources :likes, only: %i[create destroy index]
+    end
+    resources :likes, only: %i[create destroy index]
   end
 end

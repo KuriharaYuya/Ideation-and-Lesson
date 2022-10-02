@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<%user = User.find_by(name: "Yuya Example")%>
+one:
+  user_id: <%= user.id %>
+  micropost_id: 
+  comment_id: <%= user.microposts[0].comments[0].id %>
+
+two:
+  user_id: <%= user.id %>
+  micropost_id: <%= user.microposts[0].id %>
+  comment_id: 
