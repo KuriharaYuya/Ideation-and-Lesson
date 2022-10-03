@@ -1,10 +1,35 @@
 <br><br><br>
 <% @columns.each do |colum|  %>
-<h3><%= colum  %>: <%= @micropost[colum] if @micropost[colum] %></h3>
+
+<%if @micropost[colum]  %>
+<h3><%= colum  %>: <%= @micropost[colum]  %></h3>
 <br><br>
+<% end  %>
+
 <% end  %>
 <br><br>
 
+<%if @micropost.post_type == "タイムラプス"  %>
+<h4>
+
+    <p>
+        <% if @micropost.user != current_user  %>
+        <%if @micropost.verifications.find_by(user_id: current_user)  %>
+        <%verification = @micropost.verifications.find_by(user_id: current_user.id) %>
+        <%= button_to "Unverify",  micropost_verification_path(@micropost,verification),method: :delete %>
+        <% else  %>
+
+        <%= button_to "Verify",  micropost_verifications_path(@micropost) %>
+
+        <% end  %>
+        <%end %>
+
+        <%=link_to  "#{@micropost.verifications.count} verified",micropost_verifications_path(@micropost) %>
+
+    </p>
+
+</h4>
+<% end  %>
 <h3>
     <% if @micropost.likes.find_by(user_id: current_user.id)  %>
     <%=form_with(model:@like,url:  micropost_like_path(@micropost), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>
@@ -15,7 +40,7 @@
     <% end  %>
     <% else  %>
     <%=form_with(model:@like,url: micropost_likes_path(@micropost), local: true,:html => { :style => "display:inline-block;"} ) do |f| %>
-    <%=f.hidden_field :user_id,value: @user.id %>
+    <%=f.hidden_field :user_id,value: current_user.id %>
     <%=f.hidden_field :micropost_id,value: @micropost.id %>
     <%=f.submit "いいね！", disable_with: 'proccesing...'  %>
     <% end  %>
@@ -23,10 +48,12 @@
     <%=link_to "#{@micropost.likes.count}いいね",micropost_likes_path(@micropost) %>
 </h3>
 
+<%if @micropost.user == current_user  %>
 <br><br>
 <%= link_to "Edit micropost", edit_micropost_path  %>
 <%= form_with(model:@micropost,html:{method: :delete}, local: true) do |f| %>
 <%= f.submit "Delete micropost", disable_with: 'Deleting...'  %>
+<% end  %>
 <% end  %>
 
 <h2>Comment</h2>

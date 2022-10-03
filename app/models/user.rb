@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :verifications, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 70 }
   validates :email, presence: true, length: { maximum: 30 }

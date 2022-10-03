@@ -1,0 +1,9 @@
+<h1><%= @verifications.count %>人がverifyしました</h1>
+<br>
+<div>
+
+    <%@verifications.each do |verification|  %>
+    <%=verification.user.name  %>
+    <% end  %>
+
+</div>

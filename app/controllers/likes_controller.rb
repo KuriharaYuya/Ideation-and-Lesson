@@ -1,8 +1,9 @@
 class LikesController < ApplicationController
   before_action :user_log_in, only: %w[create destroy]
   def index
+    params[:micropost_id] = nil if params[:micropost_id] && params[:comment_id]
     @post = Micropost.find(params[:micropost_id]) if params[:comment_id].nil?
-    @post = Comment.find(params[:comment_id]) unless params[:micropost_id].nil? && params[:comment_id].nil?
+    @post = Comment.find(params[:comment_id]) if params[:micropost_id].nil?
     @likes = @post.likes
   end
 
