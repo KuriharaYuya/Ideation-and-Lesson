@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_02_141125) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_03_131439) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -38,6 +38,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_141125) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.boolean "verified", default: false
+    t.integer "lifelog_id"
+    t.integer "assumption_minutes"
+    t.integer "consuming_minutes"
   end
 
   create_table "relationships", force: :cascade do |t|

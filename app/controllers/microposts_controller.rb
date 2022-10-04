@@ -26,6 +26,7 @@ class MicropostsController < ApplicationController
 
   def update
     @micropost = Micropost.find(params[:id])
+    update_calculated_minutes
     @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
     if @micropost.update(micropost_params)
       redirect_to micropost_path(@micropost)
@@ -44,7 +45,8 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:title, :engagement_status, :post_type)
+    params.require(:micropost).permit(:title, :engagement_status, :post_type, :start_datetime, :end_datetime,
+                                      :assumption_minutes)
   end
 
   def get_all_column_names
@@ -53,5 +55,25 @@ class MicropostsController < ApplicationController
 
   def redirect_to_show_unless_wrong_user
     redirect_to micropost_path(@micropost) unless @micropost.user == current_user
+  end
+
+  def update_calculated_minutes
+    if @micropost[:engagement_status] == '予定'
+      type = 'assumption'
+    elsif @micropost[:engagement_status] == '完了' || @micropost[:engagement_status] == '未完了'
+      type = 'consuming'
+    end
+    result = ((@micropost.end_datetime - @micropost.start_datetime) / 60.0)
+    if @micropost.user == current_user
+      if type == 'consuming'
+        @micropost.update!(consuming_minutes: result)
+      elsif type == 'assumption'
+        @micropost.update!(assumption_minutes: result) if overwritten? && (@micropost[:engagement_status] == '予定')
+      end
+    end
+  end
+
+  def overwritten?
+    !params[:overwritten_option].nil?
   end
 end

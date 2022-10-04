@@ -12,6 +12,22 @@
 <%=f.label :post_type  %>
 <br>
 <%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
+<br>
+<%= f.label :start_datetime %>
+<br>
+<%= f.datetime_local_field :start_datetime %>
+<br>
+<%= f.label :end_datetime %>
+<br>
+<%= f.datetime_local_field :end_datetime %>
+<br>
+<%=f.label :assumption_minutes  %>
+<br>
+<%=f.number_field :assumption_minutes  %>
+<br><br>
+<%= label_tag :option, "##if you check below box, assumption_minutes will overwritten by value calc from start/end datetime##" %>
+<br>
+<%=check_box_tag :overwritten_option  %>
 <br><br><br>
 <%= f.submit "Submit", disable_with: 'Submiting...'  %>
 <% end  %>
