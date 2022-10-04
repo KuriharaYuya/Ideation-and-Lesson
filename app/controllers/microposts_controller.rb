@@ -26,9 +26,9 @@ class MicropostsController < ApplicationController
 
   def update
     @micropost = Micropost.find(params[:id])
-    update_calculated_minutes
-    @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
     if @micropost.update(micropost_params)
+      update_calculated_minutes
+      @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
       redirect_to micropost_path(@micropost)
     else
       render :edit
