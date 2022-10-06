@@ -37,39 +37,59 @@
 </div>
 <div style="height: 1px;background-color: black;margin-top:15px;"></div>
 <h3>直近のライフログのテーブル</h3>
+<div style="display: inline-block;">
+    <h4>sort</h4>
+    <div>
+        <p>date</p>
+        <textarea name="" id="" cols="30" rows="1"></textarea>
+    </div>
+    <div>
+        <p>engagement time</p>
+        <textarea name="" id="" cols="30" rows="1"></textarea>
+    </div>
+</div>
+<div style="display: inline-block;">
+    <h4>filter</h4>
+    <div>
+        <p>name</p>
+        <textarea name="" id="" cols="30" rows="1"></textarea>
+    </div>
+</div>
 <table>
-    <div style="display: inline-block;">
-        <h4>sort</h4>
-        <div>
-            <p>date</p>
-            <textarea name="" id="" cols="30" rows="1"></textarea>
-        </div>
-        <div>
-            <p>engagement time</p>
-            <textarea name="" id="" cols="30" rows="1"></textarea>
-        </div>
-    </div>
-    <div style="display: inline-block;">
-        <h4>filter</h4>
-        <div>
-            <p>name</p>
-            <textarea name="" id="" cols="30" rows="1"></textarea>
-        </div>
-    </div>
-
     <tr>
-        <th>life log</th>
-        <th>date</th>
-        <th>engagement time</th>
-        <th>assumption time</th>
+        <th>&nbsp;life log&nbsp;</th>
+        <th>&nbsp;date&nbsp;</th>
+        <th>&nbsp;engagement time&nbsp;</th>
+        <th>&nbsp;assumption time&nbsp;</th>
+        <th></th>
+        <th></th>
     </tr>
+    <%@user.lifelogs.each do |lifelog|  %>
     <tr>
         <td class="life_log">
-            <a href="#">XXX</a></td>
-        <td class="date">XXX</td>
-        <td class="enagement time">XXX</td>
-        <td class="assumption time">XXXX</td>
+            <% if lifelog.title == nil  %>
+            <%= link_to "untitled",lifelog_path(lifelog)   %>
+            <% else %>
+            <%= link_to "#{lifelog.title}",lifelog_path(lifelog)  %>
+            <% end %>
+        </td>
+        <td class="date">
+            <%=lifelog.log_date  %>
+        </td>
+        <td class="enagement time">
+            <%="XXX"  %>
+        </td>
+        <td class="assumption time">
+            <%= "XXX"  %>
+        </td>
     </tr>
+    <% end  %>
+    <%if @user == current_user  %>
+    <tr>
+        <td><%= link_to "create new lifelog",new_lifelog_path  %></td>
+
+    </tr>
+    <% end  %>
 </table>
 <p>#10件ごとにロードするのをeach文書いてかつseedしたら書く</p>
 <br><br><br>

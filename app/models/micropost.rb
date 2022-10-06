@@ -1,5 +1,6 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  belongs_to :lifelog
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   validates :title, presence: true

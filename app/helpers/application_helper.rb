@@ -4,5 +4,9 @@ module ApplicationHelper
     base_title = 'Ideation & Lessons'
     base_title if page_title.empty?
   end
+
+  def get_all_column_names(class_name)
+    class_name.column_names
+  end
   include SessionsHelper
 end

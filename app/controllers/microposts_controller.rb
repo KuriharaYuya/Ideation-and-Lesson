@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-  before_action :user_log_in, only: %w[new create destroy edit update]
+  include ApplicationHelper
   def new
     @micropost = Micropost.new
   end
@@ -15,7 +15,7 @@ class MicropostsController < ApplicationController
     @micropost = Micropost.find(params[:id])
     @user = @micropost.user
     @comment = @user.comments.new
-    @columns = get_all_column_names
+    @columns = get_all_column_names(Micropost)
     @like = @micropost.likes.find_by(user_id: current_user.id) || Like.new
   end
 
@@ -47,10 +47,6 @@ class MicropostsController < ApplicationController
   def micropost_params
     params.require(:micropost).permit(:title, :engagement_status, :post_type, :start_datetime, :end_datetime,
                                       :assumption_minutes)
-  end
-
-  def get_all_column_names
-    Micropost.column_names
   end
 
   def redirect_to_show_unless_wrong_user

@@ -1,0 +1,8 @@
+<h1>Lifelogs#new</h1>
+<%= form_with(model:@lifelog,local: true ) do |f| %>
+<%=f.label :title %>
+<%=f.text_field :title  %>
+<%=f.label :log_date, "date" %>
+<%=f.date_field :log_date  %>
+<%=f.submit "create", disable_with: 'proccessing...'  %>
+<% end  %>

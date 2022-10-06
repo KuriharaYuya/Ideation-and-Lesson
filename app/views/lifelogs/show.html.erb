@@ -1,0 +1,36 @@
+<h2><%=@lifelog.log_date  %> のライフログ</h2>
+<h2>タイトル: <%=@lifelog.title  %></h2>
+
+<%if @user == current_user  %>
+<%=form_with(model: @lifelog,html: {method: :delete},local: true) do |f| %>
+<%=f.hidden_field :id,value: @lifelog.id %>
+<%=f.submit "Delete", disable_with: 'Deleteing...'  %>
+<% end  %>
+<br>
+<%=form_with(model: @lifelog,html: {method: :get},url: edit_lifelog_path(@lifelog),local: true) do |f| %>
+<%=f.hidden_field :id, value: @lifelog.id  %>
+<%=f.submit "edit", disable_with: 'Submiting...'  %>
+<%end  %>
+
+<% end  %>
+
+<br><br><br>
+<h4>Lifelog has <%=@microposts.length  %> microposts</h4>
+<table>
+    <th>title</th>
+    <%return_optional_value_of_lifelog("column") %>
+    <%@result.each do |column|  %>
+    <th><%= column  %></th>
+    <% end  %>
+
+    <%@microposts.each do |micropost|  %>
+    <tr>
+        <td><%=link_to "#{micropost.title}",micropost_path(micropost)  %></td>
+        <%return_optional_value_of_lifelog("value") %>
+        <%@result.each do |value|  %>
+        <td><%= value  %></td>
+        <% end  %>
+    </tr>
+    <% end  %>
+
+</table>
