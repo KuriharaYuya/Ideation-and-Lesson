@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
   end
 
   def update
-    @micropost = Micropost.find(params[:id])
+    @micropost = Micropost.find(micropost_params[:id])
     if @micropost.update(micropost_params)
       update_calculated_minutes
       @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
@@ -46,7 +46,7 @@ class MicropostsController < ApplicationController
 
   def micropost_params
     params.require(:micropost).permit(:title, :engagement_status, :post_type, :start_datetime, :end_datetime,
-                                      :assumption_minutes)
+                                      :assumption_minutes, :id)
   end
 
   def redirect_to_show_unless_wrong_user
