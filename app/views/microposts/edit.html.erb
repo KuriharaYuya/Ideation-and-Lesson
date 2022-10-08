@@ -13,6 +13,10 @@
 <br>
 <%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
 <br>
+<%=f.label :exec_date, "lifelog_date" %>
+<br>
+<%=f.date_field :exec_date  %>
+<br>
 <%= f.label :start_datetime %>
 <br>
 <%= f.datetime_local_field :start_datetime %>

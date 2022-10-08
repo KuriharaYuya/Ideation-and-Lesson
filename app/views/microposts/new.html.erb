@@ -12,6 +12,15 @@
 <br>
 <%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
 <br>
+<%=f.label :exec_date, "lifeog_date" %>
+<br>
+<%=f.date_field :exec_date  %>
+<br>
+<br>
+<%if @micropost.lifelog.present?  %>
+紐づいているLifelog<%=link_to "#{@micropost.lifelog.log_date}", lifelog_path(@micropost.lifelog)  %>を確認する
+<% end  %>
+<br>
 <br>
 <%= f.label :start_datetime %>
 <br>

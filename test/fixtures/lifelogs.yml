@@ -2,12 +2,6 @@
 
 one:
   title: MyString
-  log_date: 2022-10-04
   start_datetime: 2022-10-04 23:45:16
   end_datetime: 2022-10-04 23:45:16
 
-two:
-  title: MyString
-  log_date: 2022-10-04
-  start_datetime: 2022-10-04 23:45:16
-  end_datetime: 2022-10-04 23:45:16

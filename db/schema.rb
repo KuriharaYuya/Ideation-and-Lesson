@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_04_145433) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_08_015352) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_04_145433) do
   end
 
   create_table "lifelogs", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "Untitled"
     t.date "log_date"
     t.datetime "start_datetime"
     t.datetime "end_datetime"
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_04_145433) do
     t.integer "lifelog_id"
     t.integer "assumption_minutes"
     t.integer "consuming_minutes"
+    t.date "exec_date"
   end
 
   create_table "relationships", force: :cascade do |t|

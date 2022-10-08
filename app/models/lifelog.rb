@@ -1,5 +1,6 @@
 class Lifelog < ApplicationRecord
   belongs_to :user
   has_many :microposts
-  # validates :date, presence: true
+  validates :log_date, uniqueness: { scope: :user_id }
+  validates :title, presence: true
 end

@@ -35,3 +35,8 @@
     <% end  %>
 
 </table>
+
+<%=form_with(model: Micropost.new,url:new_micropost_path,local: true,html: {method: :get} )do |f|  %>
+<%=f.hidden_field :lifelog_id, value: @lifelog.id  %>
+<%=f.submit "create lifelog", disable_with: 'creating...'  %>
+<% end  %>

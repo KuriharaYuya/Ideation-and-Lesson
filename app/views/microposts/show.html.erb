@@ -8,6 +8,8 @@
 
 <% end  %>
 <br><br>
+<h3><%=link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)  %></h3>
+<br><br>
 
 <%if @micropost.post_type == "タイムラプス"  %>
 <h4>
@@ -30,6 +32,8 @@
 
 </h4>
 <% end  %>
+
+
 <h3>
     <% if @micropost.likes.find_by(user_id: current_user.id)  %>
     <%=form_with(model:@like,url:  micropost_like_path(@micropost), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>

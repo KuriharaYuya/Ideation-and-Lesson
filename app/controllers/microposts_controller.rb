@@ -1,14 +1,28 @@
 class MicropostsController < ApplicationController
   include ApplicationHelper
+  include LifelogsHelper
   def new
-    @micropost = Micropost.new
+    @user = current_user
+    current_date = Time.now
+    if micropost_params[:lifelog_id].nil?
+      @micropost = Micropost.new(exec_date: current_date, start_datetime: current_date,
+                                 end_datetime: current_date)
+    end
+    if micropost_params[:lifelog_id].present?
+      lifelog = Lifelog.find(micropost_params[:lifelog_id])
+      @micropost = Micropost.new(exec_date: lifelog.log_date, start_datetime: lifelog.log_date,
+                                 end_datetime: lifelog.log_date, lifelog_id: lifelog.id)
+    end
+    assign_lifelog_to_micropost
   end
 
   def create
     user = current_user
-    micropost = user.microposts.build(micropost_params)
-    micropost.save
-    redirect_to micropost_path(micropost.id)
+    @micropost = user.microposts.build(micropost_params)
+    detect_lifelog_by_exec_date
+    @micropost[:lifelog_id] = @detected_lifelog.id
+    @micropost.save
+    redirect_to micropost_path(@micropost.id)
   end
 
   def show
@@ -26,8 +40,10 @@ class MicropostsController < ApplicationController
 
   def update
     @micropost = Micropost.find(micropost_params[:id])
+    @user = current_user
     if @micropost.update(micropost_params)
       update_calculated_minutes
+      assign_lifelog_to_micropost
       @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
       redirect_to micropost_path(@micropost)
     else
@@ -46,7 +62,7 @@ class MicropostsController < ApplicationController
 
   def micropost_params
     params.require(:micropost).permit(:title, :engagement_status, :post_type, :start_datetime, :end_datetime,
-                                      :assumption_minutes, :id)
+                                      :assumption_minutes, :id, :exec_date, :lifelog_id)
   end
 
   def redirect_to_show_unless_wrong_user
@@ -71,5 +87,9 @@ class MicropostsController < ApplicationController
 
   def overwritten?
     !params[:overwritten_option].nil?
+  end
+
+  def detect_lifelog_by_exec_date
+    @detected_lifelog = Lifelog.find_by(log_date: @micropost.exec_date)
   end
 end
