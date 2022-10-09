@@ -13,6 +13,10 @@
 <br>
 <%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
 <br>
+<br>
+<%= f.label :video %>
+<br>
+<%= f.file_field :video %>
 <%=f.label :exec_date, "lifelog_date" %>
 <br>
 <%=f.date_field :exec_date  %>

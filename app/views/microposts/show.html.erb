@@ -2,8 +2,13 @@
 <% @columns.each do |colum|  %>
 
 <%if @micropost[colum]  %>
+<%  unless colum == "video"  %>
 <h3><%= colum  %>: <%= @micropost[colum]  %></h3>
 <br><br>
+<% else  %>
+<h3><%= colum  %>: <%=link_to "タイムラプス添付済み",@micropost.video.url  %></h3>
+<br><br>
+<% end  %>
 <% end  %>
 
 <% end  %>

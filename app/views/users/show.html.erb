@@ -96,7 +96,10 @@
 <h3>マイクロポスト</h3>
 <br><br>
 <%if @user == current_user  %>
-<button><%= link_to "Create new post", new_micropost_path %></button>
+<%=form_with(url: new_micropost_path,local: true,html: {method: :get})do |f|  %>
+<%=f.hidden_field :jump_from_user_page,value: :true  %>
+<%=f.submit "create new micropost" %>
+<% end  %>
 <% end  %>
 <br><br>
 <% @user.microposts.each do |micropost|  %>

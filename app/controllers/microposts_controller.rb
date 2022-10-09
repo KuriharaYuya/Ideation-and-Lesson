@@ -3,15 +3,21 @@ class MicropostsController < ApplicationController
   include LifelogsHelper
   def new
     @user = current_user
+    @micropost = Micropost.new
     current_date = Time.now
-    if micropost_params[:lifelog_id].nil?
+    if params[:jump_from_user_page] == 'true'
       @micropost = Micropost.new(exec_date: current_date, start_datetime: current_date,
                                  end_datetime: current_date)
-    end
-    if micropost_params[:lifelog_id].present?
-      lifelog = Lifelog.find(micropost_params[:lifelog_id])
-      @micropost = Micropost.new(exec_date: lifelog.log_date, start_datetime: lifelog.log_date,
-                                 end_datetime: lifelog.log_date, lifelog_id: lifelog.id)
+    elsif params[:micropost].present?
+      if micropost_params[:lifelog_id].nil?
+        @micropost = Micropost.new(exec_date: current_date, start_datetime: current_date,
+                                   end_datetime: current_date)
+      end
+      if micropost_params[:lifelog_id].present?
+        lifelog = Lifelog.find(micropost_params[:lifelog_id])
+        @micropost = Micropost.new(exec_date: lifelog.log_date, start_datetime: lifelog.log_date,
+                                   end_datetime: lifelog.log_date, lifelog_id: lifelog.id)
+      end
     end
     assign_lifelog_to_micropost
   end
@@ -41,7 +47,7 @@ class MicropostsController < ApplicationController
   def update
     @micropost = Micropost.find(micropost_params[:id])
     @user = current_user
-    if @micropost.update(micropost_params)
+    if @micropost.update!(micropost_params)
       update_calculated_minutes
       assign_lifelog_to_micropost
       @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
@@ -62,7 +68,7 @@ class MicropostsController < ApplicationController
 
   def micropost_params
     params.require(:micropost).permit(:title, :engagement_status, :post_type, :start_datetime, :end_datetime,
-                                      :assumption_minutes, :id, :exec_date, :lifelog_id)
+                                      :assumption_minutes, :id, :exec_date, :lifelog_id, :video)
   end
 
   def redirect_to_show_unless_wrong_user
