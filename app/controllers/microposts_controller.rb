@@ -30,6 +30,7 @@ class MicropostsController < ApplicationController
     @micropost.save!
     result = ((@micropost.end_datetime - @micropost.start_datetime) / 60.0)
     @micropost.update!(assumption_minutes: result)
+    update_calculated_minutes
     redirect_to micropost_path(@micropost)
   end
 

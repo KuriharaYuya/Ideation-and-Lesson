@@ -77,9 +77,10 @@ def restore
   @micropost_consuming_sum = []
   # 配列にして、要素ごとに説明を入れる
   @i = 1
+  @today_microposts = @today_lifelog.microposts.order(start_datetime: :asc)
   @today_microposts.each do |micropost|
     next unless micropost.engagement_status == '完了'
-
+    p micropost.title
     @micropost_consuming_sum.push(micropost.consuming_minutes)
     str = "#{@i}限目: #{micropost.title} #{to_HH_MM(micropost.consuming_minutes)}\n"
     @tweet_micropost_logs.push(str)
@@ -115,8 +116,8 @@ def restore
 end
 
 def set_lifelogs
-  today_date = Date.yesterday
-  @today_lifelog = Lifelog.find_by(log_date: today_date)
+  @today_date = Date.today.prev_day(2)
+  @today_lifelog = Lifelog.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
   @today_microposts.each do |tgt|
