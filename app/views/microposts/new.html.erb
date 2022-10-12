@@ -3,6 +3,10 @@
 <%= f.label :title %>
 <br>
 <%= f.text_field :title %>
+<br>
+<%= f.label :video %>
+<br>
+<%= f.file_field :video %>
 <br><br>
 <%= f.label :engagement_status %>
 <br>
@@ -34,7 +38,9 @@
 <br>
 <%=f.number_field :assumption_minutes  %>
 <br>
-##if you check below box, assumption_minutes will overwritten by value calc from start/end datetime##
+<%= label_tag :option, "##if you check below box, assumption_minutes will overwritten by value calc from start/end datetime##" %>
+<br>
+<%=check_box_tag :overwritten_option  %>
 <br><br>
 <%=f.label :consuming_minutes  %>
 <br>

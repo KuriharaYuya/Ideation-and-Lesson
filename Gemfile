@@ -21,6 +21,10 @@ gem "faker", "2.20.0"
 gem "activesupport"
 gem "carrierwave"
 gem "fog-aws"
+gem "twitter"
+gem "twitter_api"
+gem "whenever"
+
 
 group :development, :test do
   gem 'debug',   '1.4.0', platforms: %i[mri mingw x64_mingw]

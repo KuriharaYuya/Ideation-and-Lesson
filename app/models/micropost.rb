@@ -3,7 +3,7 @@ class Micropost < ApplicationRecord
   belongs_to :lifelog, optional: true
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 30 }
   has_many :verifications, dependent: :destroy
   with_options unless: :post_type_is_time_lapse? do
     validates :verified, absence: true
