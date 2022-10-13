@@ -42,8 +42,9 @@ def mov_upload
   p 'F is completed'
   @f = 1
   restore
-  p @timelapse_url
   begin
+    puts @tweet_content
+    p @tweet_content.length
     twitter_client.update(
       @tweet_content, media_ids: init_request[:media_id]
     )
@@ -55,7 +56,8 @@ def mov_upload
     p 'mooo'
     retry
   rescue Twitter::Error::Forbidden
-    @wrong_times = 1
+    @wrong_times ||= 1
+    @wrong_times += 1
     p 'saaaa'
     restore
     retry
@@ -89,30 +91,45 @@ def restore
   end
   @micropost_consuming_sum = @micropost_consuming_sum.sum
 
-  @tweet_microposts = []
+  @tweet_microposts ||= []
   if @wrong_times.nil?
     @tweet_micropost_logs.each do |log|
       @tweet_microposts.push(log)
     end
   elsif @wrong_times.present?
+    @tweet_microposts = []
     @upto = @tweet_micropost_logs.size - 1
     @f = 1
     @tweet_micropost_logs.each do |log|
       break if @upto == @f
-
+      @f += 1
       @tweet_microposts.push(log)
     end
-  end
 
-  @tweet_microposts = @tweet_microposts.join
+    summed_microposts_numb = @today_microposts.size - @tweet_microposts.size
+    summed_microposts = @today_microposts.reverse[0..(summed_microposts_numb -1)]
+
+    @summed_microposts_consuming_minutes = 1
+    summed_microposts.each do |micropost|
+      @summed_microposts_consuming_minutes += micropost.consuming_minutes
+    end
+    @summed_microposts_consuming_minutes = @summed_microposts_consuming_minutes - 1
+    @summed_microposts_consuming_minutes = to_HH_MM(@summed_microposts_consuming_minutes)
+    # そもそものマイクロポストから取得して、配列番号を返す、そんでhhmmで計算して@sumで取得して終わり
+    @sum_message = "その他#{summed_microposts.size}件の合計が#{@summed_microposts_consuming_minutes}"
+  end
+  @tweet_microposts = if @sum_message.present?
+                        @tweet_microposts.join + "\n" + @sum_message
+                      else
+                        @tweet_microposts.join
+                      end
 
   # からのjoinで改行させて結合
   tweet_title = "#{@today_lifelog.log_date}の記録🥺\n"
   tweet_lifelog_sum = "合計で#{to_HH_MM(@micropost_consuming_sum)}!明日も頑張ります！"
-  #   tweet_footer = '今日の'
-  tweet_video_desc = "詳しくはurlを確認!https://twitter.com/asukakiraran"
+  tweet_video_desc = '詳しくはurlを確認!https://twitter.com/asukakiraran'
   tweet_hashtag = '#testだよ！明日花キララ日記!'
-  @tweet_content = tweet_title + "\n" + @tweet_microposts + "\n" +tweet_lifelog_sum + "\n"+ tweet_video_desc + "\n" + tweet_hashtag +  "\n"+"↓は#{@timelapse_timetable_numb}限目の様子です!"
+  @tweet_content = tweet_title + "\n" + @tweet_microposts + tweet_lifelog_sum + "\n" + tweet_video_desc + "\n" + tweet_hashtag + "\n" + "↓は#{@timelapse_timetable_numb}限目の様子です!"
 end
 
 def set_lifelogs
