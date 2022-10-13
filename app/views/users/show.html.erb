@@ -64,11 +64,11 @@
         <th></th>
         <th></th>
     </tr>
-    <%@user.lifelogs.each do |lifelog|  %>
+    <%@user.lifelogs.order(log_date: :desc)[0..4].each do |lifelog|  %>
     <tr>
         <td class="life_log">
             <% if lifelog.title == nil  %>
-            <%= link_to "untitled",lifelog_path(lifelog)   %>
+            <%= link_to "ただのライフログ",lifelog_path(lifelog)   %>
             <% else %>
             <%= link_to "#{lifelog.title}",lifelog_path(lifelog)  %>
             <% end %>
@@ -102,7 +102,7 @@
 <% end  %>
 <% end  %>
 <br><br>
-<% @user.microposts.each do |micropost|  %>
+<% @user.microposts.order(end_datetime: :desc)[0..6].each do |micropost|  %>
 <h3>title: <%= link_to "#{micropost.title}",  micropost_path(micropost)%></h3>
 
 <%end  %>
