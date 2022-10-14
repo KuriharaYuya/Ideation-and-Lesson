@@ -23,8 +23,9 @@ class MicropostsController < ApplicationController
   end
 
   def create
-    user = current_user
-    @micropost = user.microposts.build(micropost_params)
+    @user = current_user
+    @micropost = @user.microposts.build(micropost_params)
+    assign_lifelog_to_micropost
     detect_lifelog_by_exec_date
     @micropost[:lifelog_id] = @detected_lifelog.id
     @micropost.save!

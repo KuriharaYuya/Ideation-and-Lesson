@@ -80,13 +80,14 @@ def restore
   # 配列にして、要素ごとに説明を入れる
   @i = 1
   @today_microposts = @today_lifelog.microposts.order(start_datetime: :asc)
+  @timelapse_timetable_numb = @today_microposts[0]
   @today_microposts.each do |micropost|
     next unless micropost.engagement_status == '完了'
     p micropost.title
     @micropost_consuming_sum.push(micropost.consuming_minutes)
     str = "#{@i}限目: #{micropost.title} #{to_HH_MM(micropost.consuming_minutes)}\n"
     @tweet_micropost_logs.push(str)
-    @timelapse_timetable_numb = @i
+    @timelapse_timetable_numb = @i if @timelapse_timetable_numb == micropost
     @i += 1
   end
   @micropost_consuming_sum = @micropost_consuming_sum.sum
@@ -107,13 +108,13 @@ def restore
     end
 
     summed_microposts_numb = @today_microposts.size - @tweet_microposts.size
-    summed_microposts = @today_microposts.reverse[0..(summed_microposts_numb -1)]
+    summed_microposts = @today_microposts.reverse[0..(summed_microposts_numb - 1)]
 
     @summed_microposts_consuming_minutes = 1
     summed_microposts.each do |micropost|
       @summed_microposts_consuming_minutes += micropost.consuming_minutes
     end
-    @summed_microposts_consuming_minutes = @summed_microposts_consuming_minutes - 1
+    @summed_microposts_consuming_minutes -= 1
     @summed_microposts_consuming_minutes = to_HH_MM(@summed_microposts_consuming_minutes)
     # そもそものマイクロポストから取得して、配列番号を返す、そんでhhmmで計算して@sumで取得して終わり
     @sum_message = "その他#{summed_microposts.size}件の合計が#{@summed_microposts_consuming_minutes}"
@@ -137,7 +138,8 @@ def set_lifelogs
   @today_lifelog = Lifelog.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
-  @today_microposts.each do |tgt|
+  consuming_order = @today_microposts.order(consuming_minutes: :desc)
+  consuming_order.each do |tgt|
     unless tgt.engagement_status == '完了' && tgt.post_type == 'タイムラプス' && tgt.consuming_minutes.present? && tgt.video.present?
       next
     end
