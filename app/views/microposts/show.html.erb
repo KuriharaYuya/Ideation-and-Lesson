@@ -13,7 +13,12 @@
 
 <% end  %>
 <br><br>
-<h3><%=link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)  %></h3>
+<h3>
+    <%if @micropost.lifelog.present?  %>
+    <%=link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)  %>
+    <%end  %>
+    <p>紐づいているライフログはありません、editボタンで変更するか、lifelogを作成したください</p>
+</h3>
 <br><br>
 
 <%if @micropost.post_type == "タイムラプス"  %>

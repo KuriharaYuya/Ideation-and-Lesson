@@ -44,7 +44,7 @@ module LifelogsHelper
     # if @micropost.lifelog.present?
     latest_lifelogs = @user.lifelogs.order(log_date: :desc)
     latest_lifelog = return_latest_lifelog
-    if latest_lifelog.log_date.before? @micropost.exec_date
+    if latest_lifelogs.find_by(log_date: @micropost.exec_date).nil? || (latest_lifelog.log_date.before? @micropost.exec_date)
       # 紐づくべきlifelogがない場合
       @lifelog = Lifelog.new(user_id: current_user.id, log_date: @micropost.exec_date)
       set_lifelog_duration_time('calc')
