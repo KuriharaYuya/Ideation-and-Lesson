@@ -5,6 +5,7 @@ task twitter_mov_test: :environment do
   # require 'json'
   set_lifelogs
   mov_upload
+  comments_daily_overview_to_latest_post
 end
 def mov_upload
   twitter_client = Twitter::REST::Client.new do |config|
@@ -83,6 +84,7 @@ def restore
   @timelapse_timetable_numb = @today_microposts[0]
   @today_microposts.each do |micropost|
     next unless micropost.engagement_status == '完了'
+
     p micropost.title
     @micropost_consuming_sum.push(micropost.consuming_minutes)
     str = "#{@i}限目: #{micropost.title} #{to_HH_MM(micropost.consuming_minutes)}\n"
@@ -103,6 +105,7 @@ def restore
     @f = 1
     @tweet_micropost_logs.each do |log|
       break if @upto == @f
+
       @f += 1
       @tweet_microposts.push(log)
     end
@@ -126,11 +129,11 @@ def restore
                       end
 
   # からのjoinで改行させて結合
+  tweet_header = '💻Hello world💻'
   tweet_title = "#{@today_lifelog.log_date}の記録🥺\n"
   tweet_lifelog_sum = "合計で#{to_HH_MM(@micropost_consuming_sum)}!明日も頑張ります！"
-  tweet_video_desc = '詳しくはurlを確認!https://twitter.com/asukakiraran'
-  tweet_hashtag = '#testだよ！明日花キララ日記!'
-  @tweet_content = tweet_title + "\n" + @tweet_microposts + tweet_lifelog_sum + "\n" + tweet_video_desc + "\n" + tweet_hashtag + "\n" + "↓は#{@timelapse_timetable_numb}限目の様子です!"
+  tweet_hashtag = '#駆け出しエンジニアと繋がりたい'
+  @tweet_content = tweet_header + "\n" + tweet_title + "\n" + @tweet_microposts + tweet_lifelog_sum + "\n" + tweet_hashtag + "\n" + "↓は#{@timelapse_timetable_numb}限目の様子です!"
 end
 
 def set_lifelogs
@@ -154,4 +157,39 @@ def to_HH_MM(minutes)
   hour = minutes / 60
   min = minutes - hour * 60
   "#{hour}時間#{min}分"
+end
+
+def comments_daily_overview_to_latest_post
+  @twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key = 'dARw8BZxBlgqLdrXmUdLP5HL4'
+    config.consumer_secret     = 'gZ9cLoaSU3ToBlHuTkg58sQDfs5fGfnpPiRhB0a8CJOM2npnfY'
+    config.access_token        = '3223240382-TIOkEDOw6iWcDoVgLiNHejAKZANwTefDJMO8Fwx'
+    config.access_token_secret = '2Bo0HU4l3YNkX42IxvtnzjB4DOtOxXkHnFSvNxQ0d5xgc'
+  end
+  p 'now in process of commenting'
+  my_twitter_user_id = '3223240382'.to_i
+  @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
+                                          contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
+
+  # calenderとscreen_timeのurlを取得してhashに格納
+  @comments_content = @today_lifelog.overview.to_s
+  puts @comments_content
+  image_links = [@today_lifelog.calender.to_s, @today_lifelog.screen_time.to_s]
+
+  @images = ['calender.jpg', 'screen_time.jpg']
+
+  @i = -1
+  image_links.size.times do
+    File.open(@images[@i + 1], 'wb') do |file|
+      URI.open(image_links[@i + 1]) do |png|
+        file.puts png.read
+      end
+    end
+    @i += 1
+  end
+
+  @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
+  @images.each do |image|
+    File.delete(image)
+  end
 end

@@ -26,7 +26,7 @@ class LifelogsController < ApplicationController
 
   def update
     lifelog = Lifelog.find(lifelog_params[:id])
-    redirect_to lifelog_path(lifelog) if lifelog.update(lifelog_params)
+    redirect_to lifelog_path(lifelog) if lifelog.update!(lifelog_params)
   end
 
   def destroy
@@ -37,6 +37,6 @@ class LifelogsController < ApplicationController
   private
 
   def lifelog_params
-    params.require(:lifelog).permit(:title, :log_date, :id)
+    params.require(:lifelog).permit(:title, :log_date, :id, :calender, :screen_time, :overview)
   end
 end

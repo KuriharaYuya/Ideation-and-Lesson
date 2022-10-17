@@ -1,6 +1,10 @@
 <h2><%=@lifelog.log_date  %> のライフログ</h2>
 <h2>タイトル: <%=@lifelog.title  %></h2>
 <h2>consuming_sum:&nbsp;<%=@lifelog.microposts.sum(:consuming_minutes)  %></h2>
+<%if @lifelog.overview.present?  %>
+<h4>説明<br><%=@lifelog.overview  %></h4>
+<p><%=@lifelog.overview.size %>文字</p>
+<% end  %>
 
 <%if @user == current_user  %>
 <%=form_with(model: @lifelog,html: {method: :delete},local: true) do |f| %>

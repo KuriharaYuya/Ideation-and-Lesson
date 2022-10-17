@@ -1,6 +1,14 @@
 <h1>Lifelogs#new</h1>
 <%= form_with(model:@lifelog,local: true ) do |f| %>
 <%=f.label :title %>
+<br>
+<%=f.label :calender  %>
+<br>
+<%=f.file_field :calender  %>
+<br>
+<%=f.label :screen_time  %>
+<br>
+<%=f.file_field :screen_time  %>
 <%=f.text_field :title  %>
 <%=f.label :log_date, "date" %>
 <%=f.date_field :log_date  %>
