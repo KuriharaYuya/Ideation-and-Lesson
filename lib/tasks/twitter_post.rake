@@ -170,7 +170,7 @@ def comments_daily_overview_to_latest_post
     end
     @i += 1
   end
-
+  sleep 30
   @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
   @images.each do |image|
     File.delete(image)
