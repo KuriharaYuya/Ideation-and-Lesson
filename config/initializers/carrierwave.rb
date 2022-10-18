@@ -6,11 +6,15 @@ CarrierWave.configure do |config|
     aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
     region: 'ap-northeast-1'
   }
-
-  config.fog_directory = 'myvideoresource'
   config.storage :fog
   config.fog_provider = 'fog/aws'
-  config.asset_host = 'https://myvideoresource.s3.amazonaws.com'
+  if Rails.env.development?
+    config.fog_directory = 'myvideoresource'
+    config.asset_host = 'https://myvideoresource.s3.amazonaws.com'
+  elsif Rails.env.production?
+    config.fog_directory = 'yuyaassetresroucesprod'
+    config.asset_host = 'https://yuyaassetresroucesprod.s3.amazonaws.com'
+  end
   config.fog_public = true
 end
 # end
