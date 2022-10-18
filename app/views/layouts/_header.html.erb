@@ -1,13 +1,21 @@
 <ul class="nav">
   <% if logged_in? %>
   <li class="nav-item">
-    <%= @current_user.name %>
+    <p>Logged in with <%= @current_user.name %>'s account</p>
+  </li>
+  <li>
+    <%= link_to "Create new post", new_micropost_path %>
+  </li>
+  <% if !(request.path == "/users/#{current_user.id}")  %>
+  <li>
+    <%= link_to "Mypage", current_user  %>
+  </li>
+  <% end  %>
+  <li class="nav-item">
+    <%= link_to "User index Page", users_path %>
   </li>
   <li class="nav-item">
     <%= link_to "Log out", logout_path %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "User index Page", users_path %>
   </li>
   <% else %>
   <li class="nav-item">

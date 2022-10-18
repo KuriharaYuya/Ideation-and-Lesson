@@ -1,0 +1,25 @@
+<h3>Change your user-settings</h3>
+<%= form_with(model: @user, local: true) do |f| %>
+
+<%= f.label :name %>
+<br>
+<%= f.text_field :name %>
+<br>
+<%= f.label :email %>
+<br>
+<%= f.email_field :email %>
+<br>
+<%= f.label :password %>
+<br>
+<%= f.password_field :password %>
+<br>
+<%= f.label :password_confirmation, "Confirmation" %>
+<br>
+<%= f.password_field :password_confirmation %>
+<br>
+<h3></h3>
+<%= f.submit "Save changes", class: "btn btn-primary" %>
+<br>
+<h3></h3>
+<button><%= link_to "Rest inputting",edit_user_path   %></button>
+<% end %>

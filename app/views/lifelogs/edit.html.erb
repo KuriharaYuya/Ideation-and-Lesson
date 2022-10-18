@@ -1,0 +1,23 @@
+<%=form_with(model:@lifelog,local: true, html: {method: :patch}) do |f| %>
+<%=f.label :title %>
+<br>
+<%=f.text_field :title  %>
+<br>
+<%=f.label :calender  %>
+<br>
+<%=f.file_field :calender  %>
+<br>
+<%=f.label :screen_time  %>
+<br>
+<%=f.file_field :screen_time  %>
+<%=f.label :log_date, "date" %>
+<br>
+<%=f.date_field :log_date  %>
+<%=f.hidden_field :id,value: @lifelog.id  %>
+<br>
+<%=f.label :overview %>
+<br>
+<%=f.text_area :overview  %>
+<br><br>
+<%=f.submit "apply", disable_with: 'applying...'  %>
+<%end  %>

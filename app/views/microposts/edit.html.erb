@@ -1,0 +1,42 @@
+<h1>edit</h1>
+<br><br><br>
+<%= form_with(model: @micropost, local: true) do |f| %>
+<%= f.label :title %>
+<br>
+<%= f.text_field :title %>
+<br><br>
+<%= f.label :engagement_status %>
+<br>
+<%= f.select :engagement_status, ["予定","実行中","完了","未完了"] %>
+<br><br>
+<%=f.label :post_type  %>
+<br>
+<%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
+<br>
+<br>
+<%= f.label :video %>
+<br>
+<%= f.file_field :video %>
+<%=f.label :exec_date, "lifelog_date" %>
+<br>
+<%=f.date_field :exec_date  %>
+<br>
+<%= f.label :start_datetime %>
+<br>
+<%= f.datetime_local_field :start_datetime %>
+<br>
+<%= f.label :end_datetime %>
+<br>
+<%= f.datetime_local_field :end_datetime %>
+<br>
+<%=f.label :assumption_minutes  %>
+<br>
+<%=f.number_field :assumption_minutes  %>
+<br><br>
+<%= label_tag :option, "##if you check below box, assumption_minutes will overwritten by value calc from start/end datetime##" %>
+<br>
+<%=f.hidden_field :id,value: @micropost.id  %>
+<%=check_box_tag :overwritten_option  %>
+<br><br><br>
+<%= f.submit "Submit", disable_with: 'Submiting...'  %>
+<% end  %>

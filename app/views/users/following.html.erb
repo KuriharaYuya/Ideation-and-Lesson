@@ -1,0 +1,26 @@
+<h2><%="there are list of #{@user.name}'s following users"%></h2>
+
+<% @user.following.each do |user|  %>
+<div style="display: inline-block;">
+    <% if !current_user.following?(user)  %>
+    <a class="follow">
+        <%= form_with(model: current_user.active_relationships.build, local: false)do |f|%>
+        <div><%= hidden_field_tag :followed_id, user.id  %></div>
+        <%= hidden_field_tag :current_page,request.fullpath  %>
+        <%= f.submit "Follow", disable_with: 'Following...' %>
+        <% end  %>
+    </a>
+    <% else  %>
+    <a class="unfollow">
+        <%= form_with(model: current_user.active_relationships.find_by(followed: user),html: {method: :delete},local: false) do |f| %>
+        <%= hidden_field_tag :current_page,request.fullpath  %>
+        <%= f.submit "Unfollow", disable_with: "Unfollowing"  %>
+        <% end  %>
+    </a>
+    <% end  %>
+</div>
+<%= link_to "#{user.name}",user  %>
+<br>
+<h2></h2>
+
+<% end  %>

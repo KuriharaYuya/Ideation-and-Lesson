@@ -1,0 +1,9 @@
+<h1><%=@post.likes.count  %>人がいいねしました</h1>
+<br>
+<div>
+
+    <%@likes.each do |like|  %>
+    <%=like.user.name  %>
+    <% end  %>
+
+</div>

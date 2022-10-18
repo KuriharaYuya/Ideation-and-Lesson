@@ -1,0 +1,10 @@
+<% if @micropost.errors.any? %>
+<div class="alert alert-warning">
+    <ul>
+        <% @micropost.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <br>
+        <% end %>
+    </ul>
+</div>
+<% end %>

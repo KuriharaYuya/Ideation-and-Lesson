@@ -10,13 +10,75 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_202544) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_033240) do
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "content"
+  end
+
+  create_table "lifelogs", force: :cascade do |t|
+    t.string "title", default: "Untitled"
+    t.date "log_date"
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "calender"
+    t.string "screen_time"
+    t.string "overview"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.integer "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "microposts", force: :cascade do |t|
+    t.string "title"
+    t.string "explain_post"
+    t.string "post_type"
+    t.string "engagement_status"
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.boolean "verified", default: false
+    t.integer "lifelog_id"
+    t.integer "assumption_minutes"
+    t.integer "consuming_minutes"
+    t.date "exec_date"
+    t.string "video"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+  end
+
+  create_table "verifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
