@@ -126,7 +126,7 @@ def restore
 end
 
 def set_lifelogs
-  @today_date = Date.today.prev_day(3)
+  @today_date = Date.yesterday
   @today_lifelog = Lifelog.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
