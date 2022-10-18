@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
     render html: 'hello, world!'
   end
   include SessionsHelper
+  include ActionController::HttpAuthentication::Basic::ControllerMethods
 
   private
 
