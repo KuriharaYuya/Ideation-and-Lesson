@@ -1,6 +1,6 @@
 <% provide(:title, "yuya") %>
 
-<%= form_with(model: @user, local: true, method: :post, url: "/users") do |f| %>
+<%= form_with(model: @user, local: true, method: :post) do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %>
 <br>

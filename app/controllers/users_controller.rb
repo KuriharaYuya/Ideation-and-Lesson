@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include UsersHelper
-  before_action :user_log_in, except: %i[index new]
+  before_action :user_log_in, except: %i[index new create show]
   def new
     @user = User.new
   end
