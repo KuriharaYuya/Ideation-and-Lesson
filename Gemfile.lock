@@ -134,6 +134,10 @@ GEM
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     e2mmap (0.1.0)
     equalizer (0.0.11)
     erubi (1.11.0)
@@ -425,6 +429,7 @@ DEPENDENCIES
   capybara (= 3.36.0)
   carrierwave
   debug (= 1.4.0)
+  dotenv-rails
   faker (= 2.20.0)
   fog-aws
   guard (= 2.18.0)

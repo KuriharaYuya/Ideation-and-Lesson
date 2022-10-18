@@ -24,6 +24,9 @@ gem "fog-aws"
 gem "twitter"
 gem "twitter_api"
 gem "whenever"
+group :development do
+  gem "dotenv-rails"
+end
 
 
 group :development, :test do

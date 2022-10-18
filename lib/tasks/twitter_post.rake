@@ -8,11 +8,11 @@ task twitter_mov_test: :environment do
   comments_daily_overview_to_latest_post
 end
 def mov_upload
-  twitter_client = Twitter::REST::Client.new do |config|
-    config.consumer_key = 'dARw8BZxBlgqLdrXmUdLP5HL4'
-    config.consumer_secret     = 'gZ9cLoaSU3ToBlHuTkg58sQDfs5fGfnpPiRhB0a8CJOM2npnfY'
-    config.access_token        = '3223240382-TIOkEDOw6iWcDoVgLiNHejAKZANwTefDJMO8Fwx'
-    config.access_token_secret = '2Bo0HU4l3YNkX42IxvtnzjB4DOtOxXkHnFSvNxQ0d5xgc'
+  @twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
+    config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+    config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+    config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
   end
   url = @timelapse_url
   p url
@@ -23,7 +23,7 @@ def mov_upload
     end
   end
   mov = File.new(open(tgt_file))
-  init_request = Twitter::REST::Request.new(twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
+  init_request = Twitter::REST::Request.new(@twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                                             { command: 'INIT', total_bytes: mov.size, media_type: 'video/mov', media_category: 'tweet_video' }).perform
   p 'init is completed'
   @i = 1
@@ -33,12 +33,12 @@ def mov_upload
     seg ||= -1
     p @i
     @i += 1
-    Twitter::REST::Request.new(twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
+    Twitter::REST::Request.new(@twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                                { command: 'APPEND', media_id: init_request[:media_id], media_data: base64_chunk, segment_index: seg += 1, key: :media }).perform
   end
   p 'append is completed'
   mov.close
-  Twitter::REST::Request.new(twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
+  Twitter::REST::Request.new(@twitter_client, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                              { command: 'FINALIZE', media_id: init_request[:media_id] }).perform
   p 'F is completed'
   @f = 1
@@ -46,14 +46,12 @@ def mov_upload
   begin
     puts @tweet_content
     p @tweet_content.length
-    twitter_client.update(
+    @twitter_client.update(
       @tweet_content, media_ids: init_request[:media_id]
     )
   rescue Twitter::Error::BadRequest
     sleep 10
     @f += 1
-    @twitter_client = twitter_client
-    @init = init_request[:media_id]
     p 'mooo'
     retry
   rescue Twitter::Error::Forbidden
@@ -67,15 +65,6 @@ def mov_upload
 end
 
 def restore
-  twitter_client = Twitter::REST::Client.new do |config|
-    config.consumer_key = 'dARw8BZxBlgqLdrXmUdLP5HL4'
-    config.consumer_secret     = 'gZ9cLoaSU3ToBlHuTkg58sQDfs5fGfnpPiRhB0a8CJOM2npnfY'
-    config.access_token        = '3223240382-TIOkEDOw6iWcDoVgLiNHejAKZANwTefDJMO8Fwx'
-    config.access_token_secret = '2Bo0HU4l3YNkX42IxvtnzjB4DOtOxXkHnFSvNxQ0d5xgc'
-  end
-
-  # ================================================
-
   @tweet_micropost_logs = []
   @micropost_consuming_sum = []
   # 配列にして、要素ごとに説明を入れる
@@ -137,7 +126,7 @@ def restore
 end
 
 def set_lifelogs
-  @today_date = Date.yesterday
+  @today_date = Date.today.prev_day(3)
   @today_lifelog = Lifelog.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
@@ -160,12 +149,6 @@ def to_HH_MM(minutes)
 end
 
 def comments_daily_overview_to_latest_post
-  @twitter_client = Twitter::REST::Client.new do |config|
-    config.consumer_key = 'dARw8BZxBlgqLdrXmUdLP5HL4'
-    config.consumer_secret     = 'gZ9cLoaSU3ToBlHuTkg58sQDfs5fGfnpPiRhB0a8CJOM2npnfY'
-    config.access_token        = '3223240382-TIOkEDOw6iWcDoVgLiNHejAKZANwTefDJMO8Fwx'
-    config.access_token_secret = '2Bo0HU4l3YNkX42IxvtnzjB4DOtOxXkHnFSvNxQ0d5xgc'
-  end
   p 'now in process of commenting'
   my_twitter_user_id = '3223240382'.to_i
   @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
