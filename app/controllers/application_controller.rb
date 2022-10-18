@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
-  before_action :basic_auth if: :test?
+  before_action :basic_auth, if: :test?
   def hello
     render html: 'hello, world!'
   end
   include SessionsHelper
+
   private
+
   def test?
     Rails.env.test?
   end
