@@ -3,6 +3,9 @@
 <%= link_to "User setting", action: "edit"  %>
 <% end  %>
 <h2>id: <%= @user.id%></h2>
+<% if current_user.nil?  %>
+<%= button_to "follow",login_path,method: :get %>
+<% else  %>
 <%if !(@user == current_user)  %>
 <% if !current_user.following?(@user)  %>
 <a class="follow">
@@ -19,6 +22,7 @@
     <%= f.submit "Unfollow", disable_with: "Unfollowing"  %>
     <% end  %>
 </a>
+<% end  %>
 <% end  %>
 <% end  %>
 <h2>User infomation</h2>
