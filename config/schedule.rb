@@ -12,11 +12,9 @@
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
-# ENV['RAILS_ENV'] ||= 'development'
-# set :environment, ENV['RAILS_ENV']
-every 1.day, at: '08:00 pm' do
-  rake 'twitter_mov_test'
-end
+# every 1.day, at: '08:00 pm' do
+#   rake 'twitter_mov_test'
+# end
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
