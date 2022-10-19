@@ -29,7 +29,7 @@ group :development do
 end
 
 
-group :development, :test do
+group :development do
   gem 'debug',   '1.4.0', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop'
   gem 'solargraph'
@@ -51,7 +51,7 @@ group :test do
   gem 'webdrivers',               '5.0.0'
 end
 
-group :production do
+group :production,:test do
   gem 'aws-sdk-s3', '1.113.0', require: false
   gem 'pg',         '1.3.3'
 end

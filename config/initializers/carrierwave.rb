@@ -11,6 +11,9 @@ CarrierWave.configure do |config|
   if Rails.env.development?
     config.fog_directory = 'myvideoresource'
     config.asset_host = 'https://myvideoresource.s3.amazonaws.com'
+  elsif Rails.env.test?
+    config.fog_directory = 'yuyaassetresroucestest'
+    config.asset_host = 'https://yuyaassetresroucestest.s3.amazonaws.com'
   elsif Rails.env.production?
     config.fog_directory = 'yuyaassetresroucesprod'
     config.asset_host = 'https://yuyaassetresroucesprod.s3.amazonaws.com'
