@@ -126,7 +126,7 @@ def restore
 end
 
 def set_lifelogs
-  @today_date = Date.today.prev_day(3)
+  @today_date = Date.yesterday
   @today_lifelog = Lifelog.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
@@ -170,7 +170,7 @@ def comments_daily_overview_to_latest_post
     end
     @i += 1
   end
-
+  sleep 30
   @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
   @images.each do |image|
     File.delete(image)
