@@ -139,7 +139,8 @@ def set_lifelogs
   puts @lifelog_id
   if @lifelog_id.nil?
     puts 'nil'
-    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) if Rails.env.production? || Rails.env.test?
+    # @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) if Rails.env.production? || Rails.env.test?
+    @today_date = Date.today.prev_day(1) if Rails.env.production? || Rails.env.test?
     @today_date = Date.new(2022, 10, 15) if Rails.env.development?
   else
     lifelog = Lifelog.find(@lifelog_id)
