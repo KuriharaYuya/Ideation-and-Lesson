@@ -37,6 +37,6 @@ class LifelogsController < ApplicationController
   private
 
   def lifelog_params
-    params.require(:lifelog).permit(:title, :log_date, :id, :calender, :screen_time, :overview, :assumption_minutes)
+    params.require(:lifelog).permit(:title, :log_date, :id, :calender, :screen_time, :overview)
   end
 end

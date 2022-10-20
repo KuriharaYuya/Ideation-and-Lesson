@@ -1,8 +1,6 @@
 <h2><%=@lifelog.log_date  %> のライフログ</h2>
 <h2>タイトル: <%=@lifelog.title  %></h2>
 <h2>consuming_sum:&nbsp;<%=@lifelog.microposts.sum(:consuming_minutes)  %></h2>
-<h2>assumption_minutes: <%=@lifelog.assumption_minutes  %></h2>
-<h2>gap: <%=@lifelog.assumption_minutes -  @lifelog.microposts.sum(:consuming_minutes)  %></h2>
 <%if @lifelog.overview.present?  %>
 <h4>説明<br><%=@lifelog.overview  %></h4>
 <p><%=@lifelog.overview.size %>文字</p>

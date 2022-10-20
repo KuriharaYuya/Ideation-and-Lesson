@@ -16,8 +16,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      create_user_setting
       redirect_to users_path
+      # redirect_to user_url(@user.id)
     else
       flash.now[:notice] = @user.errors.full_messages
       # render action: "new"
@@ -47,10 +47,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def create_user_setting
-    setting = @user.build_user_setting
-    setting.save!
   end
 end

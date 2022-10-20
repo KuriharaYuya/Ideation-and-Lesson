@@ -1,11 +1,5 @@
 <ul class="nav">
   <% if logged_in? %>
-  <% if current_user.admin?  %>
-  <li>
-    <p></p>
-    <%=link_to "tweet console", edit_tweet_path(@current_user) %>
-  </li>
-  <% end  %>
   <li class="nav-item">
     <p>Logged in with <%= @current_user.name %>'s account</p>
   </li>
