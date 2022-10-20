@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   get 'sessions/new'
   root 'timeline_pages#home'
-  get '/signup', to: 'users#new'  
+  get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
-  get '/twitter_test', to: 'twitter#test'
+
+  resources :tweets, param: :user_id, only: %i[edit update create new]
+
   resources :users do
     member do
       get :following, :followers

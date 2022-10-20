@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_16_033240) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_022217) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_033240) do
     t.string "calender"
     t.string "screen_time"
     t.string "overview"
+    t.boolean "tweeted?", default: false
+    t.integer "assumption_minutes"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -66,12 +68,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_033240) do
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   end
 
+  create_table "user_settings", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tweet_lifelog_date", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.boolean "admin", default: false
   end
 
   create_table "verifications", force: :cascade do |t|

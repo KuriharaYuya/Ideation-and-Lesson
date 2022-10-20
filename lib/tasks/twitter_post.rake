@@ -82,6 +82,9 @@ def restore
     @i += 1
   end
   @micropost_consuming_sum = @micropost_consuming_sum.sum
+  if @today_lifelog.assumption_minutes.present?
+    @assumption_gap = (@micropost_consuming_sum - @today_lifelog.assumption_minutes)
+  end
 
   @tweet_microposts ||= []
   if @wrong_times.nil?
@@ -120,14 +123,27 @@ def restore
   # からのjoinで改行させて結合
   tweet_header = '💻Hello world💻'
   tweet_title = "#{@today_lifelog.log_date}の記録🥺\n"
-  tweet_lifelog_sum = "合計で#{to_HH_MM(@micropost_consuming_sum)}!明日も頑張ります！"
+  tweet_asp_gap = if @assumption_gap.nil?
+                    ''
+                  else
+                    " 予定より#{@assumption_gap}分! "
+                  end
+  tweet_lifelog_sum = "合計で#{to_HH_MM(@micropost_consuming_sum)}#{tweet_asp_gap}明日も頑張ります！"
   tweet_hashtag = '#駆け出しエンジニアと繋がりたい'
   @tweet_content = tweet_header + "\n" + tweet_title + "\n" + @tweet_microposts + tweet_lifelog_sum + "\n" + tweet_hashtag + "\n" + "↓は#{@timelapse_timetable_numb}限目の様子です!"
 end
 
 def set_lifelogs
-  @today_date = Date.yesterday
-  @today_lifelog = Lifelog.find_by(log_date: @today_date)
+  user = User.find_by(admin: true)
+  if @lifelog_id.nil?
+    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) if Rails.env.production? || Rails.env.test?
+    @today_date = Date.new(2022, 10, 15)
+  else
+    lifelog = Lifelog.find(@lifelog_id)
+    @today_date = lifelog.log_date
+    exit if lifelog.tweeted? == true
+  end
+  @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
   consuming_order = @today_microposts.order(consuming_minutes: :desc)
@@ -175,4 +191,6 @@ def comments_daily_overview_to_latest_post
   @images.each do |image|
     File.delete(image)
   end
+  @today_lifelog[:tweeted?] = true
+  @today_lifelog.save
 end
