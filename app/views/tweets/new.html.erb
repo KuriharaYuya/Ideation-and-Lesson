@@ -1,0 +1,6 @@
+<%@untweeted_lifelog.each do |lifelog|  %>
+<br>
+<h3><%=link_to lifelog.log_date, lifelog_path(lifelog)   %></h3>
+<%=button_to "tweet",tweets_path(lifelog_id: lifelog.id)  %>
+
+<% end %>
