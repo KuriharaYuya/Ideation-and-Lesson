@@ -1,0 +1,11 @@
+<%=form_with(model: @user_setting, url: tweet_path, html: {method: :patch},local: true) do|f| %>
+<br>
+<%=f.label :tweet_lifelog_date%>
+<br>
+<%=f.number_field :tweet_lifelog_date  %>
+<br>
+<br>
+<%=f.submit "apply" %>
+<% end  %>
+<br><br><br><br>
+<%=button_to "view untweeted lifelogs",new_tweet_path,method: :get  %>
