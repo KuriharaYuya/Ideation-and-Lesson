@@ -135,6 +135,8 @@ end
 
 def set_lifelogs
   user = User.find_by(admin: true)
+  puts user.name
+  puts @lifelog_id
   if @lifelog_id.nil?
     @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) if Rails.env.production? || Rails.env.test?
     @today_date = Date.new(2022, 10, 15)
@@ -143,7 +145,9 @@ def set_lifelogs
     @today_date = lifelog.log_date
     exit if lifelog.tweeted? == true
   end
+  puts @today_date
   @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
+  puts @today_lifelog
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
   consuming_order = @today_microposts.order(consuming_minutes: :desc)
