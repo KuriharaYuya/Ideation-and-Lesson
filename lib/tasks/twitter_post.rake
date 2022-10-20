@@ -86,7 +86,7 @@ def restore
     @assumption_gap = (@micropost_consuming_sum - @today_lifelog.assumption_minutes)
   end
 
-  @tweet_microposts ||= []
+  @tweet_microposts = []
   if @wrong_times.nil?
     @tweet_micropost_logs.each do |log|
       @tweet_microposts.push(log)
