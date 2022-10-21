@@ -135,11 +135,11 @@ end
 
 def set_lifelogs
   user = User.find_by(admin: true)
+  @lifelog_id = user.user_setting.post_lifelog_id
   puts user.name
   puts @lifelog_id
   if @lifelog_id.nil?
     puts 'nil'
-    exit
     @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) 
   else
     lifelog = Lifelog.find(@lifelog_id)

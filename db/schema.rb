@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_045414) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_043832) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -30,8 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_045414) do
     t.string "calender"
     t.string "screen_time"
     t.string "overview"
-    t.integer "assumption_minutes"
     t.boolean "tweeted?", default: false
+    t.integer "assumption_minutes"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -73,6 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_045414) do
     t.integer "tweet_lifelog_date", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post_lifelog_id"
   end
 
   create_table "users", force: :cascade do |t|
