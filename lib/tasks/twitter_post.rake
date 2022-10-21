@@ -86,7 +86,7 @@ def restore
     @assumption_gap = (@micropost_consuming_sum - @today_lifelog.assumption_minutes)
   end
 
-  @tweet_microposts ||= []
+  @tweet_microposts = []
   if @wrong_times.nil?
     @tweet_micropost_logs.each do |log|
       @tweet_microposts.push(log)
@@ -135,15 +135,20 @@ end
 
 def set_lifelogs
   user = User.find_by(admin: true)
+  @lifelog_id = user.user_setting.post_lifelog_id
+  puts user.name
+  puts @lifelog_id
   if @lifelog_id.nil?
-    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) if Rails.env.production? || Rails.env.test?
-    @today_date = Date.new(2022, 10, 15)
+    puts 'nil'
+    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) 
   else
     lifelog = Lifelog.find(@lifelog_id)
     @today_date = lifelog.log_date
     exit if lifelog.tweeted? == true
   end
+  puts @today_date
   @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
+  puts @today_lifelog
   @today_microposts = @today_lifelog.microposts.order(consuming_minutes: :desc)
   @longest_timelapse_micropost = nil
   consuming_order = @today_microposts.order(consuming_minutes: :desc)
@@ -167,11 +172,18 @@ end
 def comments_daily_overview_to_latest_post
   p 'now in process of commenting'
   my_twitter_user_id = '3223240382'.to_i
+  @twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
+    config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+    config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+    config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+  end
   @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
                                           contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
 
   # calenderとscreen_timeのurlを取得してhashに格納
   @comments_content = @today_lifelog.overview.to_s
+  @comments_content ||= ""
   puts @comments_content
   image_links = [@today_lifelog.calender.to_s, @today_lifelog.screen_time.to_s]
 
@@ -187,7 +199,12 @@ def comments_daily_overview_to_latest_post
     @i += 1
   end
   sleep 30
+  begin
   @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
+  rescue
+    sleep 20
+    retry
+  end
   @images.each do |image|
     File.delete(image)
   end

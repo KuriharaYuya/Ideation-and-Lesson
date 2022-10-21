@@ -19,8 +19,16 @@ class TweetsController < ApplicationController
 
   def create
     @lifelog_id = params[:lifelog_id]
+    user = current_user
+    user.user_setting.update(post_lifelog_id: @lifelog_id)
+    begin
     run_rake_task_tweet
+    rescue
     redirect_to new_tweet_path
+    @i = 1
+    end
+    redirect_to new_tweet_path if @i.nil?
+
   end
 
   private
