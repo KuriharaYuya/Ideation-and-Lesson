@@ -20,15 +20,15 @@
   <li class="nav-item">
     <%= link_to "Log out", logout_path %>
   </li>
+  <li class="nav-item">
+    <%= link_to "User index Page", users_path %>
+  </li>
   <% else %>
   <li class="nav-item">
     <%= link_to "signup", signup_path %>
   </li>
   <li class="nav-item">
     <%= link_to "login", login_path %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "User index Page", users_path %>
   </li>
   <% end %>
 </ul>

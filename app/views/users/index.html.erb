@@ -12,25 +12,9 @@ i += 1
             <%= button_to "follow",login_path,method: :get %>
         </a>
         <% else  %>
-
-
+        <%@user = user  %>
         <% if !(user == current_user)  %>
-
-        <a id="follow_form">
-            <% if !(current_user.following?(user)) %>
-            <%= form_with(model: current_user.active_relationships.build,remote: true) do |f| %>
-            <%= hidden_field_tag :followed_id, user.id %>
-            <%= hidden_field_tag :current_page, request.fullpath %>
-            <%= f.submit "Follow", disable_with: "Following" %>
-            <% end  %>
-            <% else  %>
-            <%= form_with(model: current_user.active_relationships.find_by(followed: user), html: {method: :delete},remote: true) do |f| %>
-            <%= hidden_field_tag :current_page, request.fullpath %>
-            <%= f.submit "Unfollow", disable_with: 'Unfollowing...'  %>
-            <% end  %>
-            <% end %>
-        </a>
-
+        <%=render 'follow_form'  %>
         <% end %>
         <% end %>
         </a>

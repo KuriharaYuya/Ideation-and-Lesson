@@ -6,24 +6,7 @@
 <% if current_user.nil?  %>
 <%= button_to "follow",login_path,method: :get %>
 <% else  %>
-<%if !(@user == current_user)  %>
-<% if !current_user.following?(@user)  %>
-<a class="follow">
-    <%= form_with(model: current_user.active_relationships.build, local: false)do |f|%>
-    <div><%= hidden_field_tag :followed_id, @user.id  %></div>
-    <%= hidden_field_tag :current_page,request.fullpath  %>
-    <%= f.submit "Follow", disable_with: 'Following...' %>
-    <% end  %>
-</a>
-<% else  %>
-<a class="unfollow">
-    <%= form_with(model: current_user.active_relationships.find_by(followed: @user),html: {method: :delete},local: false) do |f| %>
-    <%= hidden_field_tag :current_page,request.fullpath  %>
-    <%= f.submit "Unfollow", disable_with: "Unfollowing"  %>
-    <% end  %>
-</a>
-<% end  %>
-<% end  %>
+<%=render 'follow_form'  %>
 <% end  %>
 <h2>User infomation</h2>
 <div class="user_infomation">

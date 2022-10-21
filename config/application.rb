@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module HelloApp
   class Application < Rails::Application
-    config.action_view.embed_authenticity_token_in_remote_forms
+    config.action_view.embed_authenticity_token_in_remote_forms = true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
