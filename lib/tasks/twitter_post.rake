@@ -183,6 +183,7 @@ def comments_daily_overview_to_latest_post
 
   # calenderとscreen_timeのurlを取得してhashに格納
   @comments_content = @today_lifelog.overview.to_s
+  @comments_content ||= ""
   puts @comments_content
   image_links = [@today_lifelog.calender.to_s, @today_lifelog.screen_time.to_s]
 
