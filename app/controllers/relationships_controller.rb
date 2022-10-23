@@ -13,7 +13,7 @@ class RelationshipsController < ApplicationController
     @user = Relationship.find(params[:id]).followed
     current_user.unfollow(@user)
     respond_to do |format|
-      format.html { redirect_current_page }
+      # format.html { redirect_current_page }
       format.turbo_stream
     end
   end
