@@ -1,3 +1,4 @@
+<div class="form form_login">
 <%= form_with(url: login_path, scope: :session) do |f| %>
 <%= f.label :email %>
 <%= f.email_field :email %>
@@ -5,6 +6,7 @@
 <%= f.password_field :password %>
 <%= f.submit "Log in" %>
 <% end %>
+</div>
 <% flash.each do |msg_type,msg|  %>
 <%= msg  %>
 <% end  %>

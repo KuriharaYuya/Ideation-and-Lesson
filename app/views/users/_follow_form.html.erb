@@ -1,9 +1,7 @@
-<%# <div id="follow_form"> %>
-<turbo-frame id="follow_form">
-    <% if !(current_user.following?(@user)) %>
-    <%=render 'follow'  %>
-    <% else  %>
-    <%=render 'unfollow'  %>
+<div id="follow_form">
+    <% if current_user.following?(@user) %>
+    <%= render 'unfollow' %>
+    <% else %>
+    <%= render 'follow' %>
     <% end %>
-</turbo-frame>
-<%# </div> %>
+</div>
