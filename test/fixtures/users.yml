@@ -2,10 +2,12 @@ yuya:
   name: "Yuya Example"
   email: "nikoand01@gmail.com"
   password_digest: <%= User.digest("password")%>
+
 naoto:
   name: "naoto Example"
   email: "naoto505@gmail.com"
   password_digest: <%= User.digest("password")%>
+  
 aki:
   name: "aki Example"
   email: "aki1127@gmail.com"
