@@ -23,3 +23,11 @@
 <h3></h3>
 <button><%= link_to "Rest inputting",edit_user_path   %></button>
 <% end %>
+
+<h4>Delete account</h4>
+
+<%= form_with(model:@user,local: true,html: {method: :delete}) do |f| %>
+<%=f.label :password  %>
+<%=f.password_field :password %>
+<%=f.submit "delete account" %>
+<% end  %>

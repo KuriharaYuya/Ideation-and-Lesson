@@ -17,10 +17,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       create_user_setting
-      redirect_to users_path
+      # login automatically
+      session[:user_id] = @user[:id]
+      redirect_to user_path(@user)
     else
       flash.now[:notice] = @user.errors.full_messages
-      # render action: "new"
       render action: 'new'
     end
   end
@@ -33,6 +34,18 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     render partial: 'users/updated' if @user.update(user_params)
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+
+    if !(@user == current_user)
+      redirect_to logout_path
+    elsif !password_confirmed?
+      redirect_to edit_user_path
+    elsif @user.destroy!
+      redirect_to root_path
+    end
   end
 
   def followers
@@ -52,5 +65,11 @@ class UsersController < ApplicationController
   def create_user_setting
     setting = @user.build_user_setting
     setting.save!
+  end
+
+  def password_confirmed?
+    params.require(:user).permit(:password)
+    confirm_password = params[:user][:password].to_s
+    @user.authenticate(confirm_password)
   end
 end
