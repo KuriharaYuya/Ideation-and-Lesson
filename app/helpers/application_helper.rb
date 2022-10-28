@@ -10,9 +10,11 @@ module ApplicationHelper
   end
 
   def alert(type, msg)
-    @msg = msg if msg.present?
-    # list of type  => info, complete, warn, danger
-    render "layouts/flash/#{type}"
+    unless flash.empty?
+      # list of type  => info, complete, warn, danger
+      @msg = msg if msg.present?
+      render "layouts/flash/#{type}"
+    end
   end
   include SessionsHelper
 end
