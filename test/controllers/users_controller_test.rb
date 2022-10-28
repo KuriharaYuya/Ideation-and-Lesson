@@ -13,7 +13,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # logout
     get logout_url
 
-    # delete user
+    # create user
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { name: 'Example User',
                                          email: 'user@example.com',
@@ -87,6 +87,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # flash msg have disappear after moved page ?
     get root_path
     assert flash.empty?
+  end
+
+  test 'not unique email is notified by flash' do
+    # trying signup with existing email
+    post users_path, params: { user: { name: 'Example User',
+                                       email: User.all[0].email,
+                                       password: 'password',
+                                       password_confirmation: 'password' } }
+    assert_not flash.empty?
+    # flash msg is translated ?
+    assert flash[:notice][0].to_s == 'メールアドレスはすでに存在します'
   end
 
   # =======fix bugs

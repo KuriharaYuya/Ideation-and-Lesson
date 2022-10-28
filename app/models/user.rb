@@ -11,8 +11,8 @@ class User < ApplicationRecord
   has_one :user_setting, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 70 }
-  validates :email, presence: true, length: { maximum: 30 }
-  # validates :password, presence: true, length: { minimum: 6 }
+  validates :email, presence: true, length: { maximum: 30 }, uniqueness: true
+  validates :password, presence: true, length: { minimum: 6 }
   has_secure_password
   # これは付け加えるだけで勝手にpassword(digest)を暗号化してくれる
 

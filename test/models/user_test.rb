@@ -43,4 +43,16 @@ class UserTest < ActiveSupport::TestCase
     assert_not aki.following?(yuya)
     assert yuya.followers.include?(naoto)
   end
+  test 'email should  be unique ' do
+    # create user with existing email
+    user = User.new(name: 'Example User', email: User.all[0].email,
+                    password: 'foobarbaz', password_confirmation: 'foobarbaz')
+
+    assert_not user.valid?
+
+    # change email to unique
+    user[:email] = 'thisis@unique.com'
+    assert user.save
+    assert user.valid?
+  end
 end
