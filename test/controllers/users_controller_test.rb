@@ -89,6 +89,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert flash.empty?
   end
 
+  test 'not unique email is notified by flash' do
+    # trying signup with existing email
+    post users_path, params: { user: { name: 'Example User',
+                                       email: User.all[0].email,
+                                       password: 'password',
+                                       password_confirmation: 'password' } }
+    assert_not flash.empty?
+    # flash msg is translated ?
+    assert flash[:notice][0].to_s == 'メールアドレスはすでに存在します'
+  end
+
   # =======fix bugs
   # hotfix/#04_remove_dialog_on_home
   test 'should create-success dialog disappeared in home' do
