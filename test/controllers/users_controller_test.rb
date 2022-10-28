@@ -88,4 +88,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert flash.empty?
   end
+
+  # =======fix bugs
+  # hotfix/#04_remove_dialog_on_home
+  test 'should create-success dialog disappeared in home' do
+    get root_path
+    assert_select 'div.alert', count: 0
+  end
+  # =======fix bugs end
 end
