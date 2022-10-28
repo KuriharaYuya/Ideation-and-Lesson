@@ -8,5 +8,11 @@ module ApplicationHelper
   def get_all_column_names(class_name)
     class_name.column_names
   end
+
+  def alert(type, msg)
+    @msg = msg if msg.present?
+    # list of type  => info, complete, warn, danger
+    render "layouts/flash/#{type}"
+  end
   include SessionsHelper
 end

@@ -1,3 +1,4 @@
+<%= alert("complete",flash[:notice]) if !flash[:notice].nil? %>
 <h1>Here is <%= @user[:name] %>'s page</h1>
 <% if current_user == @user  %>
 <%= link_to "User setting", action: "edit"  %>
