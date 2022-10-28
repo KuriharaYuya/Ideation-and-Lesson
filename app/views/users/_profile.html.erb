@@ -1,0 +1,10 @@
+<h3>Edit your profile</h3>
+<%= alert("info",flash[:info])  %>
+<%=form_with(model:@user,local: true,html: {method: :patch}) do |f| %>
+<br>
+<%=f.label "プロフィールメッセージ",:bio  %>
+<br>
+<%=f.text_area :bio %>
+<br>
+<%=f.submit "設定する", disable_with: 'setting'   %>
+<% end  %>

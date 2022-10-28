@@ -23,12 +23,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # automatically logged in ?
     assert logged_in?
     follow_redirect!
-    assert_template 'users/show'
+    assert_template 'users/edit'
 
     # flash is shown?
     assert_not flash.empty?
     # text of flash is correct ?
     assert flash[:notice] == 'アカウントは正常に作成されました'
+    assert flash[:info] == 'あなたのことについて書きましょう'
+    assert_select 'div.alert', count: 2
 
     # flash msg have disappear after moved page ?
     get root_path
