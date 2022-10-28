@@ -19,6 +19,9 @@ class UsersController < ApplicationController
       create_user_setting
       # login automatically
       session[:user_id] = @user[:id]
+      # set flash
+      flash[:notice] = 'アカウントは正常に作成されました'
+
       redirect_to user_path(@user)
     else
       flash.now[:notice] = @user.errors.full_messages
@@ -42,8 +45,10 @@ class UsersController < ApplicationController
     if !(@user == current_user)
       redirect_to logout_path
     elsif !password_confirmed?
+      flash.now[:notice] = 'パスワードが間違っています'
       redirect_to edit_user_path
     elsif @user.destroy!
+      flash[:notice] = 'アカウントは正常に削除されました'
       redirect_to root_path
     end
   end
