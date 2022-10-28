@@ -21,8 +21,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user[:id]
       # set flash
       flash[:notice] = 'アカウントは正常に作成されました'
-
-      redirect_to user_path(@user)
+      flash[:info] = 'あなたのことについて書きましょう'
+      redirect_to edit_user_path(@user)
     else
       flash.now[:notice] = @user.errors.full_messages
       render action: 'new'
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio)
   end
 
   def create_user_setting
