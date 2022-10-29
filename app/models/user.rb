@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 30 }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }
   has_secure_password
+  attr_accessor :remember_token
+
   # これは付け加えるだけで勝手にpassword(digest)を暗号化してくれる
 
   def follow(other_user)
@@ -35,5 +37,24 @@ class User < ApplicationRecord
              BCrypt::Engine.cost
            end
     BCrypt::Password.create(string, cost:)
+  end
+
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+    remember_digest
+  end
+
+  def authenticated?(remember_token)
+    # 「ハッシュ化したremember_token == remember_digest」 を聞いてる
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  def forget
+    update_attribute(:remember_digest, nil)
   end
 end

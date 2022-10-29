@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       reset_session
       log_in(user)
+      remember(user)
       redirect_to @user
     else
       flash.now[:notice] = 'ログイン情報が間違っているか、登録されていないアカウントです'
@@ -16,7 +17,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    forget(current_user)
     log_out
+    @current_user = nil
     redirect_to root_path
   end
 end

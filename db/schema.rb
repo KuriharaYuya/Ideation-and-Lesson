@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_28_134405) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_29_020832) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_134405) do
     t.string "password_digest"
     t.boolean "admin"
     t.string "bio"
+    t.string "remember_digest"
   end
 
   create_table "verifications", force: :cascade do |t|
