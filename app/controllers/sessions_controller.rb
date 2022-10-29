@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
     @user = user
     if user && user.authenticate(params[:session][:password])
       reset_session
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       log_in(user)
-      remember(user)
       redirect_to @user
     else
       flash.now[:notice] = 'ログイン情報が間違っているか、登録されていないアカウントです'
