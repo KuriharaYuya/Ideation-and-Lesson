@@ -4,6 +4,10 @@
     <%= f.email_field :email %>
     <%= f.label :password %>
     <%= f.password_field :password %>
+    <%= f.label :remember_me, class: "checkbox inline" do %>
+    <%= f.check_box :remember_me,checked: true,style: "margin: 0px;position:unset;" %>
+    <span>Remember me on this computer</span>
+    <% end %>
     <%= f.submit "Log in" %>
     <% end %>
 </div>
