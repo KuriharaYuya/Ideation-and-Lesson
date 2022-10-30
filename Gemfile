@@ -25,6 +25,7 @@ gem "twitter"
 gem "twitter_api"
 gem "whenever"
 gem "rails-i18n"
+gem "cssbundling-rails"
 group :development do
   gem "dotenv-rails"
 end
