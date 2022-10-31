@@ -1,0 +1,4 @@
+<%= form_with(model: current_user.active_relationships.find_by(followed: @user), html: {method: :delete},local: false) do |f| %>
+<%= hidden_field_tag :current_page, request.fullpath %>
+<%= f.submit "Unfollow", disable_with: 'Unfollowing...'  %>
+<% end  %>

@@ -17,10 +17,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       create_user_setting
-      redirect_to users_path
+      # login automatically
+      session[:user_id] = @user[:id]
+      # set flash
+      flash[:notice] = 'アカウントは正常に作成されました'
+      flash[:info] = 'あなたのことについて書きましょう'
+      redirect_to edit_user_path(@user)
     else
       flash.now[:notice] = @user.errors.full_messages
-      # render action: "new"
       render action: 'new'
     end
   end
@@ -35,6 +39,20 @@ class UsersController < ApplicationController
     render partial: 'users/updated' if @user.update(user_params)
   end
 
+  def destroy
+    @user = User.find(params[:id])
+
+    if !(@user == current_user)
+      redirect_to logout_path
+    elsif !password_confirmed?
+      flash.now[:notice] = 'パスワードが間違っています'
+      redirect_to edit_user_path
+    elsif @user.destroy!
+      flash[:notice] = 'アカウントは正常に削除されました'
+      redirect_to root_path
+    end
+  end
+
   def followers
     @user = User.find_by(id: params[:id])
   end
@@ -46,11 +64,17 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio)
   end
 
   def create_user_setting
     setting = @user.build_user_setting
     setting.save!
+  end
+
+  def password_confirmed?
+    params.require(:user).permit(:password)
+    confirm_password = params[:user][:password].to_s
+    @user.authenticate(confirm_password)
   end
 end

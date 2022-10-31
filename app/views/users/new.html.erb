@@ -15,9 +15,8 @@
 <br>
 <%= f.submit "Create my account" %>
 <% end %>
-<% flash.each do |msg_type, msg|  %>
-<% msg.each do |m|  %>
-<div><%= m %></div>
+<% flash.each do |msg_type, m|  %>
+<%m.each do |msg| %>
+<%= alert("danger",msg)  %>
 <% end  %>
-<br>
 <% end  %>

@@ -1,7 +1,5 @@
-# Ruby on Rails Tutorial
+# 現在絶賛開発中！！
 
-## "hello, world!"
-
-This is the first application for the
-[*Ruby on Rails Tutorial*](https://railstutorial.jp/)
-by [Michael Hartl](https://www.michaelhartl.com/). Hello, world!
+## 12月までに自社開発系のインターンに受かるためのポートフォリオがこちらのリポジトリです
+### 完成次第ER図の作成と詳細な仕様技術を公開します
+## twitter => https://twitter.com/intern_ukaruzo

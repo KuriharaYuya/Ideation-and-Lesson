@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module HelloApp
   class Application < Rails::Application
-    config.action_view.embed_authenticity_token_in_remote_forms
+    config.action_view.embed_authenticity_token_in_remote_forms = true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
@@ -19,5 +19,8 @@ module HelloApp
     #
     config.time_zone = 'Tokyo'
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.i18n.default_locale = :ja
+    config.i18n.load_path += Dir[Rails.root.join('config/locales/*.yml').to_s]
   end
 end

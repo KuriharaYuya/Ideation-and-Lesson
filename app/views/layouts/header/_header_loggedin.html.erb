@@ -1,0 +1,21 @@
+<% if logged_in?  %>
+<p class="navbar-brand" href="#">
+  Logged in with <%=  link_to "#{@current_user.name}",user_path(current_user)%>'s account</p>
+</a>
+<% end  %>
+<% if !(request.path == "/users/#{current_user.id}")  %>
+<li class="nav-item">
+  <%= link_to "Mypage", current_user,class: "nav-link"  %>
+</li>
+<% end  %>
+<li class="nav-item">
+  <%= link_to "Log out", logout_path,class: "nav-link" %>
+</li>
+<% if current_user.admin?  %>
+<li class="nav-item">
+  <%=link_to "tweet console", edit_tweet_path(@current_user),class: "nav-link" %>
+</li>
+<% end  %>
+<li class="nav-item ">
+  <%= link_to "User index Page", users_path,class: "nav-link" %>
+</li>
