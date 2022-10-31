@@ -1,0 +1,68 @@
+// consts
+$wrapper_width: 375px;
+$wrapper_bg_color: rgb(27, 30, 31);
+$notion_gray: rgba(255, 255, 255, 0.81);
+$divider_gray: rgb(108, 117, 125);
+
+// components
+
+@mixin gray_dotted_underline {
+    border-bottom: dotted;
+    border-color: $notion_gray;
+    border-width: 1px;
+}
+@mixin gray_plane_underline {
+    border-bottom: double;
+    border-color: $divider_gray;
+    border-width: 1px;
+}
+
+// application base wire
+
+body,
+html {
+    width: $wrapper_width;
+    max-width: $wrapper_width;
+    margin: auto;
+    background-color: $wrapper_bg_color;
+    color: $notion_gray;
+}
+.app_wrapper {
+    width: 100%;
+    margin: inherit;
+    background-color: $wrapper_bg_color;
+    border: 1px solid $divider_gray;
+    padding: 2px;
+}
+
+.container {
+    width: 95%;
+    // divider
+    @include gray_plane_underline;
+}
+.header {
+    .container-fluid {
+        padding-left: 0;
+    }
+
+    .navbar-brand {
+        a {
+            color: $notion_gray;
+            font-size: xx-large;
+            text-decoration: none;
+        }
+    }
+
+    .navbar-dark .notify-btn {
+        margin-top: 4px;
+        padding: 8px;
+        .fa-bell {
+            padding-left: 7px;
+        }
+    }
+    .navbar-nav li .nav-link {
+        color: $notion_gray;
+        list-style: armenian;
+        @include gray_dotted_underline;
+    }
+}
