@@ -7,6 +7,7 @@
     "bootstrap-icons": "^1.9.1",
     "sass": "^1.55.0"
   },
-  
-    "scripts": { "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules" }
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  }
 }
