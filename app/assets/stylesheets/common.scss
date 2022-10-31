@@ -1,8 +1,15 @@
 // consts
 $wrapper_width: 375px;
-$wrapper_bg_color: rgb(27, 30, 31);
+$header_height: 65px;
+$footer_heigth: 60px;
+$wrapper_bg_color: rgb(18, 19, 20);
 $notion_gray: rgba(255, 255, 255, 0.81);
-$divider_gray: rgb(108, 117, 125);
+$notion_font_gray: rgb(158, 150, 137);
+$divider_gray: rgb(102, 94, 83);
+
+// feed_consts
+$feed_content_bg_color: rgb(28, 30, 31);
+$card_border: rgba(140, 130, 115, 0.17);
 
 // components
 
@@ -14,7 +21,7 @@ $divider_gray: rgb(108, 117, 125);
 @mixin gray_plane_underline {
     border-bottom: double;
     border-color: $divider_gray;
-    border-width: 1px;
+    border-width: 2px;
 }
 
 // application base wire
@@ -28,23 +35,36 @@ html {
     color: $notion_gray;
 }
 .app_wrapper {
+    height: 100vh;
     width: 100%;
     margin: inherit;
     background-color: $wrapper_bg_color;
     border: 1px solid $divider_gray;
     padding: 8px;
 }
+.app_content {
+    width: 100%;
+    margin: inherit;
+    height: calc(100% - ($header_height + $footer_heigth + 20px));
+    overflow-y: scroll;
+    padding-top: 8px;
+}
 
 .container {
     width: 95%;
     // divider
-    @include gray_plane_underline;
+    @include gray_plane_underline();
 }
 .header {
+    height: 65px;
+    @include gray_plane_underline;
     .container-fluid {
         padding-left: 0;
     }
-
+    .navbar {
+        z-index: 2;
+        background-color: $wrapper_bg_color;
+    }
     .navbar-brand {
         a {
             color: $notion_gray;
@@ -67,6 +87,51 @@ html {
     }
 }
 
+// home timeline
+.feed_content_wrapper {
+    margin-top: 12px;
+    .feed_content {
+        margin: auto;
+        margin-bottom: 8px;
+        width: 95%;
+        background-color: $feed_content_bg_color;
+        a {
+            color: $notion_gray;
+            text-decoration: none;
+            .card-body {
+                padding-top: 12px;
+                border: 1px solid $card_border;
+                border-radius: 10px;
+                p {
+                    display: flex;
+                    height: 18px;
+                    line-height: 18px;
+                    input {
+                        display: block;
+                        margin-right: 3px;
+                        margin-top: auto;
+                    }
+                    span {
+                        line-height: 21.5px;
+                    }
+                }
+            }
+            .posted_ago {
+                position: absolute;
+                top: 5px;
+                right: 9px;
+            }
+            .post_author_img {
+                max-height: 30px;
+                height: 30px;
+                width: 30px;
+                line-height: 30px;
+                border-radius: 50%;
+                margin-right: 4px;
+            }
+        }
+    }
+}
 // footer
 .footer {
     padding-top: 5px;
@@ -83,6 +148,8 @@ html {
     margin-bottom: 10px;
     .nav-item {
         width: calc(33% - $bettween_footer_btn/2);
+        background-color: $feed_content_bg_color;
+        border: 1px solid $card_border;
         .nav-link {
             color: $notion_gray;
             margin: auto;
@@ -97,7 +164,7 @@ html {
                 line-height: 100%;
             }
             i {
-                color: rgba(108, 117, 125);
+                color: $notion_font_gray;
             }
         }
     }
