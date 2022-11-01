@@ -96,13 +96,32 @@ html {
         margin-bottom: 8px;
         width: 95%;
         background-color: $feed_content_bg_color;
-        a {
-            color: $notion_gray;
-            text-decoration: none;
-            .card-body {
-                padding-top: 12px;
-                border: 1px solid $card_border;
-                border-radius: 10px;
+        color: $notion_font_gray;
+        .card-body {
+            padding: 10px;
+            padding-top: 12px;
+            border: 1px solid $card_border;
+            border-radius: 10px;
+            .post_author_wrap {
+                a {
+                    &:hover,
+                    &:active {
+                        text-decoration: underline;
+                        text-decoration-color: $divider_gray;
+                    }
+                }
+                .post_author_img {
+                    max-height: 30px;
+                    height: 30px;
+                    width: 30px;
+                    line-height: 30px;
+                    border-radius: 50%;
+                    margin-right: 4px;
+                }
+            }
+            a {
+                color: $notion_gray;
+                text-decoration: none;
                 p {
                     display: flex;
                     height: 18px;
@@ -116,23 +135,31 @@ html {
                         line-height: 21.5px;
                     }
                 }
-            }
-            .posted_ago {
-                position: absolute;
-                top: 5px;
-                right: 9px;
-            }
-            .post_author_img {
-                max-height: 30px;
-                height: 30px;
-                width: 30px;
-                line-height: 30px;
-                border-radius: 50%;
-                margin-right: 4px;
+                .posted_ago {
+                    position: absolute;
+                    top: 5px;
+                    right: 9px;
+                }
             }
         }
     }
 }
+
+// road btn
+.road_btn_wrap {
+    width: 95%;
+    padding: 3px;
+    padding-top: 0px;
+    .road_btn {
+        background-color: $feed_content_bg_color;
+        a {
+            color: #fff;
+            display: block;
+            text-decoration: none;
+        }
+    }
+}
+
 // footer
 .footer {
     padding-top: 5px;

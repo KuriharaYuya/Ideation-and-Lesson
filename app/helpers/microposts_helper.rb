@@ -8,7 +8,7 @@ module MicropostsHelper
   end
 
   def prompt_post
-    can_post?
-    flash[:notice] = '投稿する準備が完了しています'
+    flash[:notice] = '投稿する準備が完了しています' if can_post?
+    flash[:notice] = '既に投稿された投稿を書き換えました' if posted?
   end
 end

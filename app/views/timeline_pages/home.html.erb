@@ -1,26 +1,40 @@
 <%= alert("complete", flash[:notice])  %>
-<div class="feed_content_wrapper">
-    <%= 50.times do  %>
-    <% @i||= 1  %>
-    <div class="feed_content card">
-        <a href="#">
-            <div class="card-body">
+<div class="feed_content_wrapper" id="feed_content_wrapper">
+    <% @j = 1  %>
+    <%@microposts.each do |micropost| %>
+    <div class="feed_content card" <%= "id='loaded_top'" if @start_get > 1 && @start_get +1 == @j %>>
+        <div class="card-body">
+            <h4 class="post_author_wrap">
+                <img class="post_author_img"
+                    src="https://www.nme.com/wp-content/uploads/2022/05/le-sserafim-sakura-source-music-hybe-100522-696x442.jpg"
+                    alt="">
+                <%=link_to micropost.user.name, user_path(micropost.user)%>
+            </h4>
+            <a href="<%=micropost_path(micropost)  %>">
+                <h5 class="card-title"><%=micropost.title  %></h5>
+                <h6 class="card-subtitle mb-2 "><%= micropost.post_type %></h6>
+                <h6>経過時間: <%=to_HH_MM(micropost.consuming_minutes.to_i)  %></h6>
+                <p style="margin-bottom: 0.5rem;">
+                    <%if micropost.post_type == "タイムラプス" %>
+                    <% if micropost.video.present?  %>
+                    動画添付済み
+                    <% else  %>
+                    添付動画なし
+                    <% end %>
+                </p>
 
-                <h4 class="post_author_wrap"><img class="post_author_img"
-                        src="https://static.wikia.nocookie.net/twicenation/images/3/37/Sana_Between_1%262_Profile.jpg"
-                        alt="">Sana</h4>
-                <h5 class="card-title">Post title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">タイムラプス</h6>
-                <h6>経過時間: </h6>
-                <h6></h6>
-                <%if true %>
-                <p style="margin-bottom: 0.5rem;">動画添付済み</p>
-                <p><%= check_box_tag :verified?,true,false, {disabled: true}%><span>verified?</span></p>
+                <p><span>verified?:&nbsp;</span><%= check_box_tag :verified?,true,micropost.verified?, {disabled: true}%>
+                </p>
                 <% end  %>
-                <span class="posted_ago">2hours ago</span>
-            </div>
-        </a>
+                <span class="posted_ago"><%= distance_of_time_in_words(micropost.posted_at,Time.zone.now)  %>前</span>
+            </a>
+        </div>
     </div>
-    <% @i+=1  %>
+    <%@j += 1  %>
     <% end  %>
+    <div class="d-grid gap-2 col-6 mx-auto road_btn_wrap">
+        <button class="btn btn-primary road_btn"
+            type="button"><%=link_to "もっと見る", root_path(post_length: @microposts.length)  %></button>
+
+    </div>
 </div>
