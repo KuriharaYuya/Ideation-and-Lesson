@@ -1,2 +1,26 @@
 <%= alert("complete", flash[:notice])  %>
-<h1>Hello this is home section</h1>
+<div class="feed_content_wrapper">
+    <%= 50.times do  %>
+    <% @i||= 1  %>
+    <div class="feed_content card">
+        <a href="#">
+            <div class="card-body">
+
+                <h4 class="post_author_wrap"><img class="post_author_img"
+                        src="https://static.wikia.nocookie.net/twicenation/images/3/37/Sana_Between_1%262_Profile.jpg"
+                        alt="">Sana</h4>
+                <h5 class="card-title">Post title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">タイムラプス</h6>
+                <h6>経過時間: </h6>
+                <h6></h6>
+                <%if true %>
+                <p style="margin-bottom: 0.5rem;">動画添付済み</p>
+                <p><%= check_box_tag :verified?,true,false, {disabled: true}%><span>verified?</span></p>
+                <% end  %>
+                <span class="posted_ago">2hours ago</span>
+            </div>
+        </a>
+    </div>
+    <% @i+=1  %>
+    <% end  %>
+</div>
