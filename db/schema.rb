@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_043832) do
+=======
 ActiveRecord::Schema[7.0].define(version: 2022_10_29_020832) do
+>>>>>>> feat/#11_coding_common_layout
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
