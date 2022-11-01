@@ -1,4 +1,6 @@
+<%= alert("info",flash[:notice])  %>
 <br><br><br>
+<%=button_to "投稿する",post_micropost_path,autofocus: true if can_post?  %>
 <% @columns.each do |colum|  %>
 
 <%if @micropost[colum]  %>

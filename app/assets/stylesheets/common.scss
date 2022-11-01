@@ -146,7 +146,6 @@ html {
     :not(:last-child) {
         margin-right: $bettween_footer_btn;
     }
-    margin-bottom: 10px;
     .nav-item {
         width: calc(33% - $bettween_footer_btn/2);
         background-color: $feed_content_bg_color;

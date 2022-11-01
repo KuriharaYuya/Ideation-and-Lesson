@@ -1,6 +1,7 @@
 class MicropostsController < ApplicationController
   include ApplicationHelper
   include LifelogsHelper
+  include MicropostsHelper
   def new
     @user = current_user
     @micropost = Micropost.new
@@ -32,6 +33,7 @@ class MicropostsController < ApplicationController
     result = ((@micropost.end_datetime - @micropost.start_datetime) / 60.0)
     @micropost.update!(assumption_minutes: result)
     update_calculated_minutes
+    prompt_post
     redirect_to micropost_path(@micropost)
   end
 
@@ -55,6 +57,7 @@ class MicropostsController < ApplicationController
       update_calculated_minutes
       assign_lifelog_to_micropost
       @micropost.update(verified: false) if micropost_params[:post_type] != 'タイムラプス'
+      prompt_post
       redirect_to micropost_path(@micropost)
     else
       render :edit
@@ -66,6 +69,18 @@ class MicropostsController < ApplicationController
     user = @micropost.user
     @micropost.destroy!
     redirect_to user_path(user)
+  end
+
+  def post_micropost
+    now = Time.now
+    @micropost = Micropost.find(params[:id])
+    if can_post?
+      @micropost.update(posted?: true, posted_at: now)
+      flash[:notice] = '投稿されました'
+      redirect_to root_path
+    else
+      redirect_to micropost_path(@micropost)
+    end
   end
 
   private
