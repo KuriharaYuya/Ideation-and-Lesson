@@ -10,7 +10,7 @@
   end
   if Rails.env.test?
     user_id = User.all[-1].id.to_i
-    lifelog_id = User.find(user_id).microposts[-1].id
+    lifelog_id = User.find(user_id).lifelogs[-1].id
   end
   exec_date = Lifelog.find(lifelog_id).log_date
   posted_at = Time.now - n.minutes
