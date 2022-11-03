@@ -1,8 +1,8 @@
 <%= alert("complete", flash[:notice])  %>
-<div class="feed_content_wrapper" id="feed_content_wrapper">
+<div class="feed_content_wrapper">
     <% @j = 1  %>
     <%@microposts.each do |micropost| %>
-    <div class="feed_content card" <%= "id='loaded_top'" if @start_get > 1 && @start_get +1 == @j %>>
+    <div class="feed_content card" <%= "id="+ "loaded_first" if @start_get > 1 && @start_get +1 == @j %>>
         <div class="card-body">
             <h4 class="post_author_wrap">
                 <img class="post_author_img"
@@ -38,3 +38,8 @@
 
     </div>
 </div>
+<script>
+    var app_content = document.getElementById('app_content');
+    var loaded_first_top = document.getElementById('loaded_first').offsetTop;
+    app_content.scrollTop = loaded_first_top - 80
+</script>
