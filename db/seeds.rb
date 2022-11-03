@@ -9,7 +9,7 @@
     lifelog_id = 1
   end
   if Rails.env.test?
-    user_id = 913_302_132
+    user_id = User.all[-1].id.to_i
     lifelog_id = User.find(user_id).microposts[-1].id
   end
   exec_date = Lifelog.find(lifelog_id).log_date
