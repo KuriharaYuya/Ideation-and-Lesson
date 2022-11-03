@@ -32,11 +32,14 @@
     </div>
     <%@j += 1  %>
     <% end  %>
+    <% if @microposts.length >= 20  %>
     <div class="d-grid gap-2 col-6 mx-auto road_btn_wrap">
         <button class="btn btn-primary road_btn"
             type="button"><%=link_to "もっと見る", root_path(post_length: @microposts.length)  %></button>
-
     </div>
+    <% else  %>
+    <h5 class="no_more_posts_msg">これ以上投稿はありません</h5>
+    <% end  %>
 </div>
 <script>
     var app_content = document.getElementById('app_content');
