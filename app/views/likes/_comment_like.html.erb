@@ -1,0 +1,7 @@
+<%=form_with(model:like, url: micropost_comment_like_path(@micropost, comment), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>
+<%=f.hidden_field :user_id,value: @user.id %>
+<%=f.hidden_field :micropost_id,value: @micropost.id %>
+<%=f.hidden_field :comment_id,value: comment.id %>
+<%=f.hidden_field :like_id,value: like.id %>
+<%=f.submit "いいねを取り消す", disable_with: 'proccesing...'  %>
+<% end %>
