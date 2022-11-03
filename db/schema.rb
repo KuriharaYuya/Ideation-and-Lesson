@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2022_10_21_043832) do
-=======
-ActiveRecord::Schema[7.0].define(version: 2022_10_29_020832) do
->>>>>>> feat/#11_coding_common_layout
+ActiveRecord::Schema[7.0].define(version: 2022_11_01_051143) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -62,6 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_29_020832) do
     t.integer "consuming_minutes"
     t.date "exec_date"
     t.string "video"
+    t.boolean "posted?", default: false
+    t.datetime "posted_at"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -89,6 +87,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_29_020832) do
     t.boolean "admin"
     t.string "bio"
     t.string "remember_digest"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   create_table "verifications", force: :cascade do |t|
