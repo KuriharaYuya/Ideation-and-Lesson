@@ -8,6 +8,10 @@
     user_id = 4
     lifelog_id = 1
   end
+  if Rails.env.test?
+    user_id = 913_302_132
+    lifelog_id = User.find(user_id).microposts[-1].id
+  end
   exec_date = Lifelog.find(lifelog_id).log_date
   posted_at = Time.now - n.minutes
   Micropost.create!(title:, user_id:, start_datetime:, end_datetime:, lifelog_id:, exec_date:, posted?: true,
