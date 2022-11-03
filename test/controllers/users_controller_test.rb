@@ -109,4 +109,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_select 'div.alert', count: 0
   end
   # =======fix bugs end
+
+  test 'should updated, then redirect' do
+    bio_text = 'tetetetesy'
+    patch user_path(@saved_user), params: { user: { bio: bio_text } }
+    assert_equal bio_text, User.find(@saved_user.id).bio
+
+    # redirect successfully?
+    follow_redirect!
+    assert_not flash.empty?
+    assert flash[:notice] = '変更が完了しました。'
+  end
 end

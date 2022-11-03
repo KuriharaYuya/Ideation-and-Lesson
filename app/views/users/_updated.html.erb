@@ -1,6 +1,8 @@
 <h2>Are you sure update your account with these value?</h2>
 <p>name: <%= params[:user][:name] %></p>
 <p>email: <%= params[:user][:email] %></p>
+<%unless params[:user][:password].nil?  %>
 <p>password: <%= "●" * params[:user][:password].length.to_i  %></p>
+<% end  %>
 <button style="width: 150px;"><%= link_to "Ok",@user %></button>
 <button style="width: 150px;"><%= link_to "Reset",action: "edit" %></button>

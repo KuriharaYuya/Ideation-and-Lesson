@@ -36,7 +36,10 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    render partial: 'users/updated' if @user.update!(user_params)
+    if @user.update!(user_params)
+      flash[:notice] = '変更が完了しました。'
+      redirect_to user_path(@user)
+    end
   end
 
   def destroy
