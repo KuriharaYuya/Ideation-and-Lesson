@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_01_051143) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_041804) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -89,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_051143) do
     t.string "remember_digest"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "profile_img"
   end
 
   create_table "verifications", force: :cascade do |t|

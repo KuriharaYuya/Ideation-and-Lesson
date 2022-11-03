@@ -65,6 +65,9 @@ html {
     .navbar {
         z-index: 2;
         background-color: $wrapper_bg_color;
+        .logged_in_nav {
+            border-radius: 20px;
+        }
     }
     .navbar-brand {
         a {

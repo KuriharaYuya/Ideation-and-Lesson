@@ -3,7 +3,12 @@
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <% if logged_in? && current_user.profile_img.present? %>
+        <span class="navbar-toggler-icon logged_in_nav"
+          style="background-image: url('<%= current_user.profile_img  %>') !important;"></span>
+        <% else  %>
         <span class="navbar-toggler-icon"></span>
+        <% end  %>
       </button>
       <button type="button" class="notify-btn btn btn-dark">
         <span class="badge bg-secondary">9</span><i class="fa-solid fa-bell"></i>

@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_secure_password
   attr_accessor :remember_token
 
-  # これは付け加えるだけで勝手にpassword(digest)を暗号化してくれる
+  mount_uploader :profile_img, ProfileImageUploader
 
   def follow(other_user)
     following << other_user

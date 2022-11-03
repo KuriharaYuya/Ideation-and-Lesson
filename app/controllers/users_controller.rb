@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    render partial: 'users/updated' if @user.update(user_params)
+    render partial: 'users/updated' if @user.update!(user_params)
   end
 
   def destroy
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :profile_img)
   end
 
   def create_user_setting
