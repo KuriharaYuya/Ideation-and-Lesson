@@ -5,9 +5,7 @@
     <div class="feed_content card" <%= "id="+ "loaded_first" if @start_get > 1 && @start_get +1 == @j %>>
         <div class="card-body">
             <h4 class="post_author_wrap">
-                <img class="post_author_img"
-                    src="https://www.nme.com/wp-content/uploads/2022/05/le-sserafim-sakura-source-music-hybe-100522-696x442.jpg"
-                    alt="">
+                <img class="post_author_img" src="<%= micropost.user.profile_img  %>">
                 <%=link_to micropost.user.name, user_path(micropost.user)%>
             </h4>
             <a href="<%=micropost_path(micropost)  %>">
