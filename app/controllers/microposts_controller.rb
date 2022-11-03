@@ -42,11 +42,7 @@ class MicropostsController < ApplicationController
     @user = @micropost.user
     @comment = @user.comments.new
     @columns = get_all_column_names(Micropost)
-    @like = if logged_in?
-              @micropost.likes.find_by(user_id: current_user.id) || Like.new
-            else
-              Like.new
-            end
+    @like = @micropost.likes.find_by(user_id: current_user.id) || Like.new
   end
 
   def edit

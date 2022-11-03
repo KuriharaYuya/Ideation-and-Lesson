@@ -1,8 +1,0 @@
-<% if logged_in? && @micropost.likes.find_by(user_id: current_user.id)  %>
-<%=form_with(model:@like,url:  micropost_like_path(@micropost), local: true,:html => { :style => "display:inline-block;",method: :delete} ) do |f| %>
-<%=f.hidden_field :user_id,value: @user.id %>
-<%=f.hidden_field :micropost_id,value: @micropost.id %>
-<%=f.hidden_field :like_id,value: @like.id %>
-<%=f.submit "いいねを取り消す", disable_with: 'proccesing...'  %>
-<% end  %>
-<% end  %>

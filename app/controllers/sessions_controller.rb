@@ -16,11 +16,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def please_login
-    flash[:notice] = 'ログインしてください'
-    redirect_to login_path
-  end
-
   def destroy
     forget(current_user)
     log_out
