@@ -17,5 +17,14 @@ two:
   start_datetime: 2022-09-28 22:52:17
   end_datetime: 2022-09-28 22:52:17
 
+three:
+  title: MyString
+  user_id: 70456213
+  explain_post: MyString
+  post_type: MyString
+  engagement_status: MyString
+  start_datetime: 2022-09-28 22:52:17
+  end_datetime: 2022-09-28 22:52:17
+
 # when you exec"rails db:migate:reset", you should add "yuya" to user.yml. 
 # it makes you free from sign-up user for debug
