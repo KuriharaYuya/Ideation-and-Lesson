@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   post 'microposts/:id/post', to: 'microposts#post_micropost', as: 'post_micropost'
+  get '/please_login', to: 'sessions#please_login'
 
   resources :tweets, param: :user_id, only: %i[edit update create new]
 
