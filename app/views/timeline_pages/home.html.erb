@@ -6,7 +6,11 @@
         <%= "id="+ "loaded_first" if (@start_get > 1 && @start_get +1 == @j) || all_have_loaded?(0) && @microposts.length == @j%>>
         <div class="card-body">
             <h4 class="post_author_wrap">
+                <% if micropost.user.profile_img.present?  %>
                 <img class="post_author_img" src="<%= micropost.user.profile_img  %>">
+                <% else  %>
+                <img class="post_author_img" src="<%= profile_initial_img %>">
+                <% end %>
                 <%=link_to micropost.user.name, user_path(micropost.user)%>
             </h4>
             <a href="<%=micropost_path(micropost)  %>">
