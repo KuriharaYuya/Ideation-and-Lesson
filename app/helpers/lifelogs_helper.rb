@@ -44,15 +44,18 @@ module LifelogsHelper
     # if @micropost.lifelog.present?
     latest_lifelogs = @user.lifelogs.order(log_date: :desc)
     latest_lifelog = return_latest_lifelog
-    if latest_lifelogs.find_by(log_date: @micropost.exec_date).nil? || (latest_lifelog.log_date.before? @micropost.exec_date)
+    if @user.lifelogs.length == 0
+      # userがライフログを一つも持っていない場合
+      @lifelog = Lifelog.new(user_id: current_user.id, log_date: Time.now)
+      @lifelog.save!
+    elsif latest_lifelogs.find_by(log_date: @micropost.exec_date).nil? || (latest_lifelog.log_date.before? @micropost.exec_date)
       # 紐づくべきlifelogがない場合
       @lifelog = Lifelog.new(user_id: current_user.id, log_date: @micropost.exec_date)
       set_lifelog_duration_time('calc')
       @lifelog.save
       @micropost.update(lifelog_id: @lifelog.id)
-    end
-    # micropostが紐づくべきlifelogがある場合
-    if (latest_lifelog.log_date.after? @micropost.exec_date) || latest_lifelog.log_date == @micropost.exec_date
+    elsif (latest_lifelog.log_date.after? @micropost.exec_date) || latest_lifelog.log_date == @micropost.exec_date
+      # micropostが紐づくべきlifelogがある場合
       @i = 0
       latest_lifelogs.each do |lifelog|
         break if @i == 31
