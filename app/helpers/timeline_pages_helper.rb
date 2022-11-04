@@ -8,4 +8,8 @@ module TimelinePagesHelper
       "#{min}分"
     end
   end
+
+  def all_have_loaded?(add)
+    @number_of_posted_microposts < @start_get + add
+  end
 end
