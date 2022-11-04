@@ -2,7 +2,8 @@
 <div class="feed_content_wrapper">
     <% @j = 1  %>
     <%@microposts.each do |micropost| %>
-    <div class="feed_content card" <%= "id="+ "loaded_first" if @start_get > 1 && @start_get +1 == @j %>>
+    <div class="feed_content card"
+        <%= "id="+ "loaded_first" if (@start_get > 1 && @start_get +1 == @j) || all_have_loaded?(0) && @microposts.length == @j%>>
         <div class="card-body">
             <h4 class="post_author_wrap">
                 <img class="post_author_img" src="<%= micropost.user.profile_img  %>">
@@ -30,7 +31,7 @@
     </div>
     <%@j += 1  %>
     <% end  %>
-    <% if @microposts.length >= 20  %>
+    <% if @microposts.length >= 20 && !(all_have_loaded?(@number_of_load_microposts)) %>
     <div class="d-grid gap-2 col-6 mx-auto road_btn_wrap">
         <button class="btn btn-primary road_btn"
             type="button"><%=link_to "もっと見る", root_path(post_length: @microposts.length)  %></button>
