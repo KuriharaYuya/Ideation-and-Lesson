@@ -51,7 +51,10 @@ class User < ApplicationRecord
 
   def authenticated?(remember_token)
     # 「ハッシュ化したremember_token == remember_digest」 を聞いてる
+
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  rescue StandardError
+    nil
   end
 
   def forget
