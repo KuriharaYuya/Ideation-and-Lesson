@@ -63,7 +63,7 @@ html {
         padding-left: 0;
     }
     .navbar {
-        z-index: 2;
+        z-index: 3;
         background-color: $wrapper_bg_color;
         .logged_in_nav {
             border-radius: 20px;
@@ -145,6 +145,127 @@ html {
                 }
             }
         }
+    }
+}
+
+// explore
+.input-group {
+    display: block;
+    .search_textarea {
+        background-color: $feed_content_bg_color;
+        width: 60%;
+        display: inline-block;
+        color: $notion_gray;
+    }
+    .search_btn,
+    .reset_btn {
+        margin-bottom: 3px;
+        width: 18%;
+        height: 40px;
+        display: inline-block;
+        line-height: 40px;
+        font-size: 15px;
+        padding: 0;
+        color: $notion_gray;
+    }
+    .sort_btn {
+        margin-top: 3px;
+    }
+}
+.filters_wrapper {
+    width: 100%;
+    .sort_box {
+        margin-top: 10px;
+        display: flex;
+        .form-check {
+            $form_width: 50%;
+            width: $form_width;
+            padding-right: $form_width / 25;
+        }
+        background-color: $feed_content_bg_color;
+        select {
+            background-color: $notion_font_gray;
+        }
+        p {
+            width: 100%;
+            max-width: 100%;
+            .sort_label {
+                width: 50%;
+            }
+        }
+        .sort_end_btn {
+            color: $notion_gray;
+            text-align: center;
+            border: 2px solid $notion_font_gray;
+            text-decoration: none;
+        }
+    }
+}
+
+.search_filters {
+    width: 100%;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+    border-bottom: 2px solid $notion_font_gray;
+}
+
+// pagination
+.searched_results {
+    :last-child {
+        margin-bottom: 20px;
+    }
+}
+.pagination {
+    background-color: $wrapper_bg_color;
+    border-top: 2px solid $divider_gray;
+    bottom: 85px;
+    position: fixed;
+    z-index: 3;
+    width: $wrapper_width - 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    justify-content: space-around;
+    span {
+        min-width: 30px;
+        a {
+            text-decoration: none;
+        }
+    }
+    .next,
+    .first,
+    .prev {
+        margin-right: 10px;
+    }
+}
+.searched_user {
+    display: block;
+    width: 95%;
+    height: 60px;
+    display: flex;
+    margin: 8px 0px;
+    position: relative;
+    border: 2px solid $notion_font_gray;
+    text-decoration: none;
+    background-color: $feed_content_bg_color;
+    .user_img {
+        $user_img_size: 40px;
+        width: $user_img_size;
+        height: $user_img_size;
+        max-width: $user_img_size;
+        max-height: $user_img_size;
+        margin-right: 5px;
+        margin-left: 7px;
+        margin-top: 7px;
+    }
+    p {
+        line-height: 50px;
+        color: $notion_gray;
+        text-decoration: none;
+    }
+    .follow_btn {
+        position: absolute;
+        right: 6px;
+        margin-top: 13px;
     }
 }
 

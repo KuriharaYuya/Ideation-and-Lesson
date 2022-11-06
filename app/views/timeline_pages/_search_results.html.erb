@@ -1,0 +1,18 @@
+<div class="searched_results">
+    <% if @searched_user.present?  %>
+    <% @searched_user.each do |user|  %>
+    <a href="<%=user_path(user)%>" class="searched_user">
+        <% if user.profile_img.present?  %>
+        <img class="user_img" src="<%= user.profile_img  %>">
+        <% else  %>
+        <img class="user_img" src="<%= profile_initial_img %>">
+        <% end %>
+        <p><%= user.name  %></p>
+    </a>
+    <% end  %>
+    <br>
+</div>
+<%= paginate @searched_user if @searched_user.length > 25 %>
+<% else %>
+<h1>なし</h1>
+<% end  %>
