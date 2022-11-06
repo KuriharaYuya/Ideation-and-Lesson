@@ -6,4 +6,7 @@ class TimelinePagesControllerTest < ActionDispatch::IntegrationTest
     get root_path, params: { post_length: number_of_get_posts }
     assert_select 'h5.no_more_posts_msg', count: 1
   end
+
+  test 'search conditions should be delivered to controller' do
+  end
 end

@@ -17,3 +17,13 @@
   Micropost.create!(title:, user_id:, start_datetime:, end_datetime:, lifelog_id:, exec_date:, posted?: true,
                     posted_at:, engagement_status: '完了', post_type: 'タイムラプス')
 end
+
+120.times do |n|
+  name  = "TEST_#{Faker::Name.name}"
+  email = "example-#{n + 1}@yuyaapps.io"
+  password = 'password'
+  User.create!(name:,
+               email:,
+               password:,
+               password_confirmation: password)
+end

@@ -1,0 +1,63 @@
+<div class="serch_consoles">
+    <%=form_with(local: true,url: explore_path,html: {method: :get,class: "input-group"}) do |f|%>
+    <%=f.text_field :name_search,class: "form-control search_textarea",  placeholder: "例) ゆうや"%>
+    <%=f.submit "検索",class: "btn btn-outline-secondary search_btn"  %>
+    <%=link_to "リセット", explore_path,method: :get,class: "btn btn-outline-secondary reset_btn"  %>
+    <a class="sort_btn btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button"
+        aria-expanded="false" aria-controls="collapseExample">
+        ソートとフィルター
+    </a>
+    <div class="collapse filters_wrapper" id="collapseExample">
+        <div class="card card-body sort_box">
+            <div class="search_filters">
+                <div class="form-check">
+                    <%=f.radio_button :match_option,"exact_match",class:'form-check-input',checked: true%>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        完全一致
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%=f.radio_button :match_option,"partial_match",class:'form-check-input'%>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        部分一致
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%=f.radio_button :match_option,"forward_match",class:'form-check-input'%>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        前方一致
+                    </label>
+                </div>
+                <div class="form-check">
+                    <%=f.radio_button :match_option,"backward_match",class:'form-check-input'%>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        後方一致
+                    </label>
+                </div>
+            </div>
+            <%sort_templete =  ["昇順","降順"]   %>
+            <% if logged_in?  %>
+            <p>
+                <%=f.label "フォロワーは上へ",class: "sort_label"  %>
+                <%=f.check_box :following_asc?, checked: true, class: "sort_select"%>
+            </p>
+            <% else  %>
+            <% f.check_box :following_asc?, checked: false, class: "sort_select"%>
+            <% end  %>
+            <p>
+                <%=f.label :name,class: "sort_label"  %>
+                <%=f.select :sort_name, sort_templete,class: "sort_select"%>
+            </p>
+            <p>
+                <%=f.label :craeted_at, "登録日",class: "sort_label"  %>
+                <%=f.select :registered_at,  sort_templete,class: "sort_select"%>
+            </p>
+            <a class="sort_end_btn" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                完了
+            </a>
+            <%#=f.submit "完了", class: "sort_end_btn "  %>
+        </div>
+    </div>
+    <% end %>
+</div>
