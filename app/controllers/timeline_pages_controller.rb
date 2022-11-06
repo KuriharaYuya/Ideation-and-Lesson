@@ -26,9 +26,9 @@ class TimelinePagesController < ApplicationController
                          User.where('name LIKE ?', "%#{params[:name_search]}")
                        end
       if conditions[:registered_at_asc?]
-        @searched_user.order!(crated_at: :asc)
+        @searched_user.order!(created_at: :asc)
       else
-        @searched_user.order!(crated_at: :desc)
+        @searched_user.order!(created_at: :desc)
       end
 
       if conditions[:name_asc?]
