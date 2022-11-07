@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def return_notification
-    if logged_in?
+    if logged_in? && Notification.all[0].present?
       @user = current_user
       @notification = Notification.where(visited_id: @user.id)
     end
