@@ -10,57 +10,59 @@ class TimelinePagesController < ApplicationController
 
   def explore
     @user = User.new
-    if (params[:commit] == '検索') && params[:name_search] != ''
-      # 検索欄に値が存在した上で検索ボタンが押された場合
-      # 選択されたソートオプションを実行して返す
-      conditions = { following_asc?: following_asc?, registered_at_asc?: registered_at_asc?, name_asc?: name_asc? }
-      @searched_user = if params[:name_search] == '' || params[:name_search].nil?
-                         User.all
-                       elsif params[:match_option] == 'exact_match'
-                         User.where(name: params[:name_search])
-                       elsif params[:match_option] == 'partial_match'
-                         User.where('name LIKE ?', "%#{params[:name_search]}%")
-                       elsif params[:match_option] == 'forward_match'
-                         User.where('name LIKE ?', "#{params[:name_search]}%")
-                       elsif params[:match_option] == 'backward_match'
-                         User.where('name LIKE ?', "%#{params[:name_search]}")
-                       end
-      if conditions[:registered_at_asc?]
-        @searched_user.order!(created_at: :asc)
-      else
-        @searched_user.order!(created_at: :desc)
-      end
-
-      if conditions[:name_asc?]
-        @searched_user.order!(name: :asc)
-      else
-        @searched_user.order!(name: :desc)
-      end
-
-      if params[:following_asc] == '1'
-        @searched_user.each do |user|
-          @following_status ||= []
-          if current_user.following?(user)
-            @following_status.push([user, true])
-          else
-            @following_status.push([user, false])
-          end
-        end
-        if @following_status
-          @following_status.sort_by! { |x| x[0][1] }
-          @searched_user = []
-          @following_status.each do |status|
-            user = status[0]
-            @searched_user.push(user)
-          end
-        end
-      end
+    # if (params[:commit] == '検索') && params[:name_search] != ''
+    # 検索欄に値が存在した上で検索ボタンが押された場合
+    # 選択されたソートオプションを実行して返す
+    conditions = { following_asc?: following_asc?, registered_at_asc?: registered_at_asc?, name_asc?: name_asc? }
+    @searched_user = if params[:name_search] == '' || params[:name_search].nil?
+                       User.all
+                     elsif params[:match_option] == 'exact_match'
+                       User.where(name: params[:name_search])
+                     elsif params[:match_option] == 'partial_match'
+                       User.where('name LIKE ?', "%#{params[:name_search]}%")
+                     elsif params[:match_option] == 'forward_match'
+                       User.where('name LIKE ?', "#{params[:name_search]}%")
+                     elsif params[:match_option] == 'backward_match'
+                       User.where('name LIKE ?', "%#{params[:name_search]}")
+                     end
+    # end
+    if conditions[:registered_at_asc?]
+      @searched_user.order!(created_at: :asc)
     else
-      # 前回のparamsがそのままで、検索欄が空欄で検索ボタンが押された場合
-      # リセットと同じ扱い
-      @searched_user = User.all
+      @searched_user.order!(created_at: :desc)
     end
-    @searched_user = @searched_user.page(params[:page]) if @searched_user.length > 25
+
+    if conditions[:name_asc?]
+      @searched_user.order!(name: :asc)
+    else
+      @searched_user.order!(name: :desc)
+    end
+
+    if params[:following_asc] == '1'
+      @searched_user.each do |user|
+        @following_status ||= []
+        if current_user.following?(user)
+          @following_status.push([user, true])
+        else
+          @following_status.push([user, false])
+        end
+      end
+      if @following_status
+        @following_status.sort_by! { |x| x[0][1] }
+        @searched_user = []
+        @following_status.each do |status|
+          user = status[0]
+          @searched_user.push(user)
+        end
+      end
+    end
+    if @searched_user.length > 25
+      @searched_user = if @searched_user.is_a?(Array)
+                         Kaminari.paginate_array(@searched_user).page(params[:page]).per(10)
+                       else
+                         @searched_user.page(params[:page])
+                       end
+    end
   end
 
   private

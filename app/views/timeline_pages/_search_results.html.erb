@@ -8,11 +8,15 @@
         <img class="user_img" src="<%= profile_initial_img %>">
         <% end %>
         <p><%= user.name  %></p>
+        <% if logged_in? && current_user.following?(user)  %>
+        <span class="user_following">フォロー中</span>
+        <% end  %>
     </a>
     <% end  %>
+    <%= paginate @searched_user if @searched_user.length > 25 %>
+    <% else %>
+    <h1>なし</h1>
+    <% end  %>
+    <br>
     <br>
 </div>
-<%= paginate @searched_user if @searched_user.length > 25 %>
-<% else %>
-<h1>なし</h1>
-<% end  %>
