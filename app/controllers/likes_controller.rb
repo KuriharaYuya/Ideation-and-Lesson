@@ -1,4 +1,3 @@
-require 'User'
 class LikesController < ApplicationController
   include ApplicationHelper
   before_action :user_log_in, only: %w[create destroy]
