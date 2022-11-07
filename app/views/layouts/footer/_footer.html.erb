@@ -13,10 +13,14 @@
             </a>
         </li>
         <li class="nav-item btn btn-dark">
-            <a class="nav-link" href="#">
-                <i class="fa-solid fa-user"></i>
-                <p>Mypage</p>
-            </a>
+            <% if logged_in?  %>
+            <a class="nav-link" href="<%= user_path(current_user) %>">
+                <% else  %>
+                <a class="nav-link" href="<%= please_login_path%>">
+                    <% end  %>
+                    <i class="fa-solid fa-user"></i>
+                    <p>Mypage</p>
+                </a>
         </li>
     </ul>
 </div>
