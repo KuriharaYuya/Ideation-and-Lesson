@@ -1,4 +1,5 @@
 class TimelinePagesController < ApplicationController
+  include ApplicationHelper
   include TimelinePagesHelper
   def home
     if params[:post_length].nil?

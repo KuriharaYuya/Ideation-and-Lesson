@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include ApplicationHelper
   before_action :user_log_in
   # 本人かどうか
   def create

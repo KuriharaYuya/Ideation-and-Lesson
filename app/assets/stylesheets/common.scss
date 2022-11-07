@@ -60,6 +60,10 @@ html {
     height: 65px;
     position: relative;
     @include gray_plane_underline;
+    .header_nav_wrapper {
+        width: 100%;
+        min-width: 100%;
+    }
     .container-fluid {
         padding-left: 0;
     }
@@ -124,6 +128,10 @@ html {
                 min-height: 60px;
                 height: auto;
                 margin: 0 auto;
+                text-align: center;
+                .notified_micropost_link {
+                    display: block;
+                }
                 &:not(:last-child) {
                     margin-bottom: 7px;
                 }
@@ -271,10 +279,11 @@ html {
 .pagination {
     background-color: $wrapper_bg_color;
     border-top: 2px solid $divider_gray;
-    bottom: 85px;
+    bottom: 86px;
     position: fixed;
-    z-index: 3;
+    z-index: 2;
     width: $wrapper_width - 20px;
+    height: 30px;
     margin: 0 auto;
     margin-top: 20px;
     justify-content: space-around;

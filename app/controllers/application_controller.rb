@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # before_action :basic_auth, if: :test?
+  before_action :return_notification
   def hello
     render html: 'hello, world!'
   end

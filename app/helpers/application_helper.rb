@@ -16,5 +16,12 @@ module ApplicationHelper
       render "layouts/flash/#{type}"
     end
   end
+
+  def return_notification
+    if logged_in?
+      @user = current_user
+      @notification = Notification.where(visited_id: @user.id)
+    end
+  end
   include SessionsHelper
 end
