@@ -1,4 +1,5 @@
 class TweetsController < ApplicationController
+  include ApplicationHelper
   before_action :tweet_basic_auth, only: %w[edit]
   def edit
     @user_setting = current_user.user_setting
@@ -22,13 +23,12 @@ class TweetsController < ApplicationController
     user = current_user
     user.user_setting.update(post_lifelog_id: @lifelog_id)
     begin
-    run_rake_task_tweet
-    rescue
-    redirect_to new_tweet_path
-    @i = 1
+      run_rake_task_tweet
+    rescue StandardError
+      redirect_to new_tweet_path
+      @i = 1
     end
     redirect_to new_tweet_path if @i.nil?
-
   end
 
   private
