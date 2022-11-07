@@ -1,3 +1,4 @@
+<% if return_notification  %>
 <%@notification.each do |notification|  %>
 <%@i ||= 1  %>
 <div class="notification_content">
@@ -20,4 +21,9 @@
 <% @i += 1
 break if @i == 50
 %>
+<% end %>
+<% else %>
+<div class="notification_content">
+    <p style="font-size: 15px;">通知を見れるのは最新の50件までです</p>
+</div>
 <% end %>
