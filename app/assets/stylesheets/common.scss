@@ -58,7 +58,12 @@ html {
 }
 .header {
     height: 65px;
+    position: relative;
     @include gray_plane_underline;
+    .header_nav_wrapper {
+        width: 100%;
+        min-width: 100%;
+    }
     .container-fluid {
         padding-left: 0;
     }
@@ -79,15 +84,71 @@ html {
 
     .navbar-dark .notify-btn {
         margin-top: 4px;
+        width: 60px;
         padding: 8px;
+        text {
+            display: none;
+        }
+        &:first-child(1) {
+            display: none;
+        }
         .fa-bell {
-            padding-left: 7px;
+            display: inline;
+        }
+        span {
+            display: inline;
+            margin-right: 4px;
         }
     }
     .navbar-nav li .nav-link {
         color: $notion_gray;
         list-style: armenian;
+        text-align: center;
         @include gray_dotted_underline;
+    }
+    // notification
+    $notify_sideber_width: 270px;
+    .notification_offcanvas {
+        max-width: $notify_sideber_width;
+        position: absolute;
+        z-index: 5;
+        height: 100vh;
+        background-color: $feed_content_bg_color;
+        left: -9px;
+        .btn-close {
+            background-color: #fff;
+            border: 2px solid $divider_gray;
+        }
+        .offcanvas-body {
+            padding: 2px;
+            border: 1px solid $divider_gray;
+            .notification_content {
+                border-bottom: 1px solid $divider_gray;
+                width: 100%;
+                min-height: 60px;
+                height: auto;
+                margin: 0 auto;
+                text-align: center;
+                .notified_micropost_link {
+                    display: block;
+                }
+                &:not(:last-child) {
+                    margin-bottom: 7px;
+                }
+                .notify_msg {
+                    margin-bottom: 4px;
+                    i {
+                        margin-right: 4px;
+                    }
+                    .fa-heart {
+                        color: rgb(250, 44, 139);
+                    }
+                }
+            }
+        }
+    }
+    .modal-backdrop {
+        display: none;
     }
 }
 
@@ -218,10 +279,11 @@ html {
 .pagination {
     background-color: $wrapper_bg_color;
     border-top: 2px solid $divider_gray;
-    bottom: 85px;
+    bottom: 86px;
     position: fixed;
-    z-index: 3;
+    z-index: 2;
     width: $wrapper_width - 20px;
+    height: 30px;
     margin: 0 auto;
     margin-top: 20px;
     justify-content: space-around;

@@ -1,0 +1,23 @@
+<%@notification.each do |notification|  %>
+<%@i ||= 1  %>
+<div class="notification_content">
+    <% if @i < 50  %>
+    <p class="notify_msg"><i class="fa-sharp fa-solid fa-heart"></i>
+        <%= notification.user.name  %>さんが<%= notification.action?%>しました
+    </p>
+    <div class="notified_content">
+        <div class="notified_micropost_content">
+            <a class="notified_micropost_link"
+                href="<%= micropost_path(notification.content?)  %>"><%= notification.content?.title%></a>
+        </div>
+    </div>
+</div>
+<% else  %>
+<p style="font-size: 15px;">通知を見れるのは最新の50件までです</p>
+<% end %>
+
+
+<% @i += 1
+break if @i == 50
+%>
+<% end %>

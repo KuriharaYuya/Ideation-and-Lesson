@@ -1,4 +1,6 @@
+require 'User'
 class LikesController < ApplicationController
+  include ApplicationHelper
   before_action :user_log_in, only: %w[create destroy]
   def index
     params[:micropost_id] = nil if params[:micropost_id] && params[:comment_id]
@@ -17,6 +19,7 @@ class LikesController < ApplicationController
     like = @post.likes.build(like_params)
     like[:micropost_id] = nil if @post.instance_of?(Comment)
     like.save!
+    @post.create_notification_like_for_micropost(current_user)
     redirect_to micropost_path(params[:like][:micropost_id])
   end
 

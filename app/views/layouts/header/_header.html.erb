@@ -1,6 +1,7 @@
 <div class="header">
   <nav class="navbar navbar-light navbar-dark ">
     <div class="container-fluid">
+      <%= render 'layouts/header/header_notification'  %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <% if logged_in? && current_user.profile_img.present? %>
@@ -10,11 +11,7 @@
         <span class="navbar-toggler-icon"></span>
         <% end  %>
       </button>
-      <button type="button" class="notify-btn btn btn-dark">
-        <span class="badge bg-secondary">9</span><i class="fa-solid fa-bell"></i>
-        <span class="visually-hidden">unread messages</span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <div class="header_nav_wrapper collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <% if logged_in? %>
           <%=render 'layouts/header/header_loggedin' %>
