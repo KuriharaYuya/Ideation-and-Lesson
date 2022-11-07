@@ -1,0 +1,8 @@
+<%30.times do |n| %>
+<div class="notification_content">
+    <p class="notify_msg"><i class="fa-sharp fa-solid fa-heart"></i>Yuyaさんがいいねしました</p>
+    <div class="notified_content">
+        <%= Micropost.all.last.title %>
+    </div>
+</div>
+<% end %>

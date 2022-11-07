@@ -1,0 +1,16 @@
+<button class="notify-btn btn btn-dark " data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+    aria-controls="offcanvasExample">
+    <span class="badge bg-secondary">9</span><i class="fa-solid fa-bell"></i>
+    <span class="visually-hidden">unread messages</span>
+</button>
+
+<div class="notification_offcanvas offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">通知box</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <%= render 'layouts/header/header_notification_content'  %>
+    </div>
+</div>
