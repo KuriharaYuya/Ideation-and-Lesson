@@ -10,12 +10,8 @@ class Notification < ApplicationRecord
     'いいね' if action == 'like'
   end
 
-  def user
-    if micropost_id.present?
-      Micropost.find(micropost_id).user
-    elsif comment_id.present?
-      Comment.find(comment_id).user
-    end
+  def visitor
+    User.find(visitor_id)
   end
 
   def content?

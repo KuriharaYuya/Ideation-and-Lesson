@@ -4,7 +4,7 @@
 <div class="notification_content">
     <% if @i < 50  %>
     <p class="notify_msg"><i class="fa-sharp fa-solid fa-heart"></i>
-        <%= notification.user.name  %>さんが<%= notification.action?%>しました
+        <%= notification.visitor.name  %>さんが<%= notification.action?%>しました
     </p>
     <div class="notified_content">
         <div class="notified_micropost_content">
@@ -24,6 +24,11 @@ break if @i == 50
 <% end %>
 <% else %>
 <div class="notification_content">
-    <p style="font-size: 15px;">通知を見れるのは最新の50件までです</p>
+    <% if logged_in?  %>
+    <p style="font-size: 15px;">通知はまだありません</p>
+    <% else  %>
+    <p style="font-size: 15px;">通知はまだありません</p>
+    <a href="<%= login_path  %>">ログインする</a>
+    <% end %>
 </div>
 <% end %>
