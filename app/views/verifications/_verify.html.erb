@@ -1,0 +1,10 @@
+<% if @micropost.user != current_user && @micropost.post_type == "タイムラプス" && @micropost.engagement_status == "完了"  %>
+<%if @micropost.verifications.find_by(user_id: current_user)  %>
+<%verification = @micropost.verifications.find_by(user_id: current_user.id) %>
+<%= button_to "認可取り消し",  micropost_verification_path(@micropost,verification),method: :delete,style: "display: inline;",class: "btn btn-danger" %>
+<% else  %>
+
+<%= button_to "認める",  micropost_verifications_path(@micropost),class: "btn btn-success" %>
+
+<% end  %>
+<%end %>

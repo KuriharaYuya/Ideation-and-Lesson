@@ -1,10 +1,11 @@
 class VerificationsController < ApplicationController
+  include ApplicationHelper
   before_action :user_log_in, only: %w[create destroy index]
   before_action :set_micropost_and_user, only: %w[create destroy index]
   def create
     verification = @micropost.verifications.build(micropost_id: @micropost.id, user_id: @user.id)
     if verification.save! && @micropost.user != current_user
-      @micropost.update(verified: true)
+      @micropost.update(verified: true) unless @micropost.verified
       redirect_to micropost_path(@micropost)
     else
       redirect_to login_path
@@ -14,8 +15,8 @@ class VerificationsController < ApplicationController
   def destroy
     verification = Verification.find(@micropost.verifications.find_by(user_id: @user.id).id)
     if @user == current_user
+      @micropost.update(verified: false) if @micropost.verifications.count == 1
       verification.destroy!
-      @micropost.update(verified: false)
       redirect_to micropost_path(@micropost)
     else
       redirect_to login_path

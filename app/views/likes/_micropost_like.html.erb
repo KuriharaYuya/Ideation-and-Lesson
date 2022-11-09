@@ -4,7 +4,8 @@
 <%=form_with(model:@like,url: micropost_likes_path(@micropost), local: true,:html => { :style => "display:inline-block;"} ) do |f| %>
 <%=f.hidden_field :user_id,value: current_user.id %>
 <%=f.hidden_field :micropost_id,value: @micropost.id %>
-<%=f.submit "いいね！", disable_with: 'proccesing...'  %>
+<%=f.submit "いいね！", disable_with: 'proccesing...',class: "btn btn-primary"  %>
+<%=link_to "#{@micropost.likes.count}いいね",micropost_likes_path(@micropost) %>
 <% end  %>
 
 <% end  %>
@@ -12,4 +13,3 @@
 <% else  %>
 <%= button_to "いいね！",please_login_path, method: :get, class: "dummy" %>
 <% end  %>
-<%=link_to "#{@micropost.likes.count}いいね",micropost_likes_path(@micropost) %>

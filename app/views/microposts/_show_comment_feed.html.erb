@@ -1,0 +1,20 @@
+<div class="micropost_comments_feed">
+    <% if @micropost.comments.present?  %>
+    <% @micropost.comments.order(created_at: :asc).each do |comment| %>
+    <div class="feed_content">
+        <p class="comment_user">
+            <a href="<%= user_path(comment.user)  %>">
+                <% if comment.user.profile_img.present?  %>
+                <img class="post_author_img" src="<%= comment.user.profile_img  %>">
+                <% else  %>
+                <img class="post_author_img" src="<%= profile_initial_img %>">
+                <% end %><%= comment.user.name  %>
+            </a>
+        </p>
+        <p><%= comment.content  %></p>
+    </div>
+    <% end  %>
+    <% else  %>
+    <h4 style="text-align: center;margin-top: 15px;">まだコメントはありません</h4>
+    <% end  %>
+</div>

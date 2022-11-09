@@ -1,98 +1,17 @@
 <%= alert("info",flash[:notice])  %>
-<br><br><br>
-<%=button_to "投稿する",post_micropost_path,autofocus: true if can_post?  %>
-<% @columns.each do |colum|  %>
-
-<%if @micropost[colum]  %>
-<%  unless colum == "video"  %>
-<h3><%= colum  %>: <%= @micropost[colum]  %></h3>
-<br><br>
-<% else  %>
-<h3><%= colum  %>: <%=link_to "タイムラプス添付済み",@micropost.video.url  %></h3>
-<br><br>
-<% end  %>
-<% end  %>
-
-<% end  %>
-<br><br>
-<h3>
-    <%if @micropost.lifelog.present?  %>
-    <%=link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)  %>
-    <%end  %>
-    <p>紐づいているライフログはありません、editボタンで変更するか、lifelogを作成したください</p>
-</h3>
-<br><br>
-
-<%if @micropost.post_type == "タイムラプス"  %>
-<h4>
-
-    <p>
-        <% if @micropost.user != current_user  %>
-        <%if @micropost.verifications.find_by(user_id: current_user)  %>
-        <%verification = @micropost.verifications.find_by(user_id: current_user.id) %>
-        <%= button_to "Unverify",  micropost_verification_path(@micropost,verification),method: :delete %>
-        <% else  %>
-
-        <%= button_to "Verify",  micropost_verifications_path(@micropost) %>
-
-        <% end  %>
-        <%end %>
-
-        <%=link_to  "#{@micropost.verifications.count} verified",micropost_verifications_path(@micropost) %>
-
-    </p>
-
+<%= render 'microposts/show_table'  %>
+<% if @micropost.video.present?  %>
+<h4><a class="video_expand" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        タイムラプス動画を確認する
+    </a>
 </h4>
-<% end  %>
+<% end %>
 
-
-<h3>
+<h6 class="like_console">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+        aria-expanded="false" aria-controls="multiCollapseExample2">コメント</button>
+    <%= render 'verifications/verify'  %>
     <%= render 'likes/micropost_like' %>
     <%= render 'likes/micropost_unlike' %>
-</h3>
-
-<%if @micropost.user == current_user  %>
-<br><br>
-<%= link_to "Edit micropost", edit_micropost_path  %>
-<%= form_with(model:@micropost,html:{method: :delete}, local: true) do |f| %>
-<%= f.submit "Delete micropost", disable_with: 'Deleting...'  %>
-<% end  %>
-<% end  %>
-
-<h2>Comment</h2>
-<%= form_with(model:@comment,local: true,url: micropost_comments_path(@micropost)) do |f| %>
-<%= f.hidden_field :micropost_id,value: @micropost.id  %>
-<%=f.label :content  %>
-<br>
-<%=f.text_field :content  %>
-<br><br>
-<%=f.submit "Comment", disable_with: 'Commenting...'  %>
-<% end  %>
-<br><br>
-<% @micropost.comments.each do |comment|  %>
-<h3><%=comment.user.name %></h3>
-<h4><%=comment.content %></h4>
-
-<p>
-    <% like =  comment.likes.find_by(user_id: current_user.id) %>
-    <% if like %>
-    <%= render 'likes/comment_like' %>
-    <% else %>
-    <% @like = Like.new  %>
-    <%=form_with(model:@like,url: micropost_likes_path(comment), local: true,:html => { :style => "display:inline-block;"} ) do |f| %>
-    <%=f.hidden_field :user_id,value: current_user.id %>
-    <%=f.hidden_field :comment_id,value: comment.id %>
-    <%=f.hidden_field :micropost_id,value: @micropost.id %>
-    <%=f.hidden_field :id,value: @like.id %>
-    <%=f.submit "いいね！", disable_with: 'proccesing...'  %>
-    <% end  %>
-    <% end  %>
-    <%=link_to "#{comment.likes.count}いいね",micropost_comment_likes_path(@micropost,comment) %>
-</p>
-
-<br>
-<% if comment.user==current_user %>
-<%= button_to "delete comment", micropost_comment_path(@micropost, comment), method: :delete   %>
-<%end  %>
-
-<% end  %>
+</h6>
+<%= render 'microposts/show_comment' %>
