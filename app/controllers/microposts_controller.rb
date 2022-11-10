@@ -34,8 +34,6 @@ class MicropostsController < ApplicationController
     detect_lifelog_by_exec_date
     @micropost[:lifelog_id] = @detected_lifelog.id
     @micropost.save!
-    result = ((@micropost.end_datetime - @micropost.start_datetime) / 60.0)
-    @micropost.update!(assumption_minutes: result)
     update_calculated_minutes
     prompt_post
     redirect_to micropost_path(@micropost)

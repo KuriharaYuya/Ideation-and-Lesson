@@ -55,7 +55,7 @@
         <% end  %>
         <tr>
             <td>動画添付済み</td>
-            <td class="value"><%if @micropost.video  %>
+            <td class="value"><%if @micropost.video.present?  %>
                 <i class="fa-regular fa-circle"></i>
                 <% else  %>
                 <i class="fa-solid fa-x"></i>

@@ -1,42 +1,61 @@
-<h1>edit</h1>
-<br><br><br>
+<h2 class="text-align: center;">投稿を編集する</h2>
+<%= render 'microposts/show_video_modal'  %>
 <%= form_with(model: @micropost, local: true) do |f| %>
-<%= f.label :title %>
-<br>
-<%= f.text_field :title %>
-<br><br>
-<%= f.label :engagement_status %>
-<br>
-<%= f.select :engagement_status, ["予定","実行中","完了","未完了"] %>
-<br><br>
-<%=f.label :post_type  %>
-<br>
-<%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %>
-<br>
-<br>
-<%= f.label :video %>
-<br>
-<%= f.file_field :video %>
-<%=f.label :exec_date, "lifelog_date" %>
-<br>
-<%=f.date_field :exec_date  %>
-<br>
-<%= f.label :start_datetime %>
-<br>
-<%= f.datetime_local_field :start_datetime %>
-<br>
-<%= f.label :end_datetime %>
-<br>
-<%= f.datetime_local_field :end_datetime %>
-<br>
-<%=f.label :assumption_minutes  %>
-<br>
-<%=f.number_field :assumption_minutes  %>
-<br><br>
-<%= label_tag :option, "##if you check below box, assumption_minutes will overwritten by value calc from start/end datetime##" %>
-<br>
+<table class="table micropost_edit_table">
+    <tbody>
+        <tr>
+            <td><%= f.label :title %></td>
+            <td class="value"><%= f.text_field :title %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :engagement_status %></td>
+            <td class="value"><%= f.select :engagement_status, ["予定","実行中","完了","未完了"] %></td>
+        </tr>
+        <tr>
+            <td><%=f.label :post_type  %></td>
+            <td class="value"><%=f.select :post_type, ["勉強会","タイムラプス","自習メモ"]  %></td>
+        </tr>
+        <tr>
+            <td><%=f.label :exec_date %></td>
+            <td class="value"><%=f.date_field :exec_date  %></td>
+        </tr>
+        <tr>
+            <td>ライフログ</td>
+            <td class="value"><%= link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)%>
+                <p class="alert_lifelog_function">実施日を変更することで<br>紐づくライフログが保存時に変更されます</p>
+            </td>
+        </tr>
+        <tr>
+            <td><%= f.label :start_datetime %></td>
+            <td class="value"><%= f.datetime_local_field :start_datetime %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :end_datetime %></td>
+            <td class="value"><%= f.datetime_local_field :end_datetime %></td>
+        </tr>
+        <tr>
+            <td><%=f.label :assumption_minutes  %></td>
+            <td class="value"><%=f.number_field :assumption_minutes  %></td>
+        </tr>
+    </tbody>
+</table>
+<% if @micropost.video.present?  %>
+<h4><a class="video_expand" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        タイムラプス動画を確認する
+    </a>
+</h4>
+<p><%= f.label :video %>を変更する</p>
+<label class="btn btn-dark video_uploader_post_new">
+    <%= f.file_field :video,style: "display: none;",class:"input_video_post_new" %>ファイルを選択
+</label>
+<% end %>
+
 <%=f.hidden_field :id,value: @micropost.id  %>
-<%=check_box_tag :overwritten_option  %>
-<br><br><br>
-<%= f.submit "Submit", disable_with: 'Submiting...'  %>
+<%= f.submit "変更を保存", disable_with: 'Submiting...', class: "btn btn-primary",style: "width: 300px; margin: 0 auto; display: block;"    %>
 <% end  %>
+<script>
+    $('.input_video_post_new').on('change', function () {
+        var file = $(this).prop('files')[0];
+        $('.chosen_file').text(file.name);
+    });
+</script>
