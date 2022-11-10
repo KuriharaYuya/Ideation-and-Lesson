@@ -32,7 +32,7 @@ class Micropost < ApplicationRecord
   end
 
   def gap
-    if assumption_minutes
+    if consuming_minutes && assumption_minutes
       tmp = consuming_minutes - assumption_minutes
       if tmp > 0
         '+'.+ tmp.to_s + '分'
