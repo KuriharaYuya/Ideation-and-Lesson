@@ -1,4 +1,5 @@
 <h3><%= @micropost.title  %></h3>
+<%=button_to "投稿する",post_micropost_path,class: "post_btn_micropost_show btn btn-primary",autofocus: true if can_post? %>
 <%= render 'microposts/show_video_modal'  %>
 <table class="table micropost_show_table">
     <tbody>
