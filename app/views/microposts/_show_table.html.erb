@@ -1,0 +1,100 @@
+<h3><%= @micropost.title  %></h3>
+<%=button_to "投稿する",post_micropost_path,class: "post_btn_micropost_show btn btn-primary",autofocus: true if can_post? %>
+<%= render 'microposts/show_video_modal'  %>
+<table class="table micropost_show_table">
+    <tbody>
+        <tr>
+            <td>タイプ</td>
+            <td class="value"><%= @micropost.post_type  %></td>
+
+        </tr>
+        <tr>
+            <td>ステータス</td>
+            <td class="value"><%=@micropost.engagement_status  %></td>
+        </tr>
+        <tr class="post_datetime">
+            <td>実施日時</td>
+            <td class="value" style="text-align: center;">
+                <p><%= @micropost.start_datetime.strftime("%Y/%m/%d/%R")  %></p>
+                ~
+                <p><%= @micropost.end_datetime.strftime("%Y/%m/%d/%R")  %></p>
+            </td>
+        </tr>
+        <tr>
+            <td>投稿済み</td>
+            <td class="value">
+                <%if @micropost.posted?  %>
+                <i class="fa-regular fa-circle"></i>
+                <% else  %>
+                <i class="fa-solid fa-x"></i>
+                <% end %>
+            </td>
+
+        </tr>
+        <tr>
+            <td>ライフログ</td>
+            <td class="value"><%=link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)  %>
+            </td>
+
+        </tr>
+        <tr>
+            <td>勉強時間</td>
+            <td class="value"><%="#{@micropost.consuming_minutes}分" if @micropost.consuming_minutes %></td>
+        </tr>
+        <tr>
+            <td>予想時間</td>
+            <td class="value"><%= "#{@micropost.assumption_minutes}分" if @micropost.assumption_minutes  %></td>
+        </tr>
+        <% if @micropost.gap  %>
+        <tr>
+            <td>予想との差分</td>
+            <td class="value">
+                <%= @micropost.gap%>
+            </td>
+        </tr>
+        <% end  %>
+        <tr>
+            <td>動画添付済み</td>
+            <td class="value"><%if @micropost.video  %>
+                <i class="fa-regular fa-circle"></i>
+                <% else  %>
+                <i class="fa-solid fa-x"></i>
+                <% end %></td>
+        </tr>
+        <% if @micropost.post_type == "タイムラプス"  %>
+        <tr>
+            <td>認可済み？</td>
+
+            <%if @micropost.verified  %>
+            <td style="text-align: right;">
+                <i class="fa-regular fa-circle"></i>
+                <%=link_to  "#{@micropost.verifications.count} 人が認めました",micropost_verifications_path(@micropost) %>
+            </td>
+            <% else  %>
+            <td class="value">
+                <i class="fa-solid fa-x"></i>
+            </td>
+            <% end %>
+
+
+        </tr>
+        <% end  %>
+        <tr>
+            <td>ユーザー</td>
+            <td class="value"><a href="<%= user_path(@micropost.user) %>"><%= @micropost.user.name %></a></td>
+        </tr>
+        <!--<tr class="collapse multi-collapse" id="multiCollapseExample1">
+            <td>
+            </td>
+        </tr>
+        <tr class="collapse multi-collapse" id="multiCollapseExample2">
+            <td>
+            </td>
+        </tr> -->
+    </tbody>
+</table>
+<!--<a class="micropost_show_more_colmun" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
+    aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><span>^</span>もっと見る</a>-->
+<% if @micropost.user == current_user  %>
+<%= link_to "Edit micropost", edit_micropost_path,class: "btn btn-primary micropost_create_btn", style: "padding: 2px; font-size: 15px;"  %>
+<% end  %>

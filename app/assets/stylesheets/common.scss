@@ -23,6 +23,20 @@ $card_border: rgba(140, 130, 115, 0.17);
     border-color: $divider_gray;
     border-width: 2px;
 }
+@mixin feed_component_base {
+    margin: auto;
+    margin-bottom: 8px;
+    width: 95%;
+    background-color: $feed_content_bg_color;
+    color: $notion_font_gray;
+}
+
+@mixin feed_content_card {
+    padding: 10px;
+    padding-top: 12px;
+    border: 1px solid $card_border;
+    border-radius: 10px;
+}
 
 // application base wire
 
@@ -112,7 +126,7 @@ html {
         max-width: $notify_sideber_width;
         position: absolute;
         z-index: 5;
-        height: 100vh;
+        height: calc(100vh - 30px);
         background-color: $feed_content_bg_color;
         left: -9px;
         .btn-close {
@@ -156,16 +170,9 @@ html {
 .feed_content_wrapper {
     margin-top: 12px;
     .feed_content {
-        margin: auto;
-        margin-bottom: 8px;
-        width: 95%;
-        background-color: $feed_content_bg_color;
-        color: $notion_font_gray;
+        @include feed_component_base();
         .card-body {
-            padding: 10px;
-            padding-top: 12px;
-            border: 1px solid $card_border;
-            border-radius: 10px;
+            @include feed_content_card();
             .post_author_wrap {
                 a {
                     &:hover,
@@ -355,9 +362,187 @@ html {
     text-align: center;
 }
 
+// micropost show
+.post_btn_micropost_show {
+    margin-bottom: 8px;
+    height: 100%;
+    padding: 2px;
+    margin-left: 3px;
+    &:focus {
+        border: 2px solid blue;
+    }
+}
+@mixin micropost_table {
+    color: #fff;
+    margin-bottom: 10px;
+    tbody {
+        tr {
+            border-bottom: 1px solid $divider_gray;
+            .value {
+                text-align: center;
+            }
+        }
+        &:first-child {
+            border-top: 1px solid $divider_gray;
+        }
+        .post_datetime {
+            p {
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+.micropost_show_table {
+    @include micropost_table();
+}
+.micropost_new_table {
+    @include micropost_table();
+    input {
+        background-color: $feed_content_bg_color;
+        border: 2px solid $divider_gray;
+    }
+}
+.video_uploader_post_new {
+    padding: 4px;
+}
+.like_console {
+    text-align: right;
+    .button_to {
+        display: inline;
+    }
+    .btn {
+        font-size: 15px;
+        padding: 2px;
+        margin-right: 3px;
+    }
+}
+.micropost_create_comment {
+    background-color: $feed_content_bg_color;
+    border: 4px solid #fff;
+    height: auto;
+    padding: 8px;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    p {
+        margin-bottom: 4px;
+        font-weight: bold;
+        color: $notion_font_gray;
+    }
+    .btn {
+        font-size: 15px;
+        padding: 2px;
+        margin-right: 3px;
+    }
+    #comment_content {
+        display: block;
+        width: 95%;
+        margin: 0 auto;
+        min-height: auto;
+        margin-bottom: 8px;
+        background-color: rgb(59, 59, 59);
+        border: 1px solid $divider_gray;
+    }
+}
+.micropost_comments_feed {
+    .feed_content {
+        @include feed_component_base();
+        @include feed_content_card();
+        .comment_user {
+            height: 30px;
+            line-height: 30px;
+            a {
+                display: flex;
+                color: $notion_font_gray;
+                img {
+                    border-radius: 16px;
+                    margin-right: 5px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
+.micropost_create_btn {
+    margin-bottom: 8px;
+}
+.micropost_show_more_colmun {
+    padding: 2px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: #fff;
+    span {
+        font-size: 110%;
+    }
+}
+.video_expand {
+    border: 1px solid $divider_gray;
+    &:active {
+        border: 2px solid #fff;
+    }
+    color: $notion_font_gray;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 20px;
+    padding: 5px;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    text-align: center;
+}
+.micropost_video_modal {
+    .modal-content {
+        width: 350px;
+        margin: 0 auto;
+        background-color: $feed_content_bg_color;
+        .modal-header {
+            border-bottom: 1px solid $divider_gray;
+        }
+        .modal-footer {
+            border-top: 1px solid $divider_gray;
+            .close_btn {
+                border: 1px solid $divider_gray;
+                &:active {
+                    border: 3px solid blueviolet;
+                }
+                background-color: $wrapper_bg_color;
+            }
+        }
+    }
+}
+
 // footer
 .footer {
     padding-top: 5px;
+    position: relative;
+    .home_new_micropost_btn {
+        font-size: 63px;
+        position: absolute;
+        text-decoration: none;
+        bottom: $footer_heigth;
+        right: 15px;
+
+        i {
+            color: $notion_gray;
+            $size: 64px;
+            width: $size;
+            height: $size;
+            border-radius: 10px;
+            background-color: $feed_content_bg_color;
+            border: 2px solid rgb(35, 131, 226);
+            margin-left: 1px;
+            margin-bottom: 1px;
+            &::before {
+                margin-left: 4px;
+            }
+            &:hover {
+                color: white;
+            }
+        }
+    }
 }
 .footer .nav {
     padding-top: 8px;

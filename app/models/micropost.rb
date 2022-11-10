@@ -31,6 +31,19 @@ class Micropost < ApplicationRecord
     end
   end
 
+  def gap
+    if consuming_minutes && assumption_minutes
+      tmp = consuming_minutes - assumption_minutes
+      if tmp > 0
+        '+'.+ tmp.to_s + '分'
+      else
+        '-' + tmp.to_s + '分'
+      end
+    else
+      0
+    end
+  end
+
   private
 
   def post_type_is_time_lapse?

@@ -3,6 +3,7 @@
 <%=f.hidden_field :user_id,value: @user.id %>
 <%=f.hidden_field :micropost_id,value: @micropost.id %>
 <%=f.hidden_field :like_id,value: @like.id %>
-<%=f.submit "いいねを取り消す", disable_with: 'proccesing...'  %>
+<%=f.submit "いいね取り消し", disable_with: 'proccesing...',class: "btn btn-primary"  %>
+<%=link_to "#{@micropost.likes.count}いいね",micropost_likes_path(@micropost) %>
 <% end  %>
 <% end  %>

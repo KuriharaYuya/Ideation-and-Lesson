@@ -1,0 +1,5 @@
+<%= form_with(model:@comment,local: true,url: micropost_comments_path(@micropost)) do |f| %>
+<%= f.hidden_field :micropost_id,value: @micropost.id  %>
+<%=f.text_area :content  %>
+<%=f.submit "Comment", disable_with: 'Commenting...', class: "btn btn-primary"  %>
+<% end  %>
