@@ -363,7 +363,16 @@ html {
 }
 
 // micropost show
-.micropost_show_table {
+.post_btn_micropost_show {
+    margin-bottom: 8px;
+    height: 100%;
+    padding: 2px;
+    margin-left: 3px;
+    &:focus {
+        border: 2px solid blue;
+    }
+}
+@mixin micropost_table {
     color: #fff;
     margin-bottom: 10px;
     tbody {
@@ -382,6 +391,19 @@ html {
             }
         }
     }
+}
+.micropost_show_table {
+    @include micropost_table();
+}
+.micropost_new_table {
+    @include micropost_table();
+    input {
+        background-color: $feed_content_bg_color;
+        border: 2px solid $divider_gray;
+    }
+}
+.video_uploader_post_new {
+    padding: 4px;
 }
 .like_console {
     text-align: right;
@@ -495,6 +517,32 @@ html {
 // footer
 .footer {
     padding-top: 5px;
+    position: relative;
+    .home_new_micropost_btn {
+        font-size: 63px;
+        position: absolute;
+        text-decoration: none;
+        bottom: $footer_heigth;
+        right: 15px;
+
+        i {
+            color: $notion_gray;
+            $size: 64px;
+            width: $size;
+            height: $size;
+            border-radius: 10px;
+            background-color: $feed_content_bg_color;
+            border: 2px solid rgb(35, 131, 226);
+            margin-left: 1px;
+            margin-bottom: 1px;
+            &::before {
+                margin-left: 4px;
+            }
+            &:hover {
+                color: white;
+            }
+        }
+    }
 }
 .footer .nav {
     padding-top: 8px;

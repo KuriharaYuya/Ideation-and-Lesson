@@ -19,6 +19,10 @@ class MicropostsController < ApplicationController
         @micropost = Micropost.new(exec_date: lifelog.log_date, start_datetime: lifelog.log_date,
                                    end_datetime: lifelog.log_date, lifelog_id: lifelog.id)
       end
+    else
+      # 全く新しいライフログを作成する
+      @micropost = Micropost.new(exec_date: current_date, start_datetime: current_date,
+                                 end_datetime: current_date)
     end
     assign_lifelog_to_micropost
   end

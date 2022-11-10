@@ -1,4 +1,5 @@
 <h3><%= @micropost.title  %></h3>
+<%=button_to "投稿する",post_micropost_path,class: "post_btn_micropost_show btn btn-primary",autofocus: true if can_post? %>
 <%= render 'microposts/show_video_modal'  %>
 <table class="table micropost_show_table">
     <tbody>
@@ -44,12 +45,14 @@
             <td>予想時間</td>
             <td class="value"><%= "#{@micropost.assumption_minutes}分" if @micropost.assumption_minutes  %></td>
         </tr>
+        <% if @micropost.gap  %>
         <tr>
             <td>予想との差分</td>
             <td class="value">
                 <%= @micropost.gap%>
             </td>
         </tr>
+        <% end  %>
         <tr>
             <td>動画添付済み</td>
             <td class="value"><%if @micropost.video  %>
