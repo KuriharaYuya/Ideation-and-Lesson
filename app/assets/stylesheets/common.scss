@@ -372,6 +372,44 @@ html {
         border: 2px solid blue;
     }
 }
+@mixin console_btn {
+    width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+.btn_save {
+    @include console_btn();
+}
+.btn_delete {
+    @include console_btn();
+}
+.micropost_delete_confirmation {
+    background-color: $feed_content_bg_color;
+    border-radius: 5px;
+    border: 2px solid $divider_gray;
+    margin-bottom: 15px;
+    p {
+        text-align: center;
+        color: $notion_font_gray;
+    }
+    h1 {
+        display: flex;
+        div {
+            flex-grow: 0.5;
+            a,
+            input {
+                line-height: 35px;
+                width: 70%;
+                height: 40px;
+                display: block;
+                margin: 0 auto;
+            }
+            input {
+                line-height: 28px;
+            }
+        }
+    }
+}
 @mixin micropost_table {
     color: #fff;
     margin-bottom: 10px;
@@ -415,6 +453,7 @@ html {
 }
 .video_uploader_post_new {
     padding: 4px;
+    margin-bottom: 16px;
 }
 .like_console {
     text-align: right;
