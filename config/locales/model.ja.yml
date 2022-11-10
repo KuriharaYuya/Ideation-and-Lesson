@@ -8,13 +8,3 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: 確認用パスワード
-      micropost:
-        post_type: "タイプ"
-        start_datetime: "開始日時"
-        end_datetime: "終了日時"
-        engagement_status: "ステータス"
-        assumption_minutes: "予想時間"
-        consuming_minutes: "勉強時間"
-        exec_date: "実行日時"
-        video: "ビデオ"
-        title: "タイトル"
