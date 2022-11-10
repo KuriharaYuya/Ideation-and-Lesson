@@ -381,6 +381,12 @@ html {
             .value {
                 text-align: center;
             }
+            .alert_lifelog_function {
+                max-width: 80%;
+                margin-left: auto;
+                font-size: 13px;
+                text-align-last: left;
+            }
         }
         &:first-child {
             border-top: 1px solid $divider_gray;
@@ -390,6 +396,12 @@ html {
                 margin-bottom: 4px;
             }
         }
+        input,
+        select {
+            background-color: $feed_content_bg_color;
+            border: 2px solid $divider_gray;
+            color: #fff;
+        }
     }
 }
 .micropost_show_table {
@@ -397,10 +409,9 @@ html {
 }
 .micropost_new_table {
     @include micropost_table();
-    input {
-        background-color: $feed_content_bg_color;
-        border: 2px solid $divider_gray;
-    }
+}
+.micropost_edit_table {
+    @include micropost_table();
 }
 .video_uploader_post_new {
     padding: 4px;
@@ -442,6 +453,7 @@ html {
         margin-bottom: 8px;
         background-color: rgb(59, 59, 59);
         border: 1px solid $divider_gray;
+        color: #fff;
     }
 }
 .micropost_comments_feed {

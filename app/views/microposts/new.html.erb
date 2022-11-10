@@ -36,9 +36,13 @@
             <td class="value"><%=f.number_field :assumption_minutes  %></td>
         </tr>
         <tr>
-            <td>ライフログ</td>
-            <td class="value"><%= link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)%></td>
+            <td><%=f.label :exec_date %></td>
+            <td class="value"><%=f.date_field :exec_date  %></td>
         </tr>
+        <td>ライフログ</td>
+        <td class="value"><%= link_to "#{@micropost.lifelog.log_date}のライフログ",lifelog_path(@micropost.lifelog)%>
+            <p class="alert_lifelog_function">実施日を変更することで<br>紐づくライフログが保存時に変更されます</p>
+        </td>
     </tbody>
 </table>
 <p><%= f.label :video %> (※タイムラプスのみ)</p>
@@ -47,6 +51,9 @@
 </label>
 <p class="chosen_file"></p>
 <%=f.hidden_field :exec_date, value: @micropost.lifelog.log_date %>
+<div><%= label_tag :option, "経過時間で予想時間を上書きする" %>
+    <%=check_box_tag :overwritten_option,checked: false  %></div>
+<br>
 <%= f.submit "作成", disable_with: 'Submiting...', class: "btn btn-primary",style: "width: 300px; margin: 0 auto; display: block;"  %>
 </tr>
 <% end  %>
