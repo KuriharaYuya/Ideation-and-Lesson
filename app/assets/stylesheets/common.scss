@@ -248,7 +248,7 @@ html {
         .form-check {
             $form_width: 50%;
             width: $form_width;
-            padding-right: $form_width / 25;
+            padding-right: calc($form_width / 25);
         }
         background-color: $feed_content_bg_color;
         select {
@@ -593,6 +593,30 @@ html {
                 color: white;
             }
         }
+    }
+}
+// signup
+.singup_wrapper,
+.login_wrapper {
+    h3 {
+        color: $notion_gray;
+    }
+    input {
+        &:not(.btn) {
+            background-color: $feed_content_bg_color;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            width: 90%;
+            border: 2px solid $divider_gray;
+            color: #fff;
+            &:focus {
+                background-color: $feed_content_bg_color;
+            }
+        }
+    }
+    label {
+        left: none;
+        padding-left: calc((100% - 85%) / 2);
     }
 }
 .footer .nav {

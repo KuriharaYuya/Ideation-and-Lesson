@@ -1,17 +1,17 @@
-<%= alert('danger', flash[:notice])  %>
-<div class="form form_login">
-    <%= form_with(url: login_path, scope: :session) do |f| %>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <%= f.label :remember_me, class: "checkbox inline" do %>
-    <%= f.check_box :remember_me,checked: true,style: "margin: 0px;position:unset;" %>
-    <span>Remember me on this computer</span>
-    <% end %>
-    <%= f.submit "Log in" %>
-    <% end %>
+<%= alert("danger",flash[:notice])  %>
+<div class="login_wrapper">
+    <h3 class="text-center">ログイン</h3>
+    <div class="form form_login">
+        <%= form_with(url: login_path, scope: :session) do |f| %>
+        <div class="form-floating mb-3">
+            <%= f.email_field :email,class: "form-control",id: "floatingInput",autocomplete: "off"%>
+            <label for="floatingInput">メールアドレス</label>
+        </div>
+        <div class="form-floating mb-3">
+            <%= f.password_field  :password,class: "form-control",id: "floatingInput",autocomplete: "off"%>
+            <label for="floatingInput">パスワード</label>
+        </div>
+        <%= f.submit "Log in",class: "btn btn-primary btn_save" %>
+        <% end %>
+    </div>
 </div>
-<% flash.each do |msg_type,msg|  %>
-<%= msg  %>
-<% end  %>
