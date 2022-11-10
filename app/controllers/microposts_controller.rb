@@ -74,6 +74,7 @@ class MicropostsController < ApplicationController
     @micropost = Micropost.find(params[:id])
     user = @micropost.user
     @micropost.destroy!
+    flash[:notice] = '投稿は削除されました'
     redirect_to user_path(user)
   end
 
