@@ -1,22 +1,34 @@
 <% provide(:title, "yuya") %>
-
-<%= form_with(model: @user, local: true, method: :post) do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<br>
-<%= f.label :email %>
-<%= f.text_field :email %>
-<br>
-<%= f.label :password %>
-<%= f.password_field :password  %>
-<br>
-<%= f.label :password_confirmation  %>
-<%= f.password_field :password_confirmation  %>
-<br>
-<%= f.submit "Create my account" %>
-<% end %>
 <% flash.each do |msg_type, m|  %>
 <%m.each do |msg| %>
 <%= alert("danger",msg)  %>
 <% end  %>
-<% end  %>
+<% end %>
+<div class="singup_wrapper">
+    <h3 class="text-center">アカウントを登録する</h3>
+    <%= form_with(model: @user, local: true, method: :post) do |f| %>
+    <%
+    name = @stashed_params[:name]
+    email = @stashed_params[:email] 
+    %>
+    <div class="form-floating mb-3">
+        <%= f.text_field :name,class: "form-control",id: "floatingInput",autocomplete: "off",value: name%>
+        <label for="floatingInput">お名前</label>
+    </div>
+    <div class="form-floating mb-3">
+        <%= f.email_field :email,class: "form-control",id: "floatingInput",autocomplete: "off" ,value: email%>
+        <label for="floatingInput">メールアドレス</label>
+    </div>
+    <div class="form-floating">
+        <%= f.password_field :password,class: "form-control", id: "floatingPassword"  %>
+        <label for="floatingPassword">パスワード</label>
+    </div>
+    <div class="form-floating">
+        <%= f.password_field :password_confirmation,class: "form-control", id: "floatingPassword"  %>
+        <label for="floatingPassword">パスワード確認</label>
+    </div>
+    <%= f.submit "アカウントを作成する", class: "btn btn-primary btn_save" %>
+    <% end  %>
+    <p class="mt-4 text-center">既にアカウントをお持ちですか？</p>
+    <div class="w-50 m-auto text-center"><%=link_to "ログインする",login_path,class: " fs-5" %></div>
+</div>
