@@ -51,8 +51,22 @@
 <% end %>
 
 <%=f.hidden_field :id,value: @micropost.id  %>
-<%= f.submit "変更を保存", disable_with: 'Submiting...', class: "btn btn-primary",style: "width: 300px; margin: 0 auto; display: block;"    %>
+<%= f.submit "変更を保存", disable_with: 'Submiting...', class: "btn btn-primary btn_save"    %>
 <% end  %>
+<br>
+<div class="collapse multi-collapse micropost_delete_confirmation" id="multiCollapseExample1">
+    <p class="text-center text-warning">本当に削除しますか？</p>
+    <h1>
+        <div><a class="micropost_show_more_colmun btn btn-secondary " type="button" data-bs-toggle="collapse"
+                data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1">いいえ</a>
+        </div>
+        <div><%=form_with(model: @micropost,local: true, html: {method: :delete}) do |f| %>
+            <%=f.submit "はい",class:"btn btn-danger" %>
+            <% end  %></div>
+    </h1>
+</div>
+<a class="micropost_show_more_colmun btn btn-danger btn_delete" type="button" data-bs-toggle="collapse"
+    data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1">投稿を削除する</a>
 <script>
     $('.input_video_post_new').on('change', function () {
         var file = $(this).prop('files')[0];

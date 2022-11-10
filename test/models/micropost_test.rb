@@ -1,23 +1,18 @@
 require 'test_helper'
-
-class MicropostTest < ActiveSupport::TestCase
+class MicropostTest < ActionDispatch::IntegrationTest
+  require 'sessions_helper'
   def setup
     @micropost = microposts(:two)
     @user = users(:yuya)
   end
-  test 'should be valid' do
+  test 'should be deleted' do
     assert @micropost.valid?
-  end
-  test 'title, created_user, engagement_status, post_type should present' do
-    @micropost.title = ' '
-    assert_not @micropost.valid?
-    @micropost.user_id = ' '
-    assert_not @micropost.valid?
-
-    @micropost.engagement_status = ' '
-    assert_not @micropost.valid?
-
-    @micropost.post_type = ' '
-    assert_not @micropost.valid?
+    assert_difference 'Micropost.count', -1 do
+      delete micropost_path(@micropost)
+    end
+    follow_redirect!
+    assert_template 'users/show'
+    assert flash[:notice].present?
+    assert_equal '投稿は削除されました', flash[:notice]
   end
 end
