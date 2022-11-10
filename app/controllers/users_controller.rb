@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :user_log_in, except: %i[index new create show]
   def new
     @user = User.new
+    @stashed_params = { name: params[:name], email: params[:email] }
   end
 
   def show
@@ -25,8 +26,9 @@ class UsersController < ApplicationController
       flash[:info] = 'あなたのことについて書きましょう'
       redirect_to edit_user_path(@user)
     else
-      flash.now[:notice] = @user.errors.full_messages
-      render action: 'new'
+      flash[:notice] = @user.errors.full_messages
+      tmp = params.require(:user).permit(:name, :email)
+      redirect_to signup_path(name: tmp[:name], email: tmp[:email])
     end
   end
 
