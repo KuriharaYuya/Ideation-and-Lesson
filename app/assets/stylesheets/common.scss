@@ -596,7 +596,8 @@ html {
     }
 }
 // signup
-.singup_wrapper {
+.singup_wrapper,
+.login_wrapper {
     h3 {
         color: $notion_gray;
     }
