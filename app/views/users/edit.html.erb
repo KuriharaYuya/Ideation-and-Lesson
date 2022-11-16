@@ -1,3 +1,12 @@
-<%= alert("complete",flash[:notice])  %>
+<%= alert("complete",flash[:notice] )if flash[:notice]  %>
+<%= alert("complete",flash[:info] )if flash[:info]  %>
+<% if flash[:danger] && flash[:danger].length > 1  %>
+<% flash.each do |msg_type, m|  %>
+<%m.each do |msg| %>
+<%= alert("danger",msg)  %>
+<% end  %>
+<% end %>
+<% end %>
 <%= render "profile" %>
 <%= render "setting" %>
+<%= render 'dangerzone'  %>

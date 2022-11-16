@@ -1,10 +1,17 @@
-<h3>Edit your profile</h3>
-<%= alert("info",flash[:info])  %>
 <%=form_with(model:@user,local: true,html: {method: :patch}) do |f| %>
-<br>
-<%=f.label "プロフィールメッセージ",:bio  %>
-<br>
-<%=f.text_area :bio %>
-<br>
-<%=f.submit "設定する", disable_with: 'setting'   %>
+<% if @user.profile_img  %>
+<img class="user_img_preview" src="<%= @user.profile_img %>" alt="">
+<label class="btn btn-dark video_uploader_post_new">
+    <%= f.file_field :video,style: "display: none;",class:"input_video_post_new" %>変更する
+</label>
+<% else  %>
+<label class="btn btn-dark video_uploader_post_new">
+    <%= f.file_field :video,style: "display: none;",class:"input_video_post_new" %>画像を設定する
+</label>
+<% end  %>
+<p></p>
+<div class="mb-3">
+    <%=f.label :bio,class: "form-label" %>
+    <%=f.text_area :bio,class: "form-control",style: "height: 150px;"%>
+</div>
 <% end  %>

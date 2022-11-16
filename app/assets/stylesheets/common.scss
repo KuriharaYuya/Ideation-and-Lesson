@@ -456,6 +456,9 @@ html {
     padding: 4px;
     margin-bottom: 16px;
 }
+.user_edit_table {
+    @include micropost_table();
+}
 .like_console {
     text-align: right;
     .button_to {
@@ -623,6 +626,36 @@ html {
     margin-left: 10px;
     margin-bottom: 4px;
     color: $notion_gray;
+}
+.user_img_preview {
+    border-radius: 45px;
+    width: 60px;
+    height: 60px;
+}
+.form-control {
+    background-color: $feed_content_bg_color;
+    color: #fff;
+    border: 2px solid $divider_gray;
+}
+.user_edit_console_btns {
+    display: flex;
+    input,
+    a {
+        display: block;
+        width: 38%;
+        margin: 0 auto;
+        height: 35px;
+        text-align: center;
+    }
+}
+.account_deletion * {
+    background-color: $feed_content_bg_color;
+    color: $notion_gray;
+}
+.account_deletion input {
+    background-color: $wrapper_bg_color;
+    border: 2px solid $divider_gray;
+    color: #fff;
 }
 // footer
 .footer {
