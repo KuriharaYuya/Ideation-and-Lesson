@@ -1,0 +1,27 @@
+<div class="user_show_haeder">
+    <div class="sec">
+        <h4>
+            <% if @user.profile_img.present?  %>
+            <img class="user_img" src="<%= @user.profile_img  %>">
+            <% else  %>
+            <img class="user_img" src="<%= profile_initial_img %>">
+            <% end %>
+            <div class="user_console text-center">
+                <%if logged_in? && @user == current_user  %>
+                <%=link_to "設定",edit_user_path(@user),class: "btn btn-primary" %>
+                <% elsif !logged_in? %>
+                <%= button_to "follow",please_login_path,method: :get,class: "btn btn-primary" %>
+                <% elsif logged_in? && current_user != @user  %>
+                <%= render 'follow_form'  %>
+                <% end  %>
+            </div>
+        </h4>
+        <h3><%=@user.name  %></h3>
+        <div class="user_relationships">
+            <%= link_to "フォロワー#{@user.followers.count}人",followers_user_path %>
+            <%= link_to "フォロー中#{@user.following.count}人",following_user_path %>
+        </div>
+    </div>
+    <div class="bio"><%=@user.bio %>
+    </div>
+</div>

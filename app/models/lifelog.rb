@@ -6,4 +6,8 @@ class Lifelog < ApplicationRecord
   validates :overview, length: { maximum: 200 }
   mount_uploader :calender, ImageUploader
   mount_uploader :screen_time, ImageUploader
+
+  def consuming_minutes
+    microposts.sum(:consuming_minutes)
+  end
 end
