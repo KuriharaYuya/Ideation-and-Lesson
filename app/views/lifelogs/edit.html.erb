@@ -1,27 +1,62 @@
 <%=form_with(model:@lifelog,local: true, html: {method: :patch}) do |f| %>
-<%=f.label :title %>
-<br>
-<%=f.text_field :title  %>
-<br>
-<%=f.label :calender  %>
-<br>
-<%=f.file_field :calender  %>
-<br>
-<%=f.label :screen_time  %>
-<br>
-<%=f.file_field :screen_time  %>
-<%=f.label :log_date, "date" %>
-<br>
-<%=f.date_field :log_date  %>
+<table class="table micropost_show_table lifelog_edit_table">
+    <tbody>
+        <tr>
+            <td><%=f.label :title %>
+
+            <td><%=f.text_field :title  %></td>
+            </td>
+        </tr>
+        <tr>
+            <td><%=f.label :calender  %>
+
+            <td><%=f.file_field :calender  %></td>
+            </td>
+        </tr>
+        <tr>
+            <td><%=f.label :screen_time  %>
+
+            <td><%=f.file_field :screen_time  %></td>
+            </td>
+        </tr>
+        <tr>
+            <td><%=f.label :log_date, "date" %>
+            </td>
+            <td><%=f.date_field :log_date  %></td>
+        </tr>
+        <tr>
+            <td><%=f.label :assumption_minutes  %>
+            </td>
+            <td><%=f.number_field :assumption_minutes  %></td>
+        </tr>
+        <tr>
+            <td><%=f.label :overview %>
+            </td>
+            <td><%=f.text_area :overview  %></td>
+        </tr>
+    </tbody>
+</table>
 <%=f.hidden_field :id,value: @lifelog.id  %>
-<br>
-<%=f.label :assumption_minutes  %>
-<br>
-<%=f.number_field :assumption_minutes  %>
-<br>
-<%=f.label :overview %>
-<br>
-<%=f.text_area :overview  %>
-<br><br>
-<%=f.submit "apply", disable_with: 'applying...'  %>
+<%=f.submit "変更を保存", disable_with: 'applying...',class: "btn btn-primary"  %>
 <%end  %>
+
+<div class="collapse mb-4 mt-4" id="collapseExample">
+    <div class="card card-body">
+        <p>本当に削除しますか？</p>
+        <div class="d-flex">
+            <%=form_with(model: @lifelog,html: {method: :delete},local: true) do |f| %>
+            <%=f.hidden_field :id,value: @lifelog.id %>
+            <%=f.submit "削除する", disable_with: 'Deleteing...',class: "btn btn-danger w-20 m-auto"  %>
+            <% end  %>
+
+            <a class="btn btn-primary w-20 m-auto" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                やめておく
+            </a>
+        </div>
+    </div>
+</div>
+<a class="btn btn-danger mt-2 mb-2" data-bs-toggle="collapse" href="#collapseExample" role="button"
+    aria-expanded="false" aria-controls="collapseExample">
+    ライフログを削除
+</a>

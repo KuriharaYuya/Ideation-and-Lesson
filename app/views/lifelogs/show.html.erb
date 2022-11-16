@@ -1,51 +1,122 @@
-<h2><%=@lifelog.log_date  %> のライフログ</h2>
-<h2>タイトル: <%=@lifelog.title  %></h2>
-<h2>consuming_sum:&nbsp;<%=@lifelog.microposts.sum(:consuming_minutes)  %></h2>
-<% if @lifelog.assumption_minutes.present? %>
-<h2>assumption_minutes: <%=@lifelog.assumption_minutes  %></h2>
-<h2>gap: <%=@lifelog.assumption_minutes -  @lifelog.microposts.sum(:consuming_minutes)  %></h2>
-<% end %>
-
-<%if @lifelog.overview.present?  %>
-<h4>説明<br><%=@lifelog.overview  %></h4>
-<p><%=@lifelog.overview.size %>文字</p>
-<% end  %>
-
-<%if @user == current_user  %>
-<%=form_with(model: @lifelog,html: {method: :delete},local: true) do |f| %>
-<%=f.hidden_field :id,value: @lifelog.id %>
-<%=f.submit "Delete", disable_with: 'Deleteing...'  %>
-<% end  %>
-<br>
-<%=form_with(model: @lifelog,html: {method: :get},url: edit_lifelog_path(@lifelog),local: true) do |f| %>
-<%=f.hidden_field :id, value: @lifelog.id  %>
-<%=f.submit "edit", disable_with: 'Submiting...'  %>
-<%end  %>
-
-<% end  %>
-
-<br><br><br>
-<h4>Lifelog has <%=@microposts.length  %> microposts</h4>
-<table>
-    <th>title</th>
-    <%return_optional_value_of_lifelog("column") %>
-    <%@result.each do |column|  %>
-    <th><%= column  %></th>
+<%= alert("complete",flash[:notice])  %>
+<h4 class="text-center"><%= @lifelog.log_date  %>のライフログ</h4>
+<div class="lifelog_show_btns mb-1">
+    <%=form_with(model: Micropost.new,url:new_micropost_path,local: true,html: {method: :get} )do |f|  %>
+    <%=f.hidden_field :lifelog_id, value: @lifelog.id  %>
+    <%=f.submit "投稿を追加", disable_with: 'creating...',class: "btn btn-primary mb-4"  %>
     <% end  %>
-
-    <%@microposts.each do |micropost|  %>
-    <tr>
-        <td><%=link_to "#{micropost.title}",micropost_path(micropost)  %></td>
-        <%return_optional_value_of_lifelog("value") %>
-        <%@result.each do |value|  %>
-        <td><%= value  %></td>
+    <%=form_with(model: @lifelog,html: {method: :get},url: edit_lifelog_path(@lifelog),local: true) do |f| %>
+    <%=f.hidden_field :id, value: @lifelog.id  %>
+    <%=f.submit "編集", disable_with: 'Submiting...',class: "btn btn-danger"   %>
+    <%end  %>
+</div>
+<% if @lifelog.overview.present?  %>
+<p class="text-center mt-1">今日の一言</p>
+<p class="lifelog_overview"><%= @lifelog.overview  %></p>
+<% end  %>
+<table class="table micropost_show_table">
+    <tbody>
+        <tr>
+            <td>合計勉強時間</td>
+            <td class="value"><%= @lifelog.microposts.sum(:consuming_minutes)  %></td>
+        </tr>
+        <% if @lifelog.calender.present? %>
+        <tr>
+            <td>カレンダー添付済み</td>
+            <td class="value"><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop">
+                    画像を確認する
+                </button></td>
+        </tr>
         <% end  %>
-    </tr>
-    <% end  %>
-
+        <% if @lifelog.screen_time.present?  %>
+        <tr>
+            <td>スクリーンタイム添付済み</td>
+            <td class="value"><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop2">
+                    画像を確認する
+                </button></td>
+        </tr>
+        <% end  %>
+    </tbody>
 </table>
+<br>
+<div class="lifelog_show_feed">
+    <% @lifelog.microposts.order(end_datetime: :desc).each do |micropost|  %>
+    <div class="lifelog_wrapper">
+        <div class="feed_content card">
+            <div class="card-body">
+                <h4 class="post_author_wrap">
+                    <% if micropost.user.profile_img.present?  %>
+                    <img class="post_author_img" src="<%= micropost.user.profile_img  %>">
+                    <% else  %>
+                    <img class="post_author_img" src="<%= profile_initial_img %>">
+                    <% end %>
+                    <%=link_to micropost.user.name, user_path(micropost.user)%>
+                </h4>
+                <a href="<%=micropost_path(micropost)  %>">
+                    <h5 class="card-title"><%=micropost.title  %></h5>
+                    <h6 class="card-subtitle mb-2 "><%= micropost.post_type %></h6>
+                    <h6>経過時間: <%=to_HH_MM(micropost.consuming_minutes.to_i)  %></h6>
+                    <p style="margin-bottom: 0.5rem;">
+                        <%if micropost.post_type == "タイムラプス" %>
+                        <% if micropost.video.present?  %>
+                        動画添付済み
+                        <% else  %>
+                        添付動画なし
+                        <% end %>
+                    </p>
 
+                    <p><span>verified?:&nbsp;</span><%= check_box_tag :verified?,true,micropost.verified?, {disabled: true}%>
+                    </p>
+                    <% end  %>
+                    <!--<span class="posted_ago"><%#= distance_of_time_in_words(micropost.posted_at,Time.zone.now)  %>前</span> -->
+                </a>
+            </div>
+        </div>
+    </div>
+    <p class="text-center">
+        <%= micropost.start_datetime.strftime("%R")  %>~<%= micropost.end_datetime.strftime("%R")  %>で実施</p>
+    <% end  %>
+</div>
 <%=form_with(model: Micropost.new,url:new_micropost_path,local: true,html: {method: :get} )do |f|  %>
 <%=f.hidden_field :lifelog_id, value: @lifelog.id  %>
-<%=f.submit "create micropost", disable_with: 'creating...'  %>
+<%=f.submit "投稿を追加", disable_with: 'creating...',class: "btn btn-primary btn_save mb-4 mt-4"  %>
 <% end  %>
+
+
+<!-- Modal -->
+<div class="modal fade lifelog_calender_modal lifelog_modal" id="staticBackdrop" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">カレンダー</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="<%= @lifelog.calender  %>" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade lifelog_screentime_modal lifelog_modal" id="staticBackdrop2" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">スクリーンタイム</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="<%= @lifelog.screen_time  %>" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
