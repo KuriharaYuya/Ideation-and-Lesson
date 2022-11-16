@@ -167,7 +167,8 @@ html {
 }
 
 // home timeline
-.feed_content_wrapper {
+.feed_content_wrapper,
+.lifelog_wrapper {
     margin-top: 12px;
     .feed_content {
         @include feed_component_base();
@@ -564,7 +565,65 @@ html {
         }
     }
 }
-
+// user#show
+.user_show {
+    .lifelog_wrapper:last-child {
+        color: red !important;
+    }
+}
+.user_show_haeder {
+    border-bottom: 2px solid $divider_gray;
+    .sec {
+        width: 100%;
+        h4 {
+            $user_header_height: 70px;
+            height: $user_header_height;
+            width: 100%;
+            display: flex;
+            .user_img {
+                width: $user_header_height;
+                height: $user_header_height;
+                border-radius: 80px;
+                display: block;
+                border: 2px solid $divider_gray;
+            }
+            .user_console {
+                margin: 20px 10px 0px auto;
+                height: 40px;
+                width: 100px;
+                a {
+                    color: #fff;
+                }
+            }
+        }
+        h3 {
+            font-weight: bold;
+        }
+        .user_relationships {
+            display: flex;
+            a {
+                margin-right: 20px;
+                color: $notion_font_gray;
+                text-decoration: underline;
+            }
+        }
+    }
+    .bio {
+        margin: 10px auto;
+    }
+}
+.lifelog_wrapper {
+    background-color: #696969;
+    padding: 10px;
+    .lifelog_date a {
+        color: #fff;
+    }
+}
+.micropost_exec_duration {
+    margin-left: 10px;
+    margin-bottom: 4px;
+    color: $notion_gray;
+}
 // footer
 .footer {
     padding-top: 5px;

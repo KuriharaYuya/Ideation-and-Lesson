@@ -1,0 +1,58 @@
+    <% if @lifelogs.present?  %>
+    <% @lifelogs.each do |lifelog|  %>
+    <%if lifelog.microposts.where(posted?: true).count > 0  %>
+    <div class="lifelog_wrapper">
+        <div class="lifelog_info">
+            <p class="lifelog_date">
+                <%=link_to "#{lifelog.log_date}のライフログ", lifelog_path(lifelog) %>
+            </p>
+            <% if lifelog.title != "Untitled"  %>
+            <p class="mb-1" class="lifelog_ttl"><%= lifelog.title  %></p>
+            <% end  %>
+            <p>合計勉強時間:&nbsp;<%= lifelog.consuming_minutes  %>分</p>
+            <p><%=lifelog.microposts.where(posted?: true).count  %>個の投稿</p>
+        </div>
+        <% lifelog.microposts.where(posted?: true).order(end_datetime: :desc).each do |micropost|  %>
+        <div class="feed_content card"
+            <%#= "id="+ "loaded_first" if (@start_get > 1 && @start_get +1 == @j) || all_have_loaded?(0) && @microposts.length == @j%>>
+            <div class="card-body">
+                <h4 class="post_author_wrap">
+                    <% if micropost.user.profile_img.present?  %>
+                    <img class="post_author_img" src="<%= micropost.user.profile_img  %>">
+                    <% else  %>
+                    <img class="post_author_img" src="<%= profile_initial_img %>">
+                    <% end %>
+                    <%=link_to micropost.user.name, user_path(micropost.user)%>
+                </h4>
+                <a href="<%=micropost_path(micropost)  %>">
+                    <h5 class="card-title"><%=micropost.title  %></h5>
+                    <h6 class="card-subtitle mb-2 "><%= micropost.post_type %></h6>
+                    <h6>経過時間: <%=to_HH_MM(micropost.consuming_minutes.to_i)  %></h6>
+                    <p style="margin-bottom: 0.5rem;">
+                        <%if micropost.post_type == "タイムラプス" %>
+                        <% if micropost.video.present?  %>
+                        動画添付済み
+                        <% else  %>
+                        添付動画なし
+                        <% end %>
+                    </p>
+
+                    <p><span>verified?:&nbsp;</span><%= check_box_tag :verified?,true,micropost.verified?, {disabled: true}%>
+                    </p>
+                    <% end  %>
+                    <!--<span class="posted_ago"><%#= distance_of_time_in_words(micropost.posted_at,Time.zone.now)  %>前</span> -->
+                </a>
+            </div>
+        </div>
+        <p class="micropost_exec_duration">
+            <%= micropost.start_datetime.strftime("%R")  %>~<%= micropost.end_datetime.strftime("%R")  %>で実施</p>
+        <% end  %>
+    </div>
+    <% end  %>
+    <% end  %>
+    <br>
+    <br>
+    <%= paginate @lifelogs if @lifelogs.length > 1  %>
+    <% else  %>
+    <h3 class="text-center mt-2">投稿はまだありません</h3>
+    <% end  %>

@@ -44,11 +44,11 @@
         タイムラプス動画を確認する
     </a>
 </h4>
+<% end %>
 <p><%= f.label :video %>を変更する</p>
 <label class="btn btn-dark video_uploader_post_new">
     <%= f.file_field :video,style: "display: none;",class:"input_video_post_new" %>ファイルを選択
 </label>
-<% end %>
 
 <%=f.hidden_field :id,value: @micropost.id  %>
 <%= f.submit "変更を保存", disable_with: 'Submiting...', class: "btn btn-primary btn_save"    %>
