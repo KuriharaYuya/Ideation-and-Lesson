@@ -1,38 +1,18 @@
-<h3>Change your user-settings</h3>
-<%= form_with(model: @user, local: true) do |f| %>
-
-<%= f.label :name %>
-<br>
-<%= f.text_field :name %>
-<br>
-<%= f.label :profile_img, "プロフィール画像"  %>
-<br>
-<%= f.file_field :profile_img %>
-<br>
-<%=f.hidden_field :yeah,value: current_user.id  %>
-<%= f.label :email %>
-<br>
-<%= f.email_field :email %>
-<br>
-<%= f.label :password %>
-<br>
-<%= f.password_field :password %>
-<br>
-<%= f.label :password_confirmation, "Confirmation" %>
-<br>
-<%= f.password_field :password_confirmation %>
-<br>
-<h3></h3>
-<%= f.submit "Save changes", class: "btn btn-primary" %>
-<br>
-<h3></h3>
-<button><%= link_to "Rest inputting",edit_user_path   %></button>
-<% end %>
-
-<h4>Delete account</h4>
-
-<%= form_with(model:@user,local: true,html: {method: :delete}) do |f| %>
-<%=f.label :password  %>
-<%=f.password_field :password %>
-<%=f.submit "delete account" %>
+<%=form_with(model:@user,local: true,html: {method: :patch}) do |f| %>
+<table class="table user_edit_table">
+    <tbody>
+        <tr>
+            <td><%= f.label :name %></td>
+            <td class="value"><%=f.text_field :name  %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :email %></td>
+            <td class="value"><%=f.email_field :email  %></td>
+        </tr>
+    </tbody>
+</table>
+<div class="user_edit_console_btns">
+    <%= f.submit "変更", class: "btn btn-primary" %>
+    <%= link_to "入力のリセット",edit_user_path,class: "btn btn-warning"   %>
+</div>
 <% end  %>

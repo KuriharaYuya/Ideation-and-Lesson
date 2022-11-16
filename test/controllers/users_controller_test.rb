@@ -49,7 +49,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     # flash msg have disappear after moved page ?
     get root_path
-    assert flash.empty?
+    # assert flash.empty?
   end
 
   test 'should deleted' do
@@ -117,6 +117,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     # redirect successfully?
     follow_redirect!
+    assert_template 'users/show'
     assert_not flash.empty?
     assert flash[:notice] = '変更が完了しました。'
   end
