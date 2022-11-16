@@ -1,5 +1,5 @@
 <%= form_with(model: current_user.active_relationships.build,local: false) do |f| %>
 <%= hidden_field_tag :followed_id, @user.id %>
 <%= hidden_field_tag :current_page, request.fullpath %>
-<%= f.submit "Follow", disable_with: "Following" %>
+<%= f.submit "Follow", disable_with: "Following",class: "btn btn-primary" %>
 <% end  %>

@@ -1,4 +1,5 @@
 class RelationshipsController < ApplicationController
+  include ApplicationHelper
   before_action :user_log_in
   def create
     @user = User.find(params[:followed_id])
