@@ -26,7 +26,13 @@ class LifelogsController < ApplicationController
 
   def update
     lifelog = Lifelog.find(lifelog_params[:id])
-    redirect_to lifelog_path(lifelog) if lifelog.update!(lifelog_params)
+    if lifelog.update(lifelog_params)
+      flash[:notice] = '正常に変更されました'
+      redirect_to lifelog_path(lifelog)
+    else
+      flash[:warn] = lifelog.errors.full_messages
+      redirect_to edit_lifelog_path(lifelog)
+    end
   end
 
   def destroy

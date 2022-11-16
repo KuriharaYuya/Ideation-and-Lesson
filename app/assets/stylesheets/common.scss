@@ -657,6 +657,43 @@ html {
     border: 2px solid $divider_gray;
     color: #fff;
 }
+.lifelog_edit_table {
+    color: $notion_font_gray;
+    textarea {
+        background-color: $feed_content_bg_color;
+        color: $notion_font_gray;
+    }
+}
+.lifelog_show_btns {
+    display: flex;
+    height: 40px;
+    margin-bottom: 20px;
+    a,
+    input {
+        width: 150px;
+        margin: 0 auto;
+    }
+    input {
+        margin-left: 15px;
+    }
+}
+.lifelog_show_feed {
+    .lifelog_wrapper {
+        background-color: $wrapper_bg_color;
+    }
+}
+.lifelog_overview {
+    padding: 10px;
+    background-color: $feed_content_bg_color;
+}
+.lifelog_modal {
+    .modal-dialog {
+        max-width: $wrapper_width - 30px;
+        .modal-body img {
+            width: 95%;
+        }
+    }
+}
 // footer
 .footer {
     padding-top: 5px;
