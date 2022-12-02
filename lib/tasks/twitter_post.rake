@@ -6,6 +6,7 @@ task twitter_mov_test: :environment do
   set_lifelogs
   mov_upload
   comments_daily_overview_to_latest_post
+  comments_time_card_to_latest_post
 end
 def mov_upload
   @twitter_client = Twitter::REST::Client.new do |config|
@@ -140,7 +141,7 @@ def set_lifelogs
   puts @lifelog_id
   if @lifelog_id.nil?
     puts 'nil'
-    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date) 
+    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date)
   else
     lifelog = Lifelog.find(@lifelog_id)
     @today_date = lifelog.log_date
@@ -171,7 +172,7 @@ end
 
 def comments_daily_overview_to_latest_post
   p 'now in process of commenting'
-  my_twitter_user_id = '3223240382'.to_i
+  my_twitter_user_id = ENV['TWITTER_ACCOUNT_ID']
   @twitter_client = Twitter::REST::Client.new do |config|
     config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
     config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
@@ -183,7 +184,7 @@ def comments_daily_overview_to_latest_post
 
   # calenderとscreen_timeのurlを取得してhashに格納
   @comments_content = @today_lifelog.overview.to_s
-  @comments_content ||= ""
+  @comments_content ||= ''
   puts @comments_content
   image_links = [@today_lifelog.calender.to_s, @today_lifelog.screen_time.to_s]
 
@@ -200,14 +201,49 @@ def comments_daily_overview_to_latest_post
   end
   sleep 30
   begin
-  @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
-  rescue
+    @twitter_client.update_with_media(@comments_content, @images, options = { in_reply_to_status_id: @tweets[0].id })
+  rescue StandardError
     sleep 20
     retry
   end
   @images.each do |image|
     File.delete(image)
   end
+end
+
+def comments_time_card_to_latest_post
+  p 'now in process of commenting'
+  my_twitter_user_id = ENV['TWITTER_ACCOUNT_ID']
+  @twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
+    config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+    config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+    config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+  end
+  @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
+                                          contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
+
+  # calenderとscreen_timeのurlを取得してhashに格納
+  @comments_content = 'foobar'
+  @comments_content ||= ''
+  puts @comments_content
+  image_link = @today_lifelog.time_card.proof_img.to_s
+
+  tgt_file = 'time_card.jpg'
+  File.open(tgt_file, 'wb') do |file|
+    URI.open(url) do |img|
+      file.puts img.read
+    end
+  end
+  sleep 30
+  begin
+    @twitter_client.update_with_media(@comments_content, tgt_file, options = { in_reply_to_status_id: @tweets[0].id })
+  rescue StandardError
+    sleep 20
+    retry
+  end
+
+  File.delete(tgt_file)
   @today_lifelog[:tweeted?] = true
   @today_lifelog.save
 end
