@@ -8,11 +8,17 @@ class LifelogsController < ApplicationController
   def create
     @user = current_user
     lifelog = @user.lifelogs.build(lifelog_params)
+    lifelog.build_time_card
     redirect_to user_path(@user) if lifelog.save!
   end
 
   def show
     @lifelog = Lifelog.find(params[:id])
+    if current_user == @lifelog.user && @lifelog.time_card.nil?
+      card = @lifelog.build_time_card
+      card.save!
+    end
+    @time_card = @lifelog.time_card
     @user = @lifelog.user
     @microposts = @lifelog.microposts
     @all_column = get_all_column_names(Lifelog)
@@ -21,6 +27,7 @@ class LifelogsController < ApplicationController
 
   def edit
     @lifelog = Lifelog.find(lifelog_params[:id])
+    @time_card = @lifelog.time_card
     @columns = get_all_column_names(Lifelog)
   end
 
