@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_02_044651) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_07_155602) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -83,18 +83,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_044651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
-  end
-
-  create_table "time_cards", force: :cascade do |t|
-    t.datetime "scheduled_time_tomorrow"
-    t.datetime "scheduled_time_today"
-    t.datetime "arrived_time"
-    t.boolean "be_on_time", default: false
-    t.string "proof_img"
-    t.integer "lifelog_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "gap_min"
   end
 
   create_table "user_settings", force: :cascade do |t|

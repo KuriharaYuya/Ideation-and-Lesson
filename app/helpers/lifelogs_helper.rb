@@ -52,6 +52,7 @@ module LifelogsHelper
       # 紐づくべきlifelogがない場合
       @lifelog = Lifelog.new(user_id: current_user.id, log_date: @micropost.exec_date)
       set_lifelog_duration_time('calc')
+      @lifelog.save
       @micropost.update(lifelog_id: @lifelog.id)
     elsif (latest_lifelog.log_date.after? @micropost.exec_date) || latest_lifelog.log_date == @micropost.exec_date
       # micropostが紐づくべきlifelogがある場合
@@ -67,7 +68,6 @@ module LifelogsHelper
                           exec_date: @bind_lifelog.log_date)
         break
       end
-      bind_time_card
     end
     # ↓ lifelog would have bind & save
   end
@@ -79,11 +79,5 @@ module LifelogsHelper
 
   def return_latest_lifelog
     @user.lifelogs.order(log_date: :desc)[0]
-  end
-
-  def bind_time_card
-    created_lifelog = Lifelog.where(user_id: current_user.id).order(updated_at: :desc).last
-    card = created_lifelog.build_time_card
-    card.save
   end
 end
