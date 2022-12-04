@@ -6,7 +6,6 @@ task twitter_mov_test: :environment do
   set_lifelogs
   mov_upload
   comments_daily_overview_to_latest_post
-  time_card_upload
 end
 def mov_upload
   @twitter_client = Twitter::REST::Client.new do |config|
@@ -211,6 +210,7 @@ def comments_daily_overview_to_latest_post
   end
   @today_lifelog[:tweeted?] = true
   @today_lifelog.save
+  time_card_upload
 end
 
 # def get_lifelog
