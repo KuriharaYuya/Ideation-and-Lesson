@@ -9,6 +9,7 @@ class TimeCardsController < ApplicationController
 
   def edit
     @time_card = Lifelog.find(params[:id]).time_card
+  rescue StandardError => e
     @time_card = TimeCard.find(params[:id]) if @time_card.nil?
   end
 
