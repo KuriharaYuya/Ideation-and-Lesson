@@ -7,7 +7,7 @@ class TimeCard < ApplicationRecord
   # end
 
   def set_yesterday_lifelog
-    @yesterday_lifelog_date = lifelog.log_date.yesterday
+    @yesterday_lifelog_date = lifelog.log_date.prev_day(1)
     @yesterday_lifelog = Lifelog.find_by(log_date: @yesterday_lifelog_date)
   end
 
@@ -19,13 +19,9 @@ class TimeCard < ApplicationRecord
   def import_scheduled_time
     # 使うときは前日のカードに "scheduled_time_tomorrow"がセットされているか確認してね
     set_yesterday_lifelog
-    begin
-      import_from = @yesterday_lifelog.time_card.scheduled_time_tomorrow
-      update(scheduled_time_today: import_from)
-      scheduled_time_today
-    rescue StandardError => e
-      !time_card.scheduled_time_tomorrow.nil?
-    end
+    import_from = @yesterday_lifelog.time_card.scheduled_time_tomorrow
+    update(scheduled_time_today: import_from)
+    scheduled_time_today
   end
 
   def judge_be_on_time
