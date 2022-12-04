@@ -1,7 +1,50 @@
 task time_card_test: :environment do
-  comments_time_card_to_latest_post
+  create_content
+  tweet_test
 end
-def comments_time_card_to_latest_post
+
+def get_lifelog
+  user = User.find_by(admin: true)
+  @lifelog_id = user.user_setting.post_lifelog_id
+  if @lifelog_id.nil?
+    puts 'nil'
+    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date)
+  else
+    lifelog = Lifelog.find(@lifelog_id)
+    @today_date = lifelog.log_date
+    exit if lifelog.tweeted? == true
+  end
+
+  @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
+end
+
+def tweet_test
+  p 'time cards content processing'
+  my_twitter_user_id = '3223240382'.to_i
+  @twitter_client = Twitter::REST::Client.new do |config|
+    config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
+    config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+    config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+    config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+  end
+  @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
+                                          contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
+
+  # calenderとscreen_timeのurlを取得してhashに格納
+
+  @image = 'upload.jpg'
+  p @content
+  sleep 30
+  begin
+    @twitter_client.update_with_media(@content, @image, options = { in_reply_to_status_id: @tweets[0].id })
+  rescue StandardError
+    sleep 20
+    retry
+  end
+  File.delete(@image)
+end
+
+def create_content
   get_lifelog
 
   time_card = @today_lifelog.time_card
@@ -15,7 +58,6 @@ def comments_time_card_to_latest_post
       file.puts movie.read
     end
   end
-  File.delete(tgt_file)
 
   # create content
 
@@ -34,22 +76,7 @@ def comments_time_card_to_latest_post
 
   tomorrow_tgt = "明日は #{time_card.location_tomorrow} で#{time_card.scheduled_time_tomorrow.strftime('%R')}分から勉強するぜ！"
 
-  content = '今日の朝のタイムカード記録！！' + "\n" + recoded_location + "\n" + be_on_time + gap_on_str + "\n" + gap_min_on_str + "\n" + tomorrow_tgt
+  @content = '今日の朝のタイムカード記録！！' + "\n" + recoded_location + "\n" + be_on_time + gap_on_str + "\n" + gap_min_on_str + "\n" + tomorrow_tgt
 
-  puts content
-end
-
-def get_lifelog
-  user = User.find_by(admin: true)
-  @lifelog_id = user.user_setting.post_lifelog_id
-  if @lifelog_id.nil?
-    puts 'nil'
-    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date)
-  else
-    lifelog = Lifelog.find(@lifelog_id)
-    @today_date = lifelog.log_date
-    exit if lifelog.tweeted? == true
-  end
-
-  @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
+  puts @content
 end
