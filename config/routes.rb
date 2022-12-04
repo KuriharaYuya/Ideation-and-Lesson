@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+  resources :time_cards, only: %i[show destroy update edit]
   resources :lifelogs, only: %i[new create destroy update edit show]
   resources :relationships, only: %i[create destroy]
   resources :microposts, only: %i[new create edit update destroy show] do

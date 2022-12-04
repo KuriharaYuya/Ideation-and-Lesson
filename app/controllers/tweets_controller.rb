@@ -25,7 +25,7 @@ class TweetsController < ApplicationController
     begin
       run_rake_task_tweet
     rescue StandardError
-      redirect_to new_tweet_path
+      redirect_to edit_tweet_path(current_user)
       @i = 1
     end
     redirect_to new_tweet_path if @i.nil?
