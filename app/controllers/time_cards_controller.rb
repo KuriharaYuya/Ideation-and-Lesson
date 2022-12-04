@@ -3,6 +3,7 @@ class TimeCardsController < ApplicationController
   before_action :user_log_in, only: %w[edit update]
   def show
     @time_card = Lifelog.find(params[:id]).time_card
+  rescue StandardError => e
     @time_card = TimeCard.find(params[:id]) if @time_card.nil?
   end
 
