@@ -209,6 +209,8 @@ def comments_daily_overview_to_latest_post
   @images.each do |image|
     File.delete(image)
   end
+  @today_lifelog[:tweeted?] = true
+  @today_lifelog.save
 end
 
 # def get_lifelog
@@ -251,8 +253,6 @@ def time_card_upload
   end
   File.delete(@image)
   sleep 2
-  @today_lifelog[:tweeted?] = true
-  @today_lifelog.save
 end
 
 def create_content
