@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_124110) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_044651) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "micropost_id"
@@ -95,9 +95,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_124110) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "gap_min"
-    t.string "location_tomorrow", limit: 40
-    t.string "location_today", limit: 40
-    t.string "location_yesterday", limit: 40
   end
 
   create_table "user_settings", force: :cascade do |t|

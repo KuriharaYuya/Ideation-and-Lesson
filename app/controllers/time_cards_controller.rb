@@ -24,7 +24,6 @@ class TimeCardsController < ApplicationController
   end
 
   def time_card_params
-    params.require(:time_card).permit(:arrived_time, :proof_img, :scheduled_time_tomorrow, :scheduled_time_today,
-                                      :location_tomorrow, :location_today, :location_yesterday)
+    params.require(:time_card).permit(:arrived_time, :proof_img, :scheduled_time_tomorrow, :scheduled_time_today)
   end
 end

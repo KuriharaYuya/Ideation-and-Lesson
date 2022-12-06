@@ -4,17 +4,6 @@
 <%=link_to 'タイムカードを編集する', edit_time_card_path  %>
 <div>
     <p>タイムカード</p>
-    <br>
-    <p>到着予定の場所</p>
-    <%= @time_card.location_yesterday ? @time_card.location_yesterday : "未入力" %>
-    <br>
-    <p>到着した場所</p>
-    <%= @time_card.location_today ? @time_card.location_today : "未入力" %>
-    <br>
-    <p>明日到着予定の場所</p>
-    <%= @time_card.location_tomorrow ? @time_card.location_tomorrow : "未入力" %>
-    <br>
-    <br>
     <%if @time_card.scheduled_time_today %>
     <p>予定時刻<%= @time_card.scheduled_time_today  %></p>
     <%end %>
