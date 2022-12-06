@@ -86,6 +86,5 @@ module LifelogsHelper
     card = created_lifelog.build_time_card
     card.save
     card.import_scheduled_time
-    card.import_location
   end
 end

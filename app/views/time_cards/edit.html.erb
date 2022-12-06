@@ -1,6 +1,6 @@
 <%=form_with(model:@time_card,local: true, html: {method: :patch}) do |f| %>
 <p>到着時刻</p>
-<%= f.datetime_field :arrived_time  %>
+<%= f.datetime_field :arrived_time,value: Time.now.strftime('%Y-%m-%dT%T')  %>
 
 <p>証拠写真</p>
 <% if @time_card.proof_img  %>
@@ -11,16 +11,10 @@
 <br>
 <p>明日の到着時刻</p>
 <%if @time_card.arrived_time  %>
-<%= f.datetime_field :scheduled_time_tomorrow %>
+<%= f.datetime_field :scheduled_time_tomorrow,value: @time_card.arrived_time.strftime('%Y-%m-%dT%T')  %>
 <%else  %>
-<%= f.datetime_field :scheduled_time_tomorrow%>
+<%= f.datetime_field :scheduled_time_tomorrow,value: Time.now.strftime('%Y-%m-%dT%T')  %>
 <% end  %>
-<br>
-<p>どこに到着したか</p>
-<%=f.text_field :location_today  %>
-<br>
-<p>明日どこに到着するか</p>
-<%=f.text_field :location_tomorrow  %>
 <br>
 <br>
 <%=f.submit "送信！"  %>

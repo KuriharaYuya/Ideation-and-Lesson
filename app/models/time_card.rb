@@ -24,14 +24,6 @@ class TimeCard < ApplicationRecord
     scheduled_time_today
   end
 
-  def import_location
-    # 使うときは前日のカードに "scheduled_time_tomorrow"がセットされているか確認してね
-    set_yesterday_lifelog
-    import_from = @yesterday_lifelog.time_card.location_tomorrow
-    update(location_yesterday: import_from)
-    location_yesterday
-  end
-
   def judge_be_on_time
     gap = (arrived_time - scheduled_time_today) * 10 / 600
     result = { bool: gap <= 15, gap: }
