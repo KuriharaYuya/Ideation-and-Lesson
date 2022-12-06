@@ -6,6 +6,7 @@ task twitter_mov_test: :environment do
   set_lifelogs
   mov_upload
   comments_daily_overview_to_latest_post
+  get_lifelog
   time_card_upload
 end
 def mov_upload
@@ -256,6 +257,8 @@ def time_card_upload
 end
 
 def create_content
+  get_lifelog
+
   time_card = @today_lifelog.time_card
 
   # 画像のダウンロードと変数への代入
