@@ -82,9 +82,8 @@ module LifelogsHelper
   end
 
   def bind_time_card
-    created_lifelog = Lifelog.where(user_id: current_user.id).order(updated_at: :asc).last
+    created_lifelog = Lifelog.where(user_id: current_user.id).order(updated_at: :desc).last
     card = created_lifelog.build_time_card
     card.save
-    card.import_scheduled_time
   end
 end

@@ -8,14 +8,6 @@
 <p class="text-left">画像は既に存在します <br>アップロードした場合は上書きされます</p>
 <% end %>
 <%=f.file_field :proof_img  %>
-<br>
 <p>明日の到着時刻</p>
-<%if @time_card.arrived_time  %>
-<%= f.datetime_field :scheduled_time_tomorrow,value: @time_card.arrived_time.strftime('%Y-%m-%dT%T')  %>
-<%else  %>
-<%= f.datetime_field :scheduled_time_tomorrow,value: Time.now.strftime('%Y-%m-%dT%T')  %>
-<% end  %>
-<br>
-<br>
 <%=f.submit "送信！"  %>
 <% end  %>
