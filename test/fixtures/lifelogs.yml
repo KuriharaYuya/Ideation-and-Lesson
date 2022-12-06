@@ -1,11 +1,7 @@
-yesterday:
-  log_date: <%Date.today.prev_day(10)%>
-  title: "Untitled"
-  start_datetime: <%Date.today.prev_day(10)%>
-  end_datetime: <%Date.today.prev_day(10)%>
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-10days_ago:
-  log_date:
-  title: "Untitled"
-  start_datetime: <%Date.today.prev_day(10)%>
-  end_datetime: <%Date.today.prev_day(10)%>
+one:
+  title: MyString
+  start_datetime: 2022-10-04 23:45:16
+  end_datetime: 2022-10-04 23:45:16
+
