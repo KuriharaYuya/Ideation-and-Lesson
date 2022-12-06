@@ -238,22 +238,16 @@ def time_card_upload
     config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
   end
   p 'ここまできた'
-  begin
-    @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
-                                            contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
-  rescue StandardError => e
-    p 'ここまできておるぞ'
-    sleep 10
-    retry
-  end
+  @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
+                                          contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
 
   # calenderとscreen_timeのurlを取得してhashに格納
-  @images = ['upload.jpg']
+  @image = 'upload.jpg'
   p @content
   sleep 30
   begin
-    @twitter_client.update_with_media(@content, @images, options = { in_reply_to_status_id: @tweets[0].id })
-  rescue Twitter::Error::BadRequest
+    @twitter_client.update_with_media(@content, @image, options = { in_reply_to_status_id: @tweets[0].id })
+  rescue StandardError
     sleep 20
     retry
   end
