@@ -241,7 +241,7 @@ def time_card_upload
   begin
     @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
                                             contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
-  rescue Twitter::Error::BadRequest
+  rescue StandardError => e
     p 'ここまできておるぞ'
     sleep 10
     retry
