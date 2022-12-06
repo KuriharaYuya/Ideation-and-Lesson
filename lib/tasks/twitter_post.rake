@@ -223,6 +223,7 @@ def get_lifelog
   else
     lifelog = Lifelog.find(@lifelog_id)
     @today_date = lifelog.log_date
+    exit if lifelog.tweeted? == true
   end
 
   @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
