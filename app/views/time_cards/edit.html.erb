@@ -11,9 +11,9 @@
 <br>
 <p>明日の到着時刻</p>
 <%if @time_card.arrived_time  %>
-<%= f.datetime_field :scheduled_time_tomorrow %>
+<%= f.datetime_field :scheduled_time_tomorrow,value: @time_card.arrived_time.strftime('%Y-%m-%dT%T')  %>
 <%else  %>
-<%= f.datetime_field :scheduled_time_tomorrow%>
+<%= f.datetime_field :scheduled_time_tomorrow,('%Y-%m-%dT%T')  %>
 <% end  %>
 <br>
 <p>どこに到着したか</p>
