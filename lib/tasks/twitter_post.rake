@@ -210,37 +210,38 @@ def comments_daily_overview_to_latest_post
   @images.each do |image|
     File.delete(image)
   end
+  @today_lifelog[:tweeted?] = true
+  @today_lifelog.save
 end
 
-# def get_lifelog
-#   user = User.find_by(admin: true)
-#   @lifelog_id = user.user_setting.post_lifelog_id
-#   if @lifelog_id.nil?
-#     puts 'nil'
-#     @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date)
-#   else
-#     lifelog = Lifelog.find(@lifelog_id)
-#     @today_date = lifelog.log_date
-#   end
+def get_lifelog
+  user = User.find_by(admin: true)
+  @lifelog_id = user.user_setting.post_lifelog_id
+  if @lifelog_id.nil?
+    puts 'nil'
+    @today_date = Date.today.prev_day(user.user_setting.tweet_lifelog_date)
+  else
+    lifelog = Lifelog.find(@lifelog_id)
+    @today_date = lifelog.log_date
+  end
 
-#   @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
-# end
+  @today_lifelog = user.lifelogs.find_by(log_date: @today_date)
+end
 
 def time_card_upload
   p 'time cards content processing'
   my_twitter_user_id = '3223240382'.to_i
-  @twitter_client = nil
   @twitter_client = Twitter::REST::Client.new do |config|
     config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
     config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
     config.access_token = ENV['TWITTER_ACCESS_TOKEN']
     config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
   end
-  p 'ここまできた'
   @tweets = @twitter_client.user_timeline(user_id: my_twitter_user_id, count: 1, exclude_replies: false, include_rts: false,
                                           contributor_details: false, result_type: 'recent', locale: 'ja', tweet_mode: 'extended')
 
   # calenderとscreen_timeのurlを取得してhashに格納
+
   @image = 'upload.jpg'
   p @content
   sleep 30
@@ -251,9 +252,6 @@ def time_card_upload
     retry
   end
   File.delete(@image)
-  sleep 2
-  @today_lifelog[:tweeted?] = true
-  @today_lifelog.save
 end
 
 def create_content
