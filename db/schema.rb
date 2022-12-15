@@ -102,8 +102,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_155602) do
     t.boolean "admin"
     t.string "bio"
     t.string "remember_digest"
-    t.string "reset_digest"
-    t.datetime "reset_sent_at"
     t.string "profile_img"
   end
 
